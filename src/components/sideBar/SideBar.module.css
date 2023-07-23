@@ -1,0 +1,36 @@
+.side-bar__wrapper {
+   position: fixed;
+   float: left;
+   height: 20px;
+   width: 10%;
+   height: fit-content;
+   background-color: white;
+   margin-top: 5px;
+   padding: 10px;
+   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.25);
+   z-index: 30;
+}
+
+.side-bar__wrapper > img {
+   width: 10px;
+   height: 10px;
+   float: right;
+   margin: 5px 5px 0px 0px;
+   padding: 5px;
+   border: 1px solid black;
+}
+
+.side-bar__form {
+   margin-top: 50px;
+   display: flex;
+   flex-direction: column;
+   align-items: center;
+}
+
+.side-bar__form button {
+   width: 80%;
+}
+
+ul {
+   text-align: left;
+}

@@ -1,0 +1,34 @@
+.control-functions__wrapper {
+   padding: 15px;
+}
+
+.control-functions__wrapper > div {
+   vertical-align: top;
+   display: inline-block;
+   width: 50%;
+   height: 100%;
+}
+
+.control-functions__left > div,
+.control-functions__right > div {
+   vertical-align: top;
+   display: inline-block;
+   width: 50%;
+   height: 50%;
+}
+
+.button__wrapper {
+   width: 100%;
+   height: 100%;
+   padding: 12px;
+}
+
+.button__wrapper > button {
+   border: 1px solid black;
+   border-radius: 1rem;
+   width: 100%;
+   height: 100%;
+
+   font-weight: 900;
+   font-size: 15px;
+}

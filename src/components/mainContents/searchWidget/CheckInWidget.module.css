@@ -1,0 +1,79 @@
+.widget__wrapper {
+   border: 1px solid gray;
+   border-radius: 1rem;
+   margin: 2.2rem 0 1rem 1rem;
+   width: 13%;
+   height: fit-content;
+   float: left;
+   position: absolute;
+   padding: 0.5rem;
+}
+
+.widget__wrapper > div {
+   /* width: 100%; */
+   margin: 3% 0 auto;
+   background-color: rgb(240, 240, 240);
+}
+
+.shortcut {
+   height: 50px;
+   width: 96%;
+   text-align: center;
+   border: 1px solid gray;
+   border-radius: 1rem;
+
+   padding: 2%;
+}
+
+.shortcut button {
+   width: 21%;
+   height: 95%;
+   font-size: 10px;
+   font-weight: 900;
+
+   vertical-align: top;
+   text-align: center;
+   margin: 1%;
+   background-color: beige;
+   border: 1px solid black;
+   border-radius: 0.5rem;
+}
+
+.filter {
+   border: 1px solid gray;
+   border-radius: 1rem;
+}
+
+.filter > div {
+   padding: 5%;
+}
+
+.filter__button {
+   text-align: center;
+}
+
+.filter__button > button {
+   border: 1px solid black;
+   border-radius: 1rem;
+   background-color: beige;
+   width: 48%;
+   margin: 4% 1% 0 1%;
+}
+
+.filter__search > input {
+   width: 95%;
+   color: gray;
+   border: 1px solid black;
+   border-radius: 1rem;
+   padding: 2%;
+}
+
+.term-options__input > input {
+   width: 40%;
+}
+
+.filter__fit-or-group-selection {
+   border: 1px solid gray;
+   border-radius: 1rem;
+   padding: 4%;
+}

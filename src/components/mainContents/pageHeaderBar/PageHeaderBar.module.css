@@ -1,0 +1,31 @@
+.page-header-bar__wrapper {
+   height: 23px;
+   margin: -1% 0 1% 0;
+}
+
+.page-header-bar__wrapper > div {
+   display: inline-block;
+   border: 1px solid black;
+   border-radius: 1rem;
+   box-sizing: border-box;
+   height: 100%;
+   width: fit-content;
+   padding: 2px 6px;
+   vertical-align: top;
+   margin-left: 10px;
+}
+
+.page-header-bar__wrapper > div > img {
+   float: right;
+   margin: 5px 2px 0px 5px;
+   object-fit: cover;
+   height: 50%;
+}
+
+.page-header-bar__wrapper > button {
+   border: 1px solid black;
+   border-radius: 2rem;
+   vertical-align: middle;
+   margin-left: 1%;
+   font-size: 11px;
+}

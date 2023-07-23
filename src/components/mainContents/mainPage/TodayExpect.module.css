@@ -1,0 +1,39 @@
+.today-expect__wrapper {
+   width: 15%;
+}
+
+.today-expect__wrapper > * {
+   display: block;
+}
+
+.today-expect__wrapper > label {
+   margin: 1rem;
+   padding: 8px;
+
+   width: 70%;
+
+   border: 2px solid black;
+   border-radius: 1rem;
+}
+
+.today-expect__table {
+   margin: 0 1rem 1rem 1rem;
+   padding: 5px;
+
+   width: 80%;
+
+   border: 2px solid black;
+   border-radius: 1rem;
+}
+
+.today-expect__table > tr > th {
+   text-align: left;
+
+   width: 70%;
+
+   background-color: red;
+}
+
+.today-expect__table > tr > td {
+   text-align: center;
+}

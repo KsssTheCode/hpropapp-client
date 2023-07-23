@@ -1,0 +1,4 @@
+.area > div {
+   display: inline-block;
+   width: 50%;
+}

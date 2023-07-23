@@ -1,0 +1,28 @@
+.assign-room__table * {
+   border: 1px solid black;
+   font-size: 12px;
+}
+
+.checkbox {
+   width: 8%;
+}
+
+.room-number {
+   width: 15%;
+}
+
+.floor {
+   width: 5%;
+}
+
+.room-type {
+   width: 20%;
+}
+
+.clean-status {
+   width: 20%;
+}
+
+.room-status {
+   width: 20%;
+}

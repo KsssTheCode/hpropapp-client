@@ -1,0 +1,23 @@
+.floor__wrapper {
+   width: 100%;
+   margin: 0 auto;
+}
+
+.floor__wrapper > div {
+   margin: 20px 0;
+}
+
+.floor-label {
+   width: 80px;
+   text-align: center;
+
+   border: 1px solid black;
+   border-radius: 0.5rem;
+
+   margin-left: 10px;
+   margin-bottom: 5px;
+}
+
+.floor-label > label {
+   font-size: 25px;
+}

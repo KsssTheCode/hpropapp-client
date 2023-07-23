@@ -1,0 +1,8 @@
+.deposit__list {
+   height: 100%;
+   overflow-y: scroll;
+}
+
+.deposit__list > table {
+   width: 100%;
+}

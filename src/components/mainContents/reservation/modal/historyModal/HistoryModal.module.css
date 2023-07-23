@@ -1,0 +1,51 @@
+.history-modal__wrapper {
+   z-index: 40;
+   width: 40%;
+   height: 40%;
+   margin: 15% auto;
+
+   background-color: rgb(247, 247, 243);
+   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.25);
+
+   border: 3px solid black;
+   border-radius: 1rem;
+}
+
+.close-button {
+   width: 100%;
+   height: 15%;
+}
+
+.close-button > button {
+   float: right;
+   margin: 2% 2%;
+}
+
+.contents-table {
+   border: 1px solid black;
+   width: 90%;
+   height: 78%;
+   margin: 0 auto;
+   overflow-y: scroll;
+}
+
+.contents-table td {
+   font-size: 13px;
+}
+
+.contents-table__number {
+   font-size: 10px;
+   width: 1%;
+}
+.contents-table__contents {
+   font-size: 13px;
+   width: 50%;
+}
+.contents-table__editor {
+   font-size: 13px;
+   width: 5%;
+}
+.contents-table__time {
+   font-size: 13px;
+   width: 12%;
+}

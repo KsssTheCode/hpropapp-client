@@ -1,0 +1,11 @@
+.home__wrapper > * {
+   display: inline-block;
+   margin: 2rem;
+
+   width: fit-content;
+   height: fit-content;
+
+   border: 2px solid black;
+   border-radius: 20px;
+   align-items: center;
+}

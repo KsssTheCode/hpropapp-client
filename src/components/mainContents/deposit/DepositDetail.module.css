@@ -1,0 +1,43 @@
+.deposit-detail__wrapper {
+   height: 100%;
+   font-size: 14px;
+}
+
+.deposit-detail__wrapper label {
+   margin-right: 2%;
+}
+
+.deposit-detail__wrapper > div {
+   width: 100%;
+}
+
+.deposit-detail__wrapper > div > div {
+   padding: 3%;
+}
+
+.detail {
+   height: 45%;
+}
+
+.history {
+   height: 39%;
+   margin: 3% 0 3% 0;
+}
+
+.history > * {
+   padding: 3%;
+}
+
+.add-function {
+   width: fit-content;
+   height: 10%;
+}
+
+.add-function > div {
+   float: right;
+}
+
+.detail__double-input > div {
+   display: inline-block;
+   width: 50%;
+}

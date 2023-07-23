@@ -1,0 +1,154 @@
+.group-create-modal__wrapper {
+   position: fixed;
+   z-index: 30;
+   background-color: rgb(247, 247, 243);
+   width: 1200px;
+   height: 470px;
+   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.25);
+
+   border: 3px solid black;
+   border-radius: 1rem;
+
+   margin: 10% 9% auto;
+}
+
+.group-create-modal__buttons {
+   height: 5%;
+   padding: 15px;
+   margin-right: 10px;
+}
+
+.group-create-modal__buttons > button {
+   float: right;
+   margin: 3px;
+}
+
+.group-create-modal__form {
+   border: 1px solid black;
+   border-radius: 1rem;
+
+   margin: 0 auto;
+
+   width: 95%;
+   height: 85%;
+}
+
+.group-create-modal__form > div {
+   display: inline-block;
+   vertical-align: top;
+
+   font-size: 13px;
+
+   height: 95%;
+   margin: 0.5rem;
+}
+
+.group-create-modal__form input,
+.group-create-modal__form label {
+   margin-left: 5px;
+   width: 60px;
+}
+
+.form__main-area {
+   width: 76%;
+   height: 95%;
+}
+
+.form__lower-area,
+.form__upper-area {
+   width: 100%;
+}
+
+.form__upper-area {
+   height: 40%;
+}
+
+.form__lower-area {
+   height: 60%;
+}
+
+.form__upper-area__left > div,
+.form__upper-area__right > div,
+.form__lower-area__left > div,
+.form__lower-area__right > div {
+   padding: 4px;
+}
+
+.form__upper-area > div {
+   display: inline-block;
+   padding-bottom: 10px;
+   width: 49%;
+   border-bottom: 1px solid black;
+}
+
+.form__upper-area__left {
+   border-right: 1px solid black;
+}
+
+.form__lower-area > div {
+   display: inline-block;
+   vertical-align: top;
+   padding-top: 10px;
+   height: 100%;
+}
+
+.form__lower-area > div:first-child {
+   width: 30%;
+}
+
+.form__lower-area > div:last-child {
+   width: 67%;
+}
+
+.form__lower-area__left > div:last-child > button {
+   margin: 5px;
+}
+
+.form__lower-area__right > div {
+   width: 100%;
+}
+
+/* .form__lower-area__right > div {
+   border: 1px solid black;
+   border-radius: 0.5rem;
+   margin-left: 2rem;
+   width: 100%;
+   height: 202px;
+   overflow-y: scroll;
+} */
+
+/* .form__lower-area__right > div > table {
+   width: 97%;
+   font-size: 10px;
+   margin: 2px auto;
+   border: 1px solid black;
+   height: 90%;
+}
+
+.form__lower-area__right > div > div {
+   font-size: 10px;
+   margin-left: 10px;
+}
+
+.form__lower-area__right > div > div > input {
+   height: 10px;
+}
+
+.form__lower-area__right > div > div > label {
+   margin-left: 5px;
+} */
+
+.form__third-area {
+   width: 20%;
+   height: 95%;
+   border: 1px solid black;
+   border-radius: 1rem;
+}
+
+.form__third-area > div {
+   padding: 8px;
+}
+
+.form__third-area input {
+   float: right;
+}

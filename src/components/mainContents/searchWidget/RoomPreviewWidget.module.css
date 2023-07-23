@@ -1,0 +1,45 @@
+.widget__wrapper {
+   border: 1px solid gray;
+   border-radius: 1rem;
+   margin: 2.2rem 0 1rem 1rem;
+   width: 13%;
+   height: fit-content;
+   float: left;
+   position: absolute;
+   padding: 0.5rem;
+}
+
+.widget__wrapper > div {
+   margin: 3% 0 auto;
+   background-color: rgb(240, 240, 240);
+}
+
+.shortcut {
+   height: 80px;
+   width: 96%;
+   text-align: center;
+   border: 1px solid gray;
+   border-radius: 1rem;
+
+   padding: 2%;
+}
+
+.shortcut > button {
+   width: 40%;
+   height: 36px;
+   font-size: 10px;
+   font-weight: 900;
+
+   vertical-align: top;
+   text-align: center;
+   margin: 1%;
+   background-color: beige;
+   border: 1px solid black;
+   border-radius: 0.5rem;
+}
+
+.filter__fit-or-group-selection {
+   border: 1px solid gray;
+   border-radius: 1rem;
+   padding: 4%;
+}

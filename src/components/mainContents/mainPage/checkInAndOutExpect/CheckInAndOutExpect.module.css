@@ -1,0 +1,20 @@
+.check-in-and-out__wrapper {
+   border: 2px solid black;
+   width: 30%;
+}
+
+.check-in-and-out__select {
+   border: 1px solid black;
+   margin: 1rem;
+}
+
+.check-in-and-out__select > div {
+   display: inline-block;
+   box-sizing: border-box;
+   width: 50%;
+   padding-left: 5px;
+}
+
+.check-in-and-out__select > div:first-child {
+   border-right: 1px solid black;
+}

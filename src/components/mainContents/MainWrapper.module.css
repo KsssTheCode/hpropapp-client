@@ -1,0 +1,22 @@
+.main__wrapper {
+   width: 100%;
+   height: 95%;
+
+   position: relative;
+}
+
+.main__content {
+   width: 80%;
+   height: 95%;
+   margin-top: 2rem;
+   margin-left: 16%;
+}
+
+.main__searchWidget > * {
+   padding: 1rem;
+}
+
+.main__no-widget-contents {
+   margin-left: 15%;
+   width: 85%;
+}

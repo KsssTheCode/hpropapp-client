@@ -1,0 +1,19 @@
+.deposit__wrapper {
+   padding: 2%;
+   height: 91%;
+}
+
+.deposit__wrapper > div {
+   vertical-align: top;
+   box-sizing: border-box;
+   border: 2px solid black;
+   border-radius: 1rem;
+   display: inline-block;
+   width: 48%;
+   height: 100%;
+   padding: 2%;
+}
+
+.deposit__right {
+   margin-left: 3%;
+}

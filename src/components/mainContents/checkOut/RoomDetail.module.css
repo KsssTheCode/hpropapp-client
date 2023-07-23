@@ -1,0 +1,71 @@
+.room-info__wrapper {
+   padding: 20px;
+}
+
+.detail-info {
+   padding: 10px;
+   border: 1px solid black;
+   border-radius: 1rem;
+}
+
+.control-button {
+   margin: 2% auto;
+   width: 100%;
+   padding: 7px;
+}
+
+.control-button > button {
+   border-radius: 0.5rem;
+   width: 30%;
+   margin: 0 1.5%;
+}
+
+.detail-info > div {
+   padding: 7px;
+}
+
+.detail-info label {
+   margin-right: 7px;
+   font-weight: 600;
+   font-size: 15px;
+}
+
+.detail-info input {
+   background-color: lightgray;
+}
+
+.room-info__wrapper > div:first-child {
+   height: 10%;
+   font-size: 25px;
+   font-weight: 700;
+}
+
+.room-info__wrapper > div:first-child {
+   height: 10%;
+}
+
+.basic-info > div {
+   display: inline-block;
+}
+
+.basic-info > div:last-child {
+   float: right;
+   margin-right: 10px;
+}
+
+.double-items {
+   width: 100%;
+}
+
+.double-items > div {
+   display: inline-block;
+   width: 50%;
+}
+
+.stay-term > div {
+   display: inline-block;
+}
+
+.stay-term > div:last-child {
+   float: right;
+}

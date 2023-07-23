@@ -1,0 +1,52 @@
+.first-page__wrapper {
+   border: 1px solid black;
+   width: 40%;
+   height: 40%;
+   border-radius: 1rem;
+   padding: 3%;
+   margin: 15% auto;
+   background-color: rgb(247, 247, 243);
+}
+
+.first-page__wrapper > div {
+   display: inline-block;
+   box-sizing: border-box;
+   width: 50%;
+   height: 100%;
+   vertical-align: top;
+}
+
+.login__wrapper {
+   width: 100%;
+   height: 100%;
+}
+
+.login-form {
+   width: 80%;
+   height: 60%;
+   margin: 6% auto;
+}
+
+.login-form > div > * {
+   display: inline-block;
+   margin-top: 18%;
+}
+
+.login-form label {
+   width: 30%;
+   margin-right: 4%;
+   text-align: center;
+}
+.login-form input {
+   width: 60%;
+}
+
+.login-btn {
+   width: 80%;
+   margin: 0 auto;
+}
+
+.login-btn > button {
+   width: 95%;
+   float: right;
+}

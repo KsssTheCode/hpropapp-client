@@ -1,0 +1,19 @@
+.ag-theme-alpine {
+   width: 100%;
+   height: 100%;
+}
+
+.ag-header-row {
+   height: 30px !important;
+}
+
+.ag-root-wrapper {
+   font-size: 11px; /* 폰트 크기 설정 */
+}
+
+.items-in-one-page-container {
+   display: flex;
+   justify-content: flex-end;
+   align-items: center;
+   padding: 10px;
+}

@@ -1,0 +1,44 @@
+.account__wrapper {
+   padding: 1%;
+   height: 93%;
+}
+
+.account__wrapper > div {
+   vertical-align: top;
+   box-sizing: border-box;
+   margin: 1%;
+   padding: 1%;
+}
+
+.upper-area {
+   width: 98%;
+   border: 1px solid black;
+   border-radius: 1rem;
+   height: 55%;
+}
+
+.lower-area__list,
+.lower-area__detail {
+   display: inline-block;
+   border: 1px solid black;
+   border-radius: 1rem;
+   height: 42%;
+}
+
+.lower-area > div {
+   vertical-align: top;
+   box-sizing: border-box;
+   height: 100%;
+   display: inline-block;
+
+   border: 1px solid black;
+   border-radius: 1rem;
+}
+
+.lower-area__list {
+   width: 68%;
+}
+
+.lower-area__detail {
+   width: 28%;
+}

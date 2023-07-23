@@ -1,0 +1,13 @@
+/* .App {
+   width: 100vw;
+   height: 100vh;
+} */
+
+.App {
+   width: var(--monitor-width);
+   height: var(--monitor-height);
+}
+
+.App > * {
+   box-sizing: border-box;
+}

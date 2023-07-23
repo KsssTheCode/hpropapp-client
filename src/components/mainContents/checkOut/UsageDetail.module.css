@@ -1,0 +1,43 @@
+.room-usage__wrapper {
+   padding: 1.5%;
+}
+
+.room-usage__wrapper > div {
+   margin: 0 auto;
+}
+
+.room-usage__list {
+   overflow-y: scroll;
+   width: 100%;
+   height: 85%;
+   border: 1px solid black;
+}
+
+.room-usage__history {
+   height: 15%;
+}
+
+.room-usage__history > div:last-child {
+   float: right;
+   margin-right: 3%;
+}
+
+.room-usage__history > div:first-child {
+   margin-right: 3%;
+}
+
+.room-usage__history label {
+   padding: 5px;
+}
+
+.room-usage__history input {
+   background-color: lightgray;
+}
+
+.room-usage__history > div {
+   display: inline-block;
+}
+
+.room-usage__list > table {
+   width: 100%;
+}

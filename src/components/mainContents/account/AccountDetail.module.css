@@ -1,0 +1,18 @@
+.detail__wrapper {
+   padding: 4%;
+}
+
+.detail__wrapper label {
+   margin-right: 5%;
+}
+
+.detail__info > div {
+   margin: 5%;
+}
+
+.detail__buttons {
+   margin: 0 auto;
+   width: 90%;
+   display: flex;
+   justify-content: space-between;
+}

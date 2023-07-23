@@ -1,0 +1,25 @@
+.assign-reservation__table * {
+   border: 1px solid black;
+   font-size: 12px;
+}
+
+.checkbox {
+   width: 8%;
+}
+
+.room-number {
+   width: 15%;
+}
+
+.name {
+   width: 20%;
+}
+
+.duration {
+   width: 46%;
+   font-size: 11px;
+}
+
+.room-status {
+   width: 15%;
+}
