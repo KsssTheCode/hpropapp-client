@@ -17,7 +17,7 @@ const SideBar = (props) => {
 
    const onMovePageHandler = (e) => {
       e.preventDefault();
-      dispatch(pageActions.openPage(e.target.getAttribute('key')));
+      dispatch(pageActions.openPage(e.target.getAttribute('value')));
       props.closeSideBar();
    };
 
@@ -42,7 +42,7 @@ const SideBar = (props) => {
       return (
          <li key={page}>
             {/* <input type="checkbox" value="main" /> */}
-            <label htmlFor={page} onClick={onMovePageHandler}>
+            <label htmlFor={page} onClick={onMovePageHandler} value={page}>
                {pageTitle}
             </label>
          </li>
