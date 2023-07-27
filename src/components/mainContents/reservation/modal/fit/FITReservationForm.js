@@ -40,9 +40,10 @@ const FITReservationForm = (props) => {
       (state) => state.reservation.groupModal[props.pageName]
    );
 
-   const isHistoryModalOpen = useSelector(
-      (state) => state.reservation.isHistoryModalOpen
+   const { isOpen: isHistoryModalOpen } = useSelector(
+      (state) => state.reservation.FITModalHistoryData
    );
+
    const isAssignModalOpen = useSelector(
       (state) => state.room.assignModal.isOpen
    );
@@ -415,12 +416,12 @@ const FITReservationForm = (props) => {
       )
          formData.reference = reference.current.value;
 
-      const callerAndCallerTelData = callerAndCallerTel.current.getFormData();
+      // const callerAndCallerTelData = callerAndCallerTel.current.getFormData();
 
-      if (callerAndCallerTelData.caller)
-         formData.caller = callerAndCallerTel.caller;
-      if (callerAndCallerTelData.callerTel)
-         formData.Tel = callerAndCallerTel.callerTel;
+      // if (callerAndCallerTelData.caller)
+      //    formData.caller = callerAndCallerTel.caller;
+      // if (callerAndCallerTelData.callerTel)
+      //    formData.Tel = callerAndCallerTel.callerTel;
 
       return formData;
    };
@@ -631,7 +632,7 @@ const FITReservationForm = (props) => {
                      <label htmlFor="nights">Nts</label>
                      <input
                         type="text"
-                        value={nights}
+                        value={nights.toString()}
                         defaultValue={mode !== 'create' ? data.nights : ''}
                         readOnly
                      />

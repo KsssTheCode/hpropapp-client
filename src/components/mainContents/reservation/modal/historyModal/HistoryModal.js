@@ -7,27 +7,83 @@ import classes from './HistoryModal.module.css';
 const HistoryModal = (props) => {
    const dispatch = useDispatch();
 
-   let modal = null;
-   if (props.fitOrGroup === 'fit') modal = 'FITModal';
-   if (props.fitOrGroup === 'group') modal = 'groupModal';
-   const { changeHistory } = useSelector(
-      (state) => state.reservation[modal][props.pageName].data
+   let historyState = null;
+   if (props.fitOrGroup === 'fit') {
+      historyState = 'FITModalHistoryData';
+   } else if (props.fitOrGroup === 'group') {
+      historyState = 'groupModalHistoryData';
+   }
+   const { data: historyData } = useSelector(
+      (state) => state.reservation[historyState]
    );
 
-   const historyData = changeHistory.map((jsonString) =>
-      JSON.parse(jsonString)
-   );
-   const historysList = historyData.map((history, i) => (
-      <tr>
-         <td>{i + 1}</td>
-         <td>{history.historyMessage}</td>
-         <td>{history.editor}</td>
-         <td>{history.updateTime}</td>
-      </tr>
-   ));
+   const exceptProperties = [
+      'rsvnId',
+      'groupRsvnId',
+      'createdAt',
+      'updatedAt',
+      'deletedAt',
+   ];
+   const historysList = historyData.map((data, i) => {
+      const { updatedProperties, updatedReservation, staffId, updatedTime } =
+         data;
+      let historyMessage = '';
+      Object.keys(updatedProperties).forEach((prop) => {
+         if (!exceptProperties.includes(prop)) {
+            if (!historyMessage) {
+               historyMessage = `${prop} : "${updatedProperties[prop]}" >> "${
+                  updatedReservation[prop] ? updatedReservation[prop] : '    '
+               }"`;
+            } else {
+               historyMessage += `/ ${prop} : "${
+                  updatedProperties[prop]
+               }" >> "${
+                  updatedReservation[prop] ? updatedReservation[prop] : '    '
+               }"`;
+            }
+         }
+      });
+      return (
+         <tr>
+            <td key="number">{i + 1}</td>
+            <td key="message">{historyMessage}</td>
+            <td key="staffId">{staffId}</td>
+            <td key="updatedTime">{updatedTime}</td>
+         </tr>
+      );
+   });
+
+   // const expectProperties = ['updatedAt', 'createdAt'];
+   // const changedProperties = [...updatedObject._changed].filter(
+   //    (prop) => !expectProperties.includes(prop)
+   // );
+
+   // let historyMessage = '';
+   // changedProperties.forEach((prop) => {
+   //    if (!historyMessage) {
+   //       historyMessage = `${prop} : ${originalObject[prop]} >> ${updatedObject[prop]}`;
+   //       console.log(historyMessage);
+   //    } else {
+   //       historyMessage += `/ ${prop} : ${originalObject[prop]} >> ${updatedObject[prop]}`;
+   //    }
+   // });
+
+   // const historyData = changeHistory.map((jsonString) =>
+   //    JSON.parse(jsonString)
+   // );
+   // const historysList = historyData.map((history, i) => (
+   //    <tr>
+   //       <td>{i + 1}</td>
+   //       <td>{history.historyMessage}</td>
+   //       <td>{history.editor}</td>
+   //       <td>{history.updateTime}</td>
+   //    </tr>
+   // ));
 
    const onCloseHistoryModalHandler = () => {
-      dispatch(reservationActions.closeHistoryModal());
+      dispatch(
+         reservationActions.closeHistoryModal({ fitOrGroup: props.fitOrGroup })
+      );
    };
    return (
       <Modal open={props.isOpen}>
@@ -39,16 +95,28 @@ const HistoryModal = (props) => {
                <table>
                   <thead>
                      <tr>
-                        <th className={classes['contents-table__number']}>
+                        <th
+                           className={classes['contents-table__number']}
+                           key="number"
+                        >
                            No.
                         </th>
-                        <th className={classes['contents-table__contents']}>
+                        <th
+                           className={classes['contents-table__contents']}
+                           key="message"
+                        >
                            History
                         </th>
-                        <th className={classes['contents-table__editor']}>
+                        <th
+                           className={classes['contents-table__editor']}
+                           key="staffId"
+                        >
                            Editor
                         </th>
-                        <th className={classes['contents-table__time']}>
+                        <th
+                           className={classes['contents-table__time']}
+                           key="updatedTime"
+                        >
                            Time
                         </th>
                      </tr>

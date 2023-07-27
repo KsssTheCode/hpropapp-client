@@ -289,14 +289,14 @@ const FITReservationForm = (props) => {
       };
    };
 
-   const onSaveReservationHandler = async () => {
+   const onSaveReservationHandler = () => {
       const formData = getFormData();
       const { arrivalDate, departureDate, roomTypeCode, rateTypeCode } =
          formData;
       if (arrivalDate || departureDate || roomTypeCode || rateTypeCode) {
          formData.roomRatesData = roomRatesData;
       }
-      await editReservation(props.pageName, data.rsvnId, formData, dispatch);
+      editReservation(props.pageName, data.rsvnId, formData, dispatch);
    };
 
    const onCreateReservationHandler = async () => {

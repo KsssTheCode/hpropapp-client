@@ -1,13 +1,10 @@
 import moment from 'moment';
-import {
-   forwardRef,
-   useEffect,
-   useImperativeHandle,
-   useRef,
-   useState,
-} from 'react';
+import { forwardRef, useImperativeHandle, useRef } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { editReservation } from '../../../../../store/reservation-actions';
+import {
+   editReservation,
+   releaseAssignedRooms,
+} from '../../../../../store/reservation-actions';
 import { reservationActions } from '../../../../../store/reservation-slice';
 
 import classes from '../fit/FITReservationForm.module.css';
@@ -16,12 +13,22 @@ import classes from '../fit/FITReservationForm.module.css';
 const HistoryInformation = forwardRef((props, ref) => {
    const dispatch = useDispatch();
 
-   const { data: FITData, mode: FITMode } = useSelector(
-      (state) => state.reservation.FITModal[props.pageName]
+   let historyState = null;
+   let modalState = null;
+   if (props.fitOrGroup === 'fit') {
+      historyState = 'FITModalHistoryData';
+      modalState = 'FITModal';
+   } else if (props.fitOrGroup === 'group') {
+      historyState = 'groupModalHistoryData';
+      modalState = 'groupModal';
+   }
+
+   const { data: rsvnData, mode } = useSelector(
+      (state) => state.reservation[modalState][props.pageName]
    );
 
-   const { data: groupData, mode: groupMode } = useSelector(
-      (state) => state.reservation.groupModal[props.pageName]
+   const { data: historyData } = useSelector(
+      (state) => state.reservation[historyState]
    );
 
    const caller = useRef();
@@ -38,13 +45,13 @@ const HistoryInformation = forwardRef((props, ref) => {
          if (
             caller.current &&
             caller.current.value &&
-            caller.current.value !== data?.caller
+            caller.current.value !== rsvnData?.caller
          )
             FormData.caller = caller.current.value;
          if (
             callerTel.current &&
             callerTel.current.value &&
-            callerTel.current.value !== data?.callerTel
+            callerTel.current.value !== rsvnData?.callerTel
          )
             FormData.callerTel = callerTel.current.value;
 
@@ -52,40 +59,19 @@ const HistoryInformation = forwardRef((props, ref) => {
       },
    }));
 
-   const [data, setData] = useState();
-   const [mode, setMode] = useState();
-   const [historyInformations, setHistoryInformations] = useState();
-
-   useEffect(() => {
-      const { pageName, fitOrGroup } = props;
-      if (fitOrGroup === 'fit') {
-         setData(FITData);
-         setHistoryInformations(
-            FITData?.changeHistory.map((history) => JSON.parse(history))
-         );
-         if (pageName === 'reservation') {
-            setMode(FITMode);
-         }
-      } else if (fitOrGroup === 'group') {
-         setData(groupData);
-         setHistoryInformations(
-            groupData?.changeHistory.map((history) => JSON.parse(history))
-         );
-         if (pageName === 'reservation') {
-            setMode(groupMode);
-         }
-      }
-   }, [FITData, groupData, FITMode, groupMode, props]);
-
    const onClickButtonsHandler = (e) => {
       e.preventDefault();
-      const id = data.rsvnId || data.groupRsvnId;
+      const id = rsvnData.rsvnId || rsvnData.groupRsvnId;
       switch (e.target.textContent) {
          case 'History':
-            if (data.changeHistory.length < 1) {
+            if (historyData.length < 1) {
                alert('변경된 이력이 존재하지 않습니다.');
             } else {
-               dispatch(reservationActions.openHistoryModal());
+               dispatch(
+                  reservationActions.openHistoryModal({
+                     fitOrGroup: props.fitOrGroup,
+                  })
+               );
             }
             break;
          case 'Recover':
@@ -120,7 +106,7 @@ const HistoryInformation = forwardRef((props, ref) => {
                editReservation({
                   pageName: props.pageName,
                   id,
-                  data: { statusCode: 'RR' },
+                  data: { statusCode: 'RR', roomNumber: null },
                })
             );
             break;
@@ -137,17 +123,21 @@ const HistoryInformation = forwardRef((props, ref) => {
       }
    };
 
-   let buttons = [];
-   if (data) {
-      switch (data.statusCode) {
+   let buttons = null;
+   if (mode !== 'create') {
+      switch (rsvnData.statusCode) {
          case 'CX':
             buttons = ['History', 'Recover'];
             break;
          case 'RR':
-            buttons = ['History', 'C/I', 'CXL'];
+            rsvnData.roomNumber
+               ? (buttons = ['History', 'C/I', 'CXL'])
+               : (buttons = ['History', 'CXL']);
             break;
          case 'CI':
-            buttons = ['History', 'CXL C/I'];
+            rsvnData.roomNumber
+               ? (buttons = ['History', 'CXL C/I'])
+               : alert('객실 배정 후 입실이 가능합니다.');
             break;
          case 'HC':
          case 'CO':
@@ -156,12 +146,49 @@ const HistoryInformation = forwardRef((props, ref) => {
          default:
       }
    }
-   const buttonsTag = buttons.map((btn) => (
-      <button key={btn} onClick={onClickButtonsHandler}>
-         {btn}
-      </button>
-   ));
 
+   let buttonsTag = null;
+   if (buttons?.length > 0) {
+      buttonsTag = buttons.map((btn) => (
+         <button key={btn} onClick={onClickButtonsHandler}>
+            {btn}
+         </button>
+      ));
+   }
+
+   let convertedData = {};
+   if (mode !== 'create') {
+      convertedData = {
+         creator: rsvnData.createStaffId,
+         createTime: moment(rsvnData.createdAt).format('YYYY/MM/DD HH:mm:ss'),
+         caller: rsvnData.caller ? rsvnData.caller : null,
+         callerTel: rsvnData.callerTel ? rsvnData.callerTel : null,
+      };
+      if (historyData?.length > 0) {
+         const reducedData = historyData.reduce((obj, data, i) => {
+            const { updatedReservation } = data;
+            if (updatedReservation.statusCode === 'CI') {
+               obj.checkInStaff = data.staffId;
+               obj.checkInTime = data.updatedTime;
+            }
+
+            if (data.updatedReservation.statusCode === 'CO') {
+               obj.checkOutStaff = data.staffId;
+               obj.checkOutTime = data.updatedTime;
+            }
+
+            if (i === historyData.length - 1) {
+               obj.updateStaff = data.staffId;
+               obj.updateTime = data.updatedTime;
+            }
+
+            return obj;
+         }, {});
+
+         Object.assign(convertedData, reducedData);
+      }
+   }
+   console.log(rsvnData.statusCode);
    return (
       <div className={classes['form__create-info']}>
          <div>
@@ -171,35 +198,33 @@ const HistoryInformation = forwardRef((props, ref) => {
                readOnly
                className={classes['read-only-item']}
                onFocus={(e) => e.target.blur()}
-               value={data && data.createStaffId}
+               value={convertedData?.creator}
             />
          </div>
          <div>
-            <label htmlFor="createdTime">Created</label>
+            <label htmlFor="createTime">Create Time</label>
             <input
                type="text"
                readOnly
                className={classes['read-only-item']}
                onFocus={(e) => e.target.blur()}
-               defaultValue={
-                  data && moment(data.createdAt).format('YYYY/MM/DD HH:mm:ss')
-               }
+               value={convertedData?.createTime}
             />
          </div>
          <div>
             <label htmlFor="caller">Caller</label>
             <input
-               defaultValue={data && data.caller}
                ref={caller}
                type="text"
+               defaultValue={convertedData?.caller}
             />
          </div>
          <div>
             <label htmlFor="callerTel">Caller Tel</label>
             <input
-               defaultValue={data && data.callerTel}
                ref={callerTel}
                type="text"
+               defaultValue={convertedData?.callerTel}
             />
          </div>
          <div>
@@ -209,6 +234,11 @@ const HistoryInformation = forwardRef((props, ref) => {
                readOnly
                className={classes['read-only-item']}
                onFocus={(e) => e.target.blur()}
+               value={
+                  rsvnData.statusCode !== 'RR' || rsvnData.statusCode !== 'CX'
+                     ? ''
+                     : convertedData?.checkInStaff
+               }
             />
          </div>
          <div>
@@ -218,6 +248,11 @@ const HistoryInformation = forwardRef((props, ref) => {
                readOnly
                className={classes['read-only-item']}
                onFocus={(e) => e.target.blur()}
+               value={
+                  rsvnData.statusCode !== 'RR' || rsvnData.statusCode !== 'CX'
+                     ? ''
+                     : convertedData?.checkInTime
+               }
             />
          </div>
          <div>
@@ -227,6 +262,7 @@ const HistoryInformation = forwardRef((props, ref) => {
                readOnly
                className={classes['read-only-item']}
                onFocus={(e) => e.target.blur()}
+               value={convertedData?.checkOutStaff}
             />
          </div>
          <div>
@@ -238,6 +274,7 @@ const HistoryInformation = forwardRef((props, ref) => {
                readOnly
                className={classes['read-only-item']}
                onFocus={(e) => e.target.blur()}
+               value={convertedData?.checkOutTime}
             />
          </div>
          <div>
@@ -247,12 +284,7 @@ const HistoryInformation = forwardRef((props, ref) => {
                readOnly
                className={classes['read-only-item']}
                onFocus={(e) => e.target.blur()}
-               defaultValue={
-                  data && historyInformations.length > 0
-                     ? historyInformations[historyInformations.length - 1]
-                          .editor
-                     : ''
-               }
+               value={convertedData?.updateStaff}
             />
          </div>
          <div>
@@ -262,12 +294,7 @@ const HistoryInformation = forwardRef((props, ref) => {
                readOnly
                className={classes['read-only-item']}
                onFocus={(e) => e.target.blur()}
-               defaultValue={
-                  data && historyInformations.length > 0
-                     ? historyInformations[historyInformations.length - 1]
-                          .updateTime
-                     : ''
-               }
+               value={convertedData?.updateTime}
             />
          </div>
          {mode !== 'create' && (

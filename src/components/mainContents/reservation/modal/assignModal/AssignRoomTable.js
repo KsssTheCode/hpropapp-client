@@ -29,7 +29,7 @@ const AssignRoomTable = forwardRef((props, ref) => {
             endDate,
          })
       );
-   }, [dispatch, searchOptions, roomsData]);
+   }, [dispatch, searchOptions]);
 
    const checkboxChangeHandler = (e) => {
       if (e.target.checked) {

@@ -2,7 +2,7 @@ import { reservationActions } from './reservation-slice';
 
 export const openDetailModal = ({ id, pageName }) => {
    return async (dispatch) => {
-      const getRequest = async () => {
+      const getReservationData = async () => {
          const params = new URLSearchParams({ id });
          if (id.charAt(0) === 'R') {
             const response = await fetch(
@@ -21,7 +21,7 @@ export const openDetailModal = ({ id, pageName }) => {
       };
 
       try {
-         const responseData = await getRequest();
+         const responseData = await getReservationData();
          if (responseData.arrivalTime) {
             const t = responseData.arrivalTime;
             responseData.arrivalTime = t.slice(0, 2) + ':' + t.slice(2);
@@ -31,7 +31,12 @@ export const openDetailModal = ({ id, pageName }) => {
             responseData.departureTime = t.slice(0, 2) + ':' + t.slice(2);
          }
          if (id[0] === 'R') {
-            const { DailyRates, RoomRates, ...reservationData } = responseData;
+            const {
+               DailyRates,
+               RoomRates,
+               ReservationChangeHistories,
+               ...reservationData
+            } = responseData;
 
             const dailyRatesData = DailyRates.map((rate) => {
                const room = RoomRates.find((room) => +room.date === +rate.date);
@@ -53,9 +58,19 @@ export const openDetailModal = ({ id, pageName }) => {
                   data: dailyRatesData,
                })
             );
+            dispatch(
+               reservationActions.replaceHistoryModalData({
+                  fitOrGroup: 'fit',
+                  data: ReservationChangeHistories,
+               })
+            );
          }
          if (id[0] === 'G') {
-            const { Reservations, ...groupReservationData } = responseData;
+            const {
+               Reservations,
+               ReservationChangeHistories,
+               ...groupReservationData
+            } = responseData;
             if (Reservations) {
                dispatch(
                   reservationActions.replaceGroupDetailReservationsState(
@@ -69,6 +84,12 @@ export const openDetailModal = ({ id, pageName }) => {
             };
             if (pageName === 'reservation') sendData.mode = 'detail';
             dispatch(reservationActions.openGroupModal(sendData));
+            dispatch(
+               reservationActions.replaceHistoryModalData({
+                  fitOrGroup: 'group',
+                  ReservationChangeHistories,
+               })
+            );
          }
       } catch (err) {
          console.log(err);
@@ -258,7 +279,8 @@ export const editReservation = ({ pageName, id, data }) => {
                   credentials: 'include',
                }
             );
-            return response;
+            const responseData = await response.json();
+            return responseData;
          }
          if (id.charAt(0) === 'G') {
             fitOrGroup = 'group';
@@ -271,7 +293,8 @@ export const editReservation = ({ pageName, id, data }) => {
                   credentials: 'include',
                }
             );
-            return response;
+            const responseData = await response.json();
+            return responseData;
          }
       };
       try {

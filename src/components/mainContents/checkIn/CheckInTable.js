@@ -92,7 +92,7 @@ const CheckInTable = (props) => {
          width: '20',
          cellRenderer: (params) => {
             const rowData = params.node.data;
-            if (rowData.statusCode === 'RR') {
+            if (rowData.statusCode === 'RR' && rowData.roomNumber) {
                return (
                   <button
                      className={classes['check-in-button']}

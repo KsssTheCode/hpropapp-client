@@ -22,7 +22,6 @@ export const getStaffsData = (searchOptions) => {
 };
 
 export const logIn = ({ staffId, password }) => {
-   console.log(staffId);
    return async (dispatch) => {
       const sendRequest = async () => {
          const response = await fetch(
@@ -34,8 +33,6 @@ export const logIn = ({ staffId, password }) => {
                credentials: 'include',
             }
          );
-
-         console.log(response.headers);
 
          return response;
       };

@@ -3,16 +3,6 @@ import { createSlice } from '@reduxjs/toolkit';
 const reservationSlice = createSlice({
    name: 'reservation',
    initialState: {
-      modal: {
-         reservation: {
-            isOpen: false,
-            mode: null,
-            fitOrGroup: null,
-            data: null,
-         },
-         checkIn: { isOpen: false, firOrGroup: null, data: null },
-         checkOut: { isOpen: false, fitOrGroup: null, data: null },
-      },
       FITModal: {
          reservation: { isOpen: false, mode: null, data: null },
          checkIn: { isOpen: false, data: null },
@@ -51,7 +41,8 @@ const reservationSlice = createSlice({
          checkOut: { isOpen: false, data: null },
       },
       reservationStatus: [],
-      isHistoryModalOpen: false,
+      FITModalHistoryData: { isOpen: false, data: [] },
+      groupModalHistoryData: { isOpen: false, data: [] },
       checkOutDetail: {},
    },
    reducers: {
@@ -68,6 +59,7 @@ const reservationSlice = createSlice({
          const initialData = { isOpen: false, data: null };
          if (pageName === 'reservation') initialData.mode = null;
          state.FITModal[pageName] = initialData;
+         state.FITModalHistoryData = { ...state.FITModalHistoryData, data: [] };
       },
       closeGroupModal(state, action) {
          const { pageName } = action.payload;
@@ -79,16 +71,28 @@ const reservationSlice = createSlice({
          if (pageName === 'reservation') initialData.mode = null;
          state.groupModal[pageName] = initialData;
          state.groupDetailReservations = [];
+         state.groupModalHistoryData = {
+            ...state.groupModalHistoryData,
+            data: [],
+         };
       },
       replaceModalData(state, action) {
          const { pageName, data, fitOrGroup } = action.payload;
+         console.log(pageName, data, fitOrGroup);
          let modal = null;
          if (fitOrGroup === 'fit') modal = 'FITModal';
          if (fitOrGroup === 'group') modal = 'groupModal';
-         state[modal][pageName].data = {
-            ...state[modal][pageName].data,
-            ...data,
+         state[modal][pageName] = {
+            ...state[modal][pageName],
+            data,
          };
+      },
+      replaceHistoryModalData(state, action) {
+         const { data, fitOrGroup } = action.payload;
+         let historyModal = null;
+         if (fitOrGroup === 'fit') historyModal = 'FITModalHistoryData';
+         if (fitOrGroup === 'group') historyModal = 'groupModalHistoryData';
+         state[historyModal] = { ...state[historyModal], data };
       },
       reflectCreationToReservationsState(state, action) {
          const { fitOrGroup, pageName, data } = action.payload;
@@ -347,11 +351,25 @@ const reservationSlice = createSlice({
       replaceReservationStatus(state, action) {
          state.reservationStatus = action.payload;
       },
-      openHistoryModal(state) {
-         state.isHistoryModalOpen = true;
+      openHistoryModal(state, action) {
+         const { fitOrGroup } = action.payload;
+         let historyState = null;
+         if (fitOrGroup === 'fit') {
+            historyState = 'FITModalHistoryData';
+         } else if (fitOrGroup === 'group') {
+            historyState = 'groupModalHistoryData';
+         }
+         state[historyState] = { ...state[historyState], isOpen: true };
       },
-      closeHistoryModal(state) {
-         state.isHistoryModalOpen = false;
+      closeHistoryModal(state, action) {
+         const { fitOrGroup } = action.payload;
+         let historyState = null;
+         if (fitOrGroup === 'fit') {
+            historyState = 'FITModalHistoryData';
+         } else if (fitOrGroup === 'group') {
+            historyState = 'groupModalHistoryData';
+         }
+         state[historyState] = { ...state[historyState], isOpen: false };
       },
       replaceCheckOutDetail(state, action) {
          state.checkOutDetail = action.payload;
