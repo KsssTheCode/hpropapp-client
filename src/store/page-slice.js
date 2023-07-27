@@ -3,6 +3,8 @@ import { createSlice } from '@reduxjs/toolkit';
 const pageSlice = createSlice({
    name: 'page',
    initialState: {
+      entirePages: ['main', 'reservation', 'checkIn', 'checkOut'],
+      // entirePages: ['main', 'reservation', 'checkIn', 'checkOut', 'Room Preview', 'Deposit', 'Account', 'humanResource'],
       openedPages: [],
       currentPage: 'main',
    },
