@@ -9,7 +9,7 @@ import { reservationActions } from '../../../store/reservation-slice';
 import { getRateTypeCodesData } from '../../../store/rate-type-actions';
 import { getRoomTypeCodesData } from '../../../store/room-type-actions';
 import { getStaffsData } from '../../../store/staff-actions';
-import { getMembershipsData } from '../../../store/membership-actions';
+// import { getMembershipsData } from '../../../store/membership-actions';
 
 import FitOrGroupSwtich from '../../UI/FitOrGroupSwitch';
 import MultiDropdown from '../../UI/MultiDropdown';
@@ -19,18 +19,10 @@ import classes from './CheckInWidget.module.css';
 const roomTypeOptions = { attributes: ['roomTypeCode', 'roomTypeName'] };
 const rateTypeOptions = { attributes: ['rateTypeCode'] };
 const staffOptions = { attributes: ['name', 'staffId'] };
-const membershipOptions = { attributes: ['membershipName'] };
+// const membershipOptions = { attributes: ['membershipName'] };
 
 const CheckInWidget = () => {
    const dispatch = useDispatch();
-
-   const [selectedRateTypeCodes, setSelectedRateTypeCodes] = useState([]);
-   const [selectedRoomTypeCodes, setSelectedRoomTypeCodes] = useState([]);
-   const [selectedStatuses, setSelectedStatuses] = useState([]);
-   // const [selectedMemberships, setSelectedMemberships] = useState([]);
-   const [selectedCreateStaffs, setSelectedCreateStaffs] = useState([]);
-   const [selectedCheckInStaffs, setSelectedCheckInStaffs] = useState([]);
-   const [selectedCheckOutStaffs, setSelectedCheckOutStaffs] = useState([]);
 
    const keywordRef = useRef();
    const createStartDateRef = useRef();
@@ -39,6 +31,14 @@ const CheckInWidget = () => {
    const arrivalEndDateRef = useRef();
    const departureStartDateRef = useRef();
    const departureEndDateRef = useRef();
+
+   const [selectedRateTypeCodes, setSelectedRateTypeCodes] = useState([]);
+   const [selectedRoomTypeCodes, setSelectedRoomTypeCodes] = useState([]);
+   const [selectedStatuses, setSelectedStatuses] = useState([]);
+   // const [selectedMemberships, setSelectedMemberships] = useState([]);
+   const [selectedCreateStaffs, setSelectedCreateStaffs] = useState([]);
+   const [selectedCheckInStaffs, setSelectedCheckInStaffs] = useState([]);
+   const [selectedCheckOutStaffs, setSelectedCheckOutStaffs] = useState([]);
 
    const rateTypeCodes = useSelector((state) => state.rateType.rateTypeCodes);
    const roomTypeCodes = useSelector((state) => state.roomType.roomTypeCodes);

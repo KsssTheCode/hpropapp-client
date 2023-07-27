@@ -167,6 +167,8 @@ const ReservationWidget = () => {
             (d) => d.value
          );
 
+      console.log(searchOptions);
+
       dispatch(getReservationsDataByOptions(searchOptions, 'reservation'));
    };
 
@@ -223,10 +225,12 @@ const ReservationWidget = () => {
                   <MultiDropdown
                      data={rateTypeCodes}
                      optionName="rateTypeCodes"
+                     onSelectChange={onSelectChangeHandler}
                   />
                   <MultiDropdown
                      data={roomTypeCodes}
                      optionName="roomTypeCodes"
+                     onSelectChange={onSelectChangeHandler}
                   />
                   <MultiDropdown
                      data={statuses}

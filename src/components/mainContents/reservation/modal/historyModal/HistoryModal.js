@@ -53,33 +53,6 @@ const HistoryModal = (props) => {
       );
    });
 
-   // const expectProperties = ['updatedAt', 'createdAt'];
-   // const changedProperties = [...updatedObject._changed].filter(
-   //    (prop) => !expectProperties.includes(prop)
-   // );
-
-   // let historyMessage = '';
-   // changedProperties.forEach((prop) => {
-   //    if (!historyMessage) {
-   //       historyMessage = `${prop} : ${originalObject[prop]} >> ${updatedObject[prop]}`;
-   //       console.log(historyMessage);
-   //    } else {
-   //       historyMessage += `/ ${prop} : ${originalObject[prop]} >> ${updatedObject[prop]}`;
-   //    }
-   // });
-
-   // const historyData = changeHistory.map((jsonString) =>
-   //    JSON.parse(jsonString)
-   // );
-   // const historysList = historyData.map((history, i) => (
-   //    <tr>
-   //       <td>{i + 1}</td>
-   //       <td>{history.historyMessage}</td>
-   //       <td>{history.editor}</td>
-   //       <td>{history.updateTime}</td>
-   //    </tr>
-   // ));
-
    const onCloseHistoryModalHandler = () => {
       dispatch(
          reservationActions.closeHistoryModal({ fitOrGroup: props.fitOrGroup })
