@@ -1,11 +1,8 @@
-import { useState } from 'react';
 import Select from 'react-select';
 
 import classes from './MultiDropdown.modules.css';
 
 const Dropdown = (props) => {
-   const [selectedValues, setSelectedValues] = useState();
-
    let placeholderValue = null;
    const datas = props.data.map((d) => {
       let dataSet = {};
@@ -83,7 +80,6 @@ const Dropdown = (props) => {
          className={classes['basic-multi-select']}
          classNamePrefix="select"
          styles={customStyles}
-         value={selectedValues}
          onChange={onChangeSelectionHandler}
       />
    );
