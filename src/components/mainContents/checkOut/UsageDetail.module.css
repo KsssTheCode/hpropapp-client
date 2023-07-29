@@ -27,6 +27,7 @@
 }
 
 .room-usage__history label {
+   font-size: 13px;
    padding: 5px;
 }
 
@@ -40,4 +41,5 @@
 
 .room-usage__list > table {
    width: 100%;
+   font-size: 13px;
 }

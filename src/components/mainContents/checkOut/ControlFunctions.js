@@ -9,7 +9,9 @@ const ControlFunctions = () => {
                   <button>Amount Transfer</button>
                </div>
                <div className={classes['button__wrapper']}>
-                  <button style={{ fontSize: '20px' }}>Folio</button>
+                  <button style={{ fontSize: '20px', fontWeight: '500' }}>
+                     Folio
+                  </button>
                </div>
             </div>
             <div className={classes['control-functions__left__lower']}>
@@ -24,15 +26,21 @@ const ControlFunctions = () => {
          <div className={classes['control-functions__right']}>
             <div className={classes['control-functions__right__upper']}>
                <div className={classes['button__wrapper']}>
-                  <button style={{ fontSize: '20px' }}>Card</button>
+                  <button style={{ fontSize: '20px', fontWeight: '500' }}>
+                     Card
+                  </button>
                </div>
                <div className={classes['button__wrapper']}>
-                  <button style={{ fontSize: '20px' }}>Cash</button>
+                  <button style={{ fontSize: '20px', fontWeight: '500' }}>
+                     Cash
+                  </button>
                </div>
             </div>
             <div className={classes['control-functions__right__lower']}>
                <div className={classes['button__wrapper']}>
-                  <button style={{ fontSize: '17px' }}>Deposit</button>
+                  <button style={{ fontSize: '17px', fontWeight: '700' }}>
+                     DP
+                  </button>
                </div>
                <div className={classes['button__wrapper']}>
                   <button>City Ledger</button>

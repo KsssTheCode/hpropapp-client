@@ -182,7 +182,7 @@ const RoomDetail = (props) => {
                <label>Reference</label>
                <input
                   type="reference"
-                  style={{ width: '73%' }}
+                  style={{ width: '60%' }}
                   value={data.reference}
                   readOnly
                />

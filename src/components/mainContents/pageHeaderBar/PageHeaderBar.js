@@ -17,7 +17,7 @@ const Widget = () => {
    };
 
    const onCloseAllTabHandler = () => {
-      dispatch(pageActions.closeAllPages);
+      dispatch(pageActions.closeAllPages());
    };
 
    const widgetsList = openedPages.map((pageName) => (

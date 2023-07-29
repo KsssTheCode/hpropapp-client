@@ -28,6 +28,7 @@ const pageSlice = createSlice({
                  state.openedPages[state.openedPages.length - 1]);
       },
       closeAllPages(state) {
+         console.log('b');
          state.openedPages = [];
          state.currentPage = 'main';
       },
