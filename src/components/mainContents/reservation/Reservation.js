@@ -26,7 +26,10 @@ const Reservation = () => {
 
    useEffect(() => {
       dispatch(
-         getReservationsDataByOptions(initialSearchOptions, 'reservation')
+         getReservationsDataByOptions({
+            searchOptions: initialSearchOptions,
+            pageName: 'reservation',
+         })
       );
    }, [dispatch]);
 

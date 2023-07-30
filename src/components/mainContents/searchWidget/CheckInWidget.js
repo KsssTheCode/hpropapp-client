@@ -133,7 +133,9 @@ const CheckInWidget = () => {
             (d) => d.value
          );
 
-      dispatch(getReservationsDataByOptions(searchOptions, 'checkIn'));
+      dispatch(
+         getReservationsDataByOptions({ searchOptions, pageName: 'checkIn' })
+      );
    };
 
    const todayExpectedArrivalHandler = (e) => {
@@ -142,7 +144,9 @@ const CheckInWidget = () => {
          arrivalStartDate: today,
          arrivalEndDate: today,
       };
-      dispatch(getReservationsDataByOptions(searchOptions));
+      dispatch(
+         getReservationsDataByOptions({ searchOptions, pageName: 'checkIn' })
+      );
    };
 
    const todayExpectedCheckOutHandler = (e) => {
@@ -152,7 +156,9 @@ const CheckInWidget = () => {
          departureEndDate: today,
          status: ['CI'],
       };
-      dispatch(getReservationsDataByOptions(searchOptions, 'checkIn'));
+      dispatch(
+         getReservationsDataByOptions({ searchOptions, pageName: 'checkIn' })
+      );
    };
 
    const todayExpectedCheckInHandler = (e) => {
@@ -162,7 +168,9 @@ const CheckInWidget = () => {
          arrivalEndDate: today,
          status: ['RR'],
       };
-      dispatch(getReservationsDataByOptions(searchOptions, 'checkIn'));
+      dispatch(
+         getReservationsDataByOptions({ searchOptions, pageName: 'checkIn' })
+      );
    };
 
    const stayingHandler = (e) => {
@@ -170,7 +178,9 @@ const CheckInWidget = () => {
       const searchOptions = {
          status: ['CI'],
       };
-      dispatch(getReservationsDataByOptions(searchOptions, 'checkIn'));
+      dispatch(
+         getReservationsDataByOptions({ searchOptions, pageName: 'checkIn' })
+      );
    };
 
    const onClearFormHandler = (e) => {

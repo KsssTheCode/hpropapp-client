@@ -632,8 +632,13 @@ const FITReservationForm = (props) => {
                      <label htmlFor="nights">Nts</label>
                      <input
                         type="text"
-                        value={nights.toString()}
-                        defaultValue={mode !== 'create' ? data.nights : ''}
+                        defaultValue={
+                           nights
+                              ? nights.toString()
+                              : mode !== 'create'
+                              ? data.nights
+                              : ''
+                        }
                         readOnly
                      />
                   </div>

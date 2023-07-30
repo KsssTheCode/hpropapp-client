@@ -29,7 +29,10 @@ const CheckOut = () => {
       if (firstRendering) {
          firstRendering = false;
          dispatch(
-            getReservationsDataByOptions(initialSearchOptions, 'checkOut')
+            getReservationsDataByOptions({
+               searchOptions: initialSearchOptions,
+               pageName: 'checkOut',
+            })
          );
       } else {
          return;

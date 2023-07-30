@@ -22,7 +22,7 @@ const Header = (props) => {
             alt="Menu bar icon"
             onClick={props.openSideBar}
          />
-         <SearchBar />
+         {/* <SearchBar /> */}
          <img
             className={classes.logOutIcon}
             src={logOutIcon}

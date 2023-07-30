@@ -13,33 +13,43 @@ const CheckOutWidget = () => {
    const departureStartDateRef = useRef();
    const departureEndDateRef = useRef();
 
-   const inHouseHandler = () => {
-      const options = {
-         statusCode: ['CI'],
-      };
-      dispatch(getReservationsDataByOptions(options, 'checkOut'));
+   const onClickShortCutHandler = (e) => {
+      e.preventDefault();
+      let searchOptions = {};
+      switch (e.target.innerText) {
+         case 'Today E/D':
+            searchOptions = {
+               departureStartDate: moment().format('YYYYMMDD'),
+               departureEndDate: moment().format('YYYYMMDD'),
+               statusCodes: ['CI'],
+            };
+            break;
+         case 'In House':
+            searchOptions = { statusCodes: ['CI'] };
+            break;
+         case 'Today C/O':
+            searchOptions = {
+               departureStartDate: moment().format('YYYYMMDD'),
+               departureEndDate: moment().format('YYYYMMDD'),
+               statusCodes: ['CO'],
+            };
+            break;
+         case 'HCO':
+            searchOptions = { statusCodes: ['HC'] };
+            break;
+         default:
+      }
+
+      console.log(searchOptions);
+      dispatch(
+         getReservationsDataByOptions({ searchOptions, pageName: 'checkOut' })
+      );
    };
-   const todyExpectedDepartureHandler = () => {
-      const options = {
-         departureStartDate: moment().format('YYYYMMDD'),
-         departureEndDate: moment().format('YYYYMMDD'),
-         statusCode: ['CI'],
-      };
-      dispatch(getReservationsDataByOptions(options, 'checkOut'));
-   };
-   const checkedOutHandler = () => {
-      const options = {
-         departureStartDate: moment().format('YYYYMMDD'),
-         departureEndDate: moment().format('YYYYMMDD'),
-         statusCode: ['CO'],
-      };
-      dispatch(getReservationsDataByOptions(options, 'checkOut'));
-   };
-   const holdingCheckOutHandler = () => {
-      const options = {
-         statusCode: ['HC'],
-      };
-      dispatch(getReservationsDataByOptions(options, 'checkOut'));
+
+   const onClearFilterHandler = (e) => {
+      e.preventDefault();
+      departureStartDateRef.current.value = '';
+      departureEndDateRef.current.value = '';
    };
 
    const onSubmitSearchFormHandler = (e) => {
@@ -53,20 +63,23 @@ const CheckOutWidget = () => {
          searchOptions.departureEndDate =
             departureEndDateRef.current.value.replace(/-/g, '');
 
-      dispatch(getReservationsDataByOptions(searchOptions, 'checkOut'));
+      dispatch(
+         getReservationsDataByOptions({ searchOptions, pageName: 'checkOut' })
+      );
    };
    return (
       <form onSubmit={onSubmitSearchFormHandler}>
          <div className={classes['widget__wrapper']}>
             <div className={classes['shortcut']}>
-               <button onClick={todyExpectedDepartureHandler}>Today E/D</button>
-               <button onClick={inHouseHandler}>In House</button>
-               <button onClick={checkedOutHandler}>Today C/O</button>
-               <button onClick={holdingCheckOutHandler}>HCO</button>
+               <button onClick={onClickShortCutHandler}>Today E/D</button>
+               <button onClick={onClickShortCutHandler}>In House</button>
+               <button onClick={onClickShortCutHandler}>Today C/O</button>
+               <button onClick={onClickShortCutHandler}>HCO</button>
             </div>
             <div className={classes['filter']}>
                <div className={classes['filter__button']}>
                   <button type="submit">SEARCH</button>
+                  <button onClick={onClearFilterHandler}>CLEAR</button>
                </div>
                <div>
                   <div>

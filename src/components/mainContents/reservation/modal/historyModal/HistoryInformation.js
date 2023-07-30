@@ -160,7 +160,7 @@ const HistoryInformation = forwardRef((props, ref) => {
    if (mode !== 'create') {
       convertedData = {
          creator: rsvnData.createStaffId,
-         createTime: moment(rsvnData.createdAt).format('YYYY/MM/DD HH:mm:ss'),
+         createTime: moment(rsvnData.createdAt).format('YYYY-MM-DD HH:mm:ss'),
          caller: rsvnData.caller ? rsvnData.caller : null,
          callerTel: rsvnData.callerTel ? rsvnData.callerTel : null,
       };
@@ -188,7 +188,7 @@ const HistoryInformation = forwardRef((props, ref) => {
          Object.assign(convertedData, reducedData);
       }
    }
-   console.log(rsvnData.statusCode);
+
    return (
       <div className={classes['form__create-info']}>
          <div>
@@ -235,7 +235,7 @@ const HistoryInformation = forwardRef((props, ref) => {
                className={classes['read-only-item']}
                onFocus={(e) => e.target.blur()}
                value={
-                  rsvnData.statusCode !== 'RR' || rsvnData.statusCode !== 'CX'
+                  rsvnData?.statusCode !== 'RR' || rsvnData?.statusCode !== 'CX'
                      ? ''
                      : convertedData?.checkInStaff
                }
@@ -249,7 +249,7 @@ const HistoryInformation = forwardRef((props, ref) => {
                className={classes['read-only-item']}
                onFocus={(e) => e.target.blur()}
                value={
-                  rsvnData.statusCode !== 'RR' || rsvnData.statusCode !== 'CX'
+                  rsvnData?.statusCode !== 'RR' || rsvnData.statusCode !== 'CX'
                      ? ''
                      : convertedData?.checkInTime
                }

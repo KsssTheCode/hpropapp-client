@@ -97,12 +97,11 @@ export const openDetailModal = ({ id, pageName }) => {
    };
 };
 
-export const getReservationsDataByOptions = (searchOptions, pageName) => {
+export const getReservationsDataByOptions = ({ searchOptions, pageName }) => {
    return async (dispatch) => {
       const getRequest = async () => {
          if (searchOptions) {
-            const { fitOrGroup, ...newSearchOptions } = searchOptions;
-            const params = new URLSearchParams(newSearchOptions);
+            const params = new URLSearchParams(searchOptions);
             const FITresponse = await fetch(
                `${process.env.REACT_APP_API_HOST}/rsvn/get-rsvns-in-options?${params}`,
                { credentials: 'include' }
@@ -164,9 +163,18 @@ export const createReservation = ({ createFormData, fitOrGroup, pageName }) => {
       };
       try {
          const responseData = await sendRequest();
+
+         if (responseData) {
+            alert('예약생성 완료');
+         } else {
+            alert('예약생성 실패');
+            return;
+         }
+
          let id = null;
          if (fitOrGroup === 'fit') id = responseData.rsvnId;
          if (fitOrGroup === 'group') id = responseData.groupRsvnId;
+
          dispatch(openDetailModal({ id, pageName: 'reservation' }));
 
          dispatch(

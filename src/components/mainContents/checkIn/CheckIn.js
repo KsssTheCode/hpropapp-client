@@ -31,7 +31,10 @@ const CheckIn = () => {
       if (firstRendering) {
          firstRendering = false;
          dispatch(
-            getReservationsDataByOptions(initialSearchOptions, 'checkIn')
+            getReservationsDataByOptions({
+               searchOptions: initialSearchOptions,
+               pageName: 'checkIn',
+            })
          );
       } else {
          return;

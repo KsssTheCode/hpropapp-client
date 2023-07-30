@@ -169,7 +169,12 @@ const ReservationWidget = () => {
 
       console.log(searchOptions);
 
-      dispatch(getReservationsDataByOptions(searchOptions, 'reservation'));
+      dispatch(
+         getReservationsDataByOptions({
+            searchOptions,
+            pageName: 'reservation',
+         })
+      );
    };
 
    return (

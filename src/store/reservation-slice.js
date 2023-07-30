@@ -78,7 +78,6 @@ const reservationSlice = createSlice({
       },
       replaceModalData(state, action) {
          const { pageName, data, fitOrGroup } = action.payload;
-         console.log(pageName, data, fitOrGroup);
          let modal = null;
          if (fitOrGroup === 'fit') modal = 'FITModal';
          if (fitOrGroup === 'group') modal = 'groupModal';

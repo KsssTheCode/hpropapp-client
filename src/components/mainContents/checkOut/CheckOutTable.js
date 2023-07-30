@@ -18,6 +18,7 @@ const CheckOutTable = () => {
    const { fit, group } = useSelector(
       (state) => state.reservation.reservations.checkOut
    );
+
    const fitOrGroupFilter = useSelector(
       (state) => state.reservation.fitOrGroupFilter.checkOut
    );
@@ -49,7 +50,7 @@ const CheckOutTable = () => {
    };
 
    const checkOutSelectedReservationHandler = () => {
-      dispatch(getReservationsDataByOptions);
+      dispatch(getReservationsDataByOptions({ pageName: 'checkOut' }));
    };
 
    const columns = [
