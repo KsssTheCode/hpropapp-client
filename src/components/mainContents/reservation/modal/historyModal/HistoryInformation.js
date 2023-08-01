@@ -62,64 +62,41 @@ const HistoryInformation = forwardRef((props, ref) => {
    const onClickButtonsHandler = (e) => {
       e.preventDefault();
       const id = rsvnData.rsvnId || rsvnData.groupRsvnId;
-      switch (e.target.textContent) {
-         case 'History':
-            if (historyData.length < 1) {
-               alert('변경된 이력이 존재하지 않습니다.');
-            } else {
-               dispatch(
-                  reservationActions.openHistoryModal({
-                     fitOrGroup: props.fitOrGroup,
-                  })
-               );
-            }
-            break;
-         case 'Recover':
-            dispatch(
-               editReservation({
-                  pageName: props.pageName,
-                  id,
-                  data: { statusCode: 'RR' },
-               })
-            );
-            break;
-         case 'C/I':
-            dispatch(
-               editReservation({
-                  pageName: props.pageName,
-                  id,
-                  data: { statusCode: 'CI' },
-               })
-            );
-            break;
-         case 'CXL':
-            dispatch(
-               editReservation({
-                  pageName: props.pageName,
-                  id,
-                  data: { statusCode: 'CX' },
-               })
-            );
-            break;
-         case 'CXL C/I':
-            dispatch(
-               editReservation({
-                  pageName: props.pageName,
+      const pageName = props.pageName;
+      const fitOrGroup = props.fitOrGroup;
+
+      let requestData = {};
+
+      if (e.target.textContent === 'History') {
+         if (historyData.length < 1) {
+            alert('변경 이력이 존재하지 않습니다.');
+         } else {
+            dispatch(reservationActions.openHistoryModal({ fitOrGroup }));
+         }
+      } else {
+         switch (e.target.textContent) {
+            case 'Recover':
+               requestData = { pageName, id, data: { statusCode: 'RR' } };
+               break;
+            case 'C/I':
+               requestData = { pageName, id, data: { statusCode: 'CI' } };
+               break;
+            case 'CXL':
+               requestData = { pageName, id, data: { statusCode: 'CX' } };
+               break;
+            case 'CXL C/I':
+               requestData = {
+                  pageName,
                   id,
                   data: { statusCode: 'RR', roomNumber: null },
-               })
-            );
-            break;
-         case 'Re C/I':
-            dispatch(
-               editReservation({
-                  pageName: props.pageName,
-                  id,
-                  data: { statusCode: 'CI' },
-               })
-            );
-            break;
-         default:
+               };
+               break;
+            case 'Re C/I':
+               requestData = { pageName, id, data: { statusCode: 'CI' } };
+               break;
+            default:
+         }
+         dispatch(editReservation(requestData));
       }
    };
 
@@ -234,11 +211,7 @@ const HistoryInformation = forwardRef((props, ref) => {
                readOnly
                className={classes['read-only-item']}
                onFocus={(e) => e.target.blur()}
-               value={
-                  rsvnData?.statusCode !== 'RR' || rsvnData?.statusCode !== 'CX'
-                     ? ''
-                     : convertedData?.checkInStaff
-               }
+               value={convertedData?.checkInStaff}
             />
          </div>
          <div>
@@ -248,11 +221,7 @@ const HistoryInformation = forwardRef((props, ref) => {
                readOnly
                className={classes['read-only-item']}
                onFocus={(e) => e.target.blur()}
-               value={
-                  rsvnData?.statusCode !== 'RR' || rsvnData.statusCode !== 'CX'
-                     ? ''
-                     : convertedData?.checkInTime
-               }
+               value={convertedData?.checkInTime}
             />
          </div>
          <div>
