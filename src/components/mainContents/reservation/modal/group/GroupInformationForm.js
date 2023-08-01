@@ -242,7 +242,13 @@ const GroupInformationForm = forwardRef((props, ref) => {
                   type="text"
                   style={{ width: '15px' }}
                   readOnly
-                  value={mode !== 'create' ? nights : ''}
+                  defaultValue={
+                     nights
+                        ? nights.toString()
+                        : mode !== 'create'
+                        ? data.nights
+                        : ''
+                  }
                />
             </div>
          </div>
