@@ -167,8 +167,6 @@ const ReservationWidget = () => {
             (d) => d.value
          );
 
-      console.log(searchOptions);
-
       dispatch(
          getReservationsDataByOptions({
             searchOptions,
