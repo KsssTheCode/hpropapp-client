@@ -9,6 +9,8 @@ import ReservationTable from './ReservationTable';
 import GroupReservationForm from './modal/group/GroupReservationForm';
 import FITReservationForm from './modal/fit/FITReservationForm';
 
+let firstRendering = true;
+
 const initialSearchOptions = {
    arrivalStartDate: moment().format('YYYYMMDD'),
    arrivalEndDate: moment().add(30, 'days').format('YYYYMMDD'),
@@ -24,14 +26,28 @@ const Reservation = () => {
       (state) => state.reservation.groupModal.reservation
    );
 
+   const { reservation: reservationSearchOptions } = useSelector(
+      (state) => state.reservation.searchOptions
+   );
+
    useEffect(() => {
-      dispatch(
-         getReservationsDataByOptions({
-            searchOptions: initialSearchOptions,
-            pageName: 'reservation',
-         })
-      );
-   }, [dispatch]);
+      let searchOptions = null;
+      if (firstRendering) {
+         firstRendering = false;
+         reservationSearchOptions
+            ? (searchOptions = reservationSearchOptions)
+            : (searchOptions = initialSearchOptions);
+
+         dispatch(
+            getReservationsDataByOptions({
+               searchOptions,
+               pageName: 'reservation',
+            })
+         );
+      } else {
+         return;
+      }
+   }, [dispatch, reservationSearchOptions]);
 
    return (
       <div className={classes['reservation__wrapper']}>
@@ -52,4 +68,4 @@ const Reservation = () => {
    );
 };
 
-export default React.memo(Reservation);
+export default Reservation;

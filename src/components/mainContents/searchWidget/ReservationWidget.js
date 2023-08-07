@@ -166,7 +166,6 @@ const ReservationWidget = () => {
          searchOptions.checkOutStaffs = selectedCheckOutStaffs.map(
             (d) => d.value
          );
-
       dispatch(
          getReservationsDataByOptions({
             searchOptions,

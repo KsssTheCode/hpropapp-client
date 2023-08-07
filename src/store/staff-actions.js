@@ -51,7 +51,7 @@ export const logIn = ({ staffId, password }) => {
 };
 
 export const logOut = () => {
-   return async (dispatch) => {
+   return async () => {
       const sendRequest = async () => {
          const response = await fetch(
             `${process.env.REACT_APP_API_HOST}/auth/logout`,
@@ -69,8 +69,8 @@ export const logOut = () => {
 
          if (response.ok) {
             alert('로그아웃 완료');
-
             window.location.reload();
+            sessionStorage.removeItem('page');
          } else {
             alert('로그아웃 실패');
          }

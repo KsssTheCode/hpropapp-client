@@ -154,7 +154,7 @@ const CheckInWidget = () => {
       const searchOptions = {
          departureStartDate: today,
          departureEndDate: today,
-         status: ['CI'],
+         statusCodes: ['CI'],
       };
       dispatch(
          getReservationsDataByOptions({ searchOptions, pageName: 'checkIn' })
@@ -166,7 +166,7 @@ const CheckInWidget = () => {
       const searchOptions = {
          arrivalStartDate: today,
          arrivalEndDate: today,
-         status: ['RR'],
+         statusCodes: ['RR'],
       };
       dispatch(
          getReservationsDataByOptions({ searchOptions, pageName: 'checkIn' })
@@ -176,7 +176,7 @@ const CheckInWidget = () => {
    const stayingHandler = (e) => {
       e.preventDefault();
       const searchOptions = {
-         status: ['CI'],
+         statusCodes: ['CI'],
       };
       dispatch(
          getReservationsDataByOptions({ searchOptions, pageName: 'checkIn' })

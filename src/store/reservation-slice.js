@@ -373,6 +373,23 @@ const reservationSlice = createSlice({
       replaceCheckOutDetail(state, action) {
          state.checkOutDetail = action.payload;
       },
+      saveSearchOptionsToSession(state) {
+         sessionStorage.setItem(
+            'pageSearchOptions',
+            JSON.stringify(state.searchOptions)
+         );
+      },
+      replaceSearchOptionsFromSession(state) {
+         const pageSearchOptionsSession = JSON.parse(
+            sessionStorage.getItem('pageSearchOptions')
+         );
+         console.log(pageSearchOptionsSession);
+         if (pageSearchOptionsSession) {
+            state.searchOptions = pageSearchOptionsSession;
+         } else {
+            return;
+         }
+      },
    },
 });
 

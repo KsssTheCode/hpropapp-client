@@ -26,20 +26,28 @@ const CheckIn = () => {
    const { isOpen: isGroupModalOpen } = useSelector(
       (state) => state.reservation.groupModal.checkIn
    );
+   const { checkIn: checkInSearchOptions } = useSelector(
+      (state) => state.reservation.searchOptions
+   );
 
    useEffect(() => {
+      let searchOptions = null;
       if (firstRendering) {
          firstRendering = false;
+         checkInSearchOptions
+            ? (searchOptions = checkInSearchOptions)
+            : (searchOptions = initialSearchOptions);
+
          dispatch(
             getReservationsDataByOptions({
-               searchOptions: initialSearchOptions,
+               searchOptions,
                pageName: 'checkIn',
             })
          );
       } else {
          return;
       }
-   }, [dispatch]);
+   }, [dispatch, checkInSearchOptions]);
 
    return (
       <div className={classes['checkin__wrapper']}>

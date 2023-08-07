@@ -24,20 +24,28 @@ const CheckOut = () => {
    const { isOpen } = useSelector(
       (state) => state.reservation.FITModal.checkOut
    );
+   const { checkOut: checkOutSearchOptions } = useSelector(
+      (state) => state.reservation.searchOptions
+   );
 
    useEffect(() => {
+      let searchOptions = null;
       if (firstRendering) {
          firstRendering = false;
+         checkOutSearchOptions
+            ? (searchOptions = checkOutSearchOptions)
+            : (searchOptions = initialSearchOptions);
+
          dispatch(
             getReservationsDataByOptions({
-               searchOptions: initialSearchOptions,
+               searchOptions,
                pageName: 'checkOut',
             })
          );
       } else {
          return;
       }
-   }, [dispatch]);
+   }, [dispatch, checkOutSearchOptions]);
 
    return (
       <div className={classes['check-out__wrapper']}>

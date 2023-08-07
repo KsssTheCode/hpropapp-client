@@ -8,6 +8,7 @@ import Header from './components/header/Header';
 import MainWrapper from './components/mainContents/MainWrapper';
 import SideBar from './components/sideBar/SideBar';
 import Login from './components/login/Login';
+import { reservationActions } from './store/reservation-slice';
 
 const monitorWidth = window.innerWidth;
 const monitorHeight = window.innerHeight;
@@ -30,6 +31,7 @@ const App = () => {
    useEffect(() => {
       const getPageStoreAfterReload = () => {
          dispatch(pageActions.replacePageStoreFromSession());
+         dispatch(reservationActions.replaceSearchOptionsFromSession());
       };
 
       window.addEventListener('load', getPageStoreAfterReload);
@@ -43,6 +45,7 @@ const App = () => {
       const savePageStoreBeforeUnload = (e) => {
          e.preventDefault();
          dispatch(pageActions.savePageStoreToSession());
+         dispatch(reservationActions.saveSearchOptionsToSession());
       };
 
       window.addEventListener('beforeunload', savePageStoreBeforeUnload);
@@ -61,11 +64,6 @@ const App = () => {
    };
 
    return (
-      // <div className={classes.App}>
-      //    <Header openSideBar={openSideBarHandler} />
-      //    {activeSideBarModal && <SideBar closeSideBar={closeSideBarHandler} />}
-      //    <MainWrapper />
-      // </div>
       <div className={classes.App}>
          {isLoggedIn ? (
             <>
