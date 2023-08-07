@@ -1,4 +1,4 @@
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import { useState, useEffect } from 'react';
 import { pageActions } from './store/page-slice';
 
@@ -25,8 +25,6 @@ document.documentElement.style.setProperty(
 const App = () => {
    const dispatch = useDispatch();
    const [activeSideBarModal, setActiveSideBarModal] = useState(false);
-
-   const { isLoggedIn } = useSelector((state) => state.staff.login);
 
    useEffect(() => {
       const getPageStoreAfterReload = () => {
@@ -62,6 +60,8 @@ const App = () => {
    const closeSideBarHandler = () => {
       setActiveSideBarModal(false);
    };
+
+   const isLoggedIn = sessionStorage.getItem('isLoggedIn');
 
    return (
       <div className={classes.App}>

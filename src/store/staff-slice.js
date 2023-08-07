@@ -9,9 +9,11 @@ const staffSlice = createSlice({
    reducers: {
       login(state, action) {
          state.login = { isLoggedIn: true, userName: action.payload.userName };
+         sessionStorage.setItem('isLoggedIn', true);
       },
-      logOut(state, action) {
+      logOut(state) {
          state.login = { isLoggedIn: false, userName: null };
+         sessionStorage.removeItem('isLoggedIn');
       },
       replaceStaffsList(state, action) {
          state.staffs = action.payload;

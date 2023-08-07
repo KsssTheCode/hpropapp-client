@@ -383,7 +383,6 @@ const reservationSlice = createSlice({
          const pageSearchOptionsSession = JSON.parse(
             sessionStorage.getItem('pageSearchOptions')
          );
-         console.log(pageSearchOptionsSession);
          if (pageSearchOptionsSession) {
             state.searchOptions = pageSearchOptionsSession;
          } else {
