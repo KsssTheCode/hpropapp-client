@@ -7,6 +7,9 @@ const staffSlice = createSlice({
       staffs: [],
    },
    reducers: {
+      keepLogin(state) {
+         state.login = { ...state.login, isLoggedIn: true };
+      },
       login(state, action) {
          state.login = { isLoggedIn: true, userName: action.payload.userName };
          sessionStorage.setItem('isLoggedIn', true);

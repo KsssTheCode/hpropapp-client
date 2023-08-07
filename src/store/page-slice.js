@@ -37,7 +37,6 @@ const pageSlice = createSlice({
             currentPage: state.currentPage,
          };
          sessionStorage.setItem('page', JSON.stringify(pageSession));
-         sessionStorage.setItem('pageSearchOptions', JSON.stringify());
       },
       replacePageStoreFromSession(state) {
          const pageSession = JSON.parse(sessionStorage.getItem('page'));

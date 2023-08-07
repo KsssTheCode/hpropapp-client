@@ -1,6 +1,7 @@
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { useState, useEffect } from 'react';
 import { pageActions } from './store/page-slice';
+import { staffActions } from './store/staff-slice';
 
 import classes from './App.module.css';
 
@@ -25,13 +26,18 @@ document.documentElement.style.setProperty(
 const App = () => {
    const dispatch = useDispatch();
    const [activeSideBarModal, setActiveSideBarModal] = useState(false);
+   const { isLoggedIn } = useSelector((state) => state.staff.login);
+
+   useEffect(() => {
+      if (sessionStorage.getItem('isLoggedIn'))
+         dispatch(staffActions.keepLogin());
+   }, [dispatch]);
 
    useEffect(() => {
       const getPageStoreAfterReload = () => {
          dispatch(pageActions.replacePageStoreFromSession());
          dispatch(reservationActions.replaceSearchOptionsFromSession());
       };
-
       window.addEventListener('load', getPageStoreAfterReload);
 
       return () => {
@@ -60,8 +66,6 @@ const App = () => {
    const closeSideBarHandler = () => {
       setActiveSideBarModal(false);
    };
-
-   const isLoggedIn = sessionStorage.getItem('isLoggedIn');
 
    return (
       <div className={classes.App}>

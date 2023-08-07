@@ -71,7 +71,8 @@ export const logOut = () => {
             alert('로그아웃 완료');
             window.location.reload();
             sessionStorage.removeItem('page');
-            sessionStorage.removeItem('staffId');
+            sessionStorage.removeItem('isLoggedIn');
+            sessionStorage.removeItem('pageSearchOptions');
          } else {
             alert('로그아웃 실패');
          }
