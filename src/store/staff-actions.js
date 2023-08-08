@@ -1,4 +1,5 @@
 import { staffActions } from './staff-slice';
+import schedule from 'node-schedule';
 
 export const getStaffsData = (searchOptions) => {
    return async (dispatch) => {
@@ -36,11 +37,17 @@ export const logIn = ({ staffId, password }) => {
 
          return response;
       };
+
       try {
          const response = await sendRequest();
          if (response.status === 200) {
-            const userName = await response.json();
-            dispatch(staffActions.login(userName));
+            const staffId = await response.json();
+            dispatch(staffActions.login(staffId));
+
+            schedule.scheduleJob(
+               new Date(Date.now() + 8 * 60 * 60 * 1000),
+               extendLoginState()
+            );
          } else {
             alert('로그인 실패');
          }
@@ -50,8 +57,49 @@ export const logIn = ({ staffId, password }) => {
    };
 };
 
-export const logOut = () => {
+const extendLoginState = () => {
    return async () => {
+      const sendRequest = async (password) => {
+         const staffId = sessionStorage.getItem('staffId');
+         const response = await fetch(
+            `${process.env.REACT_APP_API_HOST}/auth/extend-login`,
+            {
+               method: 'POST',
+               body: JSON.stringify({ staffId, password }),
+               headers: { 'Content-Type': 'application/json' },
+               credentials: 'include',
+            }
+         );
+         return await response.json();
+      };
+
+      try {
+         const confirm = window.confirm(
+            '로그인 후 8시간이 경과되어 자동 로그아웃됩니다.\n로그인을 유지하시겠습니까?'
+         );
+         if (confirm) {
+            const password = window.prompt(
+               '로그인 연장을 하시려면 비밀번호를 입력하세요'
+            );
+            if (password) {
+               const response = await sendRequest(password);
+               if (response.status !== 200) {
+                  alert('비밀번호 입력오류. \n로그아웃됩니다.');
+               }
+            } else {
+               logOut();
+            }
+         } else {
+            logOut();
+         }
+      } catch (err) {
+         console.log(err);
+      }
+   };
+};
+
+export const logOut = () => {
+   return async (dispatch) => {
       const sendRequest = async () => {
          const response = await fetch(
             `${process.env.REACT_APP_API_HOST}/auth/logout`,
@@ -70,9 +118,13 @@ export const logOut = () => {
          if (response.ok) {
             alert('로그아웃 완료');
             window.location.reload();
+
             sessionStorage.removeItem('page');
             sessionStorage.removeItem('isLoggedIn');
             sessionStorage.removeItem('pageSearchOptions');
+            sessionStorage.removeItem('staffId');
+
+            dispatch(staffActions.logOut());
          } else {
             alert('로그아웃 실패');
          }
