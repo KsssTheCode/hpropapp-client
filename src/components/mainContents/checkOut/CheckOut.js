@@ -32,7 +32,7 @@ const CheckOut = () => {
       let searchOptions = null;
       if (firstRendering) {
          firstRendering = false;
-         checkOutSearchOptions
+         Object.entries(checkOutSearchOptions).length > 0
             ? (searchOptions = checkOutSearchOptions)
             : (searchOptions = initialSearchOptions);
 

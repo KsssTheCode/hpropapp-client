@@ -103,7 +103,12 @@ const reservationSlice = createSlice({
          state.reservations[pageName][fitOrGroup] = updatedData;
       },
       reflectCreationToGroupDetailReservationsState(state, action) {
-         const updatedData = [...state.groupDetailReservations, action.payload];
+         let updatedData = [];
+         if (Array.isArray(action.payload)) {
+            updatedData = [...state.groupDetailReservations, ...action.payload];
+         } else {
+            updatedData = [...state.groupDetailReservations, action.payload];
+         }
          state.groupDetailReservations = updatedData;
       },
       reflectRoomAssignsToModalState(state, action) {

@@ -99,6 +99,7 @@ export const openDetailModal = ({ id, pageName }) => {
 
 export const getReservationsDataByOptions = ({ searchOptions, pageName }) => {
    return async (dispatch) => {
+      console.log(searchOptions);
       const getRequest = async () => {
          if (searchOptions) {
             const params = new URLSearchParams(searchOptions);
@@ -200,9 +201,9 @@ export const createDetailReservations = ({ pageName, groupId, formData }) => {
                body: JSON.stringify({
                   groupRsvnId: groupId,
                   detailReservationsData: formData,
-                  credentials: 'include',
                }),
                headers: { 'Content-Type': 'application/json' },
+               credentials: 'include',
             }
          );
 
@@ -230,6 +231,55 @@ export const createDetailReservations = ({ pageName, groupId, formData }) => {
       }
    };
 };
+
+// export const createDetailReservations = ({ pageName, groupId, formData }) => {
+//    return async (dispatch) => {
+//       const sendRequest = async () => {
+//          const response = await fetch(
+//             `${process.env.REACT_APP_API_HOST}/group-rsvn/create-detail-rsvns`,
+//             {
+//                method: 'POST',
+//                body: JSON.stringify({
+//                   groupRsvnId: groupId,
+//                   detailReservationsData: formData,
+//                   credentials: 'include',
+//                }),
+//                headers: { 'Content-Type': 'application/json' },
+//                credentials: 'include',
+//             }
+//          );
+
+//          return response;
+//       };
+
+//       try {
+//          const response = await sendRequest();
+
+//          if (response.status === 401) {
+//             alert('기능 접근권한이 없습니다.');
+//             return;
+//          }
+
+//          const responseData = await response.json();
+
+//          dispatch(
+//             reservationActions.reflectCreationToGroupDetailReservationsState(
+//                responseData
+//             )
+//          );
+
+//          dispatch(
+//             reservationActions.reflectCreationToReservationsState({
+//                pageName,
+//                fitOrGroup: 'fit',
+//                data: responseData,
+//             })
+//          );
+//       } catch (err) {
+//          console.log(err);
+//       }
+//    };
+// };
 
 export const getReservationStatus = () => {
    return async (dispatch) => {

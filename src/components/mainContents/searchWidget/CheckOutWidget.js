@@ -40,7 +40,6 @@ const CheckOutWidget = () => {
          default:
       }
 
-      console.log(searchOptions);
       dispatch(
          getReservationsDataByOptions({ searchOptions, pageName: 'checkOut' })
       );

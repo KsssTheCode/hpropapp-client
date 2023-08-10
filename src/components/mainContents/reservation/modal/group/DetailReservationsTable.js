@@ -29,8 +29,8 @@ const DetailReservationsTable = (props) => {
 
          if (rsvn.DailyRates)
             rsvn.DailyRates.forEach((rate) => {
-               roomRate = rate.price;
-               totalAmount += rate.price;
+               roomRate = +rate.price;
+               totalAmount += +rate.price;
             });
 
          return {

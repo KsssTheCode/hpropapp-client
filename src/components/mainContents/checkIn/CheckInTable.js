@@ -72,7 +72,6 @@ const CheckInTable = (props) => {
 
          const updatedData = data.map((d) => {
             if (d.rsvnId === id) {
-               console.log({ ...d, statusCode: 'CI' });
                return { ...d, statusCode: 'CI' };
             } else if (d.groupRsvnId === id) {
                return { ...d, statusCode: 'CI' };

@@ -34,10 +34,9 @@ const Reservation = () => {
       let searchOptions = null;
       if (firstRendering) {
          firstRendering = false;
-         reservationSearchOptions
+         Object.entries(reservationSearchOptions).length > 0
             ? (searchOptions = reservationSearchOptions)
             : (searchOptions = initialSearchOptions);
-
          dispatch(
             getReservationsDataByOptions({
                searchOptions,

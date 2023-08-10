@@ -34,7 +34,7 @@ const CheckIn = () => {
       let searchOptions = null;
       if (firstRendering) {
          firstRendering = false;
-         checkInSearchOptions
+         Object.entries(checkInSearchOptions).length > 0
             ? (searchOptions = checkInSearchOptions)
             : (searchOptions = initialSearchOptions);
 
