@@ -1,8 +1,6 @@
 import { staffActions } from './staff-slice';
 import schedule from 'node-schedule';
 
-const autoLogOutScheduleJobs = [];
-
 export const getStaffsData = (searchOptions) => {
    return async (dispatch) => {
       const getRequest = async () => {
@@ -27,7 +25,6 @@ export const getStaffsData = (searchOptions) => {
 export const logOut = () => {
    return async (dispatch) => {
       const sendRequest = async () => {
-         console.log('hi');
          const response = await fetch(
             `${process.env.REACT_APP_API_HOST}/auth/logout`,
             {
