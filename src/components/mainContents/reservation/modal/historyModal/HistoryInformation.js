@@ -1,10 +1,7 @@
 import moment from 'moment';
 import { forwardRef, useImperativeHandle, useRef } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import {
-   editReservation,
-   releaseAssignedRooms,
-} from '../../../../../store/reservation-actions';
+import { editReservation } from '../../../../../store/reservation-actions';
 import { reservationActions } from '../../../../../store/reservation-slice';
 
 import classes from '../fit/FITReservationForm.module.css';

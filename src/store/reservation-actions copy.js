@@ -1,91 +1,95 @@
-import * as api from '../api/reservationApi';
 import { reservationActions } from './reservation-slice';
 
 export const openDetailModal = ({ id, pageName }) => {
    return async (dispatch) => {
+      const getReservationData = async () => {
+         const params = new URLSearchParams({ id });
+         if (id.charAt(0) === 'R') {
+            const response = await fetch(
+               `${process.env.REACT_APP_API_HOST}/rsvn/get-selected-rsvn?${params}`,
+               { credentials: 'include' }
+            );
+            return response.json();
+         }
+         if (id.charAt(0) === 'G') {
+            const response = await fetch(
+               `${process.env.REACT_APP_API_HOST}/group-rsvn/get-selected-group-rsvn?${params}`,
+               { credentials: 'include' }
+            );
+            return response.json();
+         }
+      };
+
       try {
-         const response = await api.openRsvnDetailModal(id);
-         if (response.status === 404) {
-            alert(response.message);
-         } else if (response.status === 400) {
-            alert(response.message);
-         } else if (response.status === 200) {
-            console.log('성공');
-            const responseData = await response.json();
-            console.log(responseData);
-            console.log(responseData.errorMessage);
+         const responseData = await getReservationData();
+         if (responseData.arrivalTime) {
+            const t = responseData.arrivalTime;
+            responseData.arrivalTime = t.slice(0, 2) + ':' + t.slice(2);
+         }
+         if (responseData.departureTime) {
+            const t = responseData.departureTime;
+            responseData.departureTime = t.slice(0, 2) + ':' + t.slice(2);
+         }
+         if (id[0] === 'R') {
+            const {
+               DailyRates,
+               RoomRates,
+               ReservationChangeHistories,
+               ...reservationData
+            } = responseData;
 
-            if (responseData.arrivalTime) {
-               const t = responseData.arrivalTime;
-               responseData.arrivalTime = t.slice(0, 2) + ':' + t.slice(2);
-            }
-            if (responseData.departureTime) {
-               const t = responseData.departureTime;
-               responseData.departureTime = t.slice(0, 2) + ':' + t.slice(2);
-            }
-            if (id[0] === 'R') {
-               const {
-                  DailyRates,
-                  RoomRates,
-                  ReservationChangeHistories,
-                  ...reservationData
-               } = responseData;
+            const dailyRatesData = DailyRates.map((rate) => {
+               const room = RoomRates.find((room) => +room.date === +rate.date);
+               const originPrice = room ? room.price : null;
+               const totalPrice = rate.price;
+               return { date: rate.date, originPrice, totalPrice };
+            });
 
-               const dailyRatesData = DailyRates.map((rate) => {
-                  const room = RoomRates.find(
-                     (room) => +room.date === +rate.date
-                  );
-                  const originPrice = room ? room.price : null;
-                  const totalPrice = rate.price;
-                  return { date: rate.date, originPrice, totalPrice };
-               });
+            const sendData = {
+               data: reservationData,
+               pageName,
+            };
+            if (pageName === 'reservation') sendData.mode = 'detail';
 
-               const sendData = {
-                  data: reservationData,
+            dispatch(reservationActions.openFITModal(sendData));
+            dispatch(
+               reservationActions.replaceRoomRatesData({
                   pageName,
-               };
-               if (pageName === 'reservation') sendData.mode = 'detail';
-
-               dispatch(reservationActions.openFITModal(sendData));
+                  data: dailyRatesData,
+               })
+            );
+            dispatch(
+               reservationActions.replaceHistoryModalData({
+                  fitOrGroup: 'fit',
+                  data: ReservationChangeHistories,
+               })
+            );
+         }
+         if (id[0] === 'G') {
+            const {
+               Reservations,
+               ReservationChangeHistories,
+               ...groupReservationData
+            } = responseData;
+            if (Reservations) {
                dispatch(
-                  reservationActions.replaceRoomRatesData({
-                     pageName,
-                     data: dailyRatesData,
-                  })
-               );
-               dispatch(
-                  reservationActions.replaceHistoryModalData({
-                     fitOrGroup: 'fit',
-                     data: ReservationChangeHistories,
-                  })
+                  reservationActions.replaceGroupDetailReservationsState(
+                     Reservations
+                  )
                );
             }
-            if (id[0] === 'G') {
-               const {
-                  Reservations,
+            const sendData = {
+               data: groupReservationData,
+               pageName,
+            };
+            if (pageName === 'reservation') sendData.mode = 'detail';
+            dispatch(reservationActions.openGroupModal(sendData));
+            dispatch(
+               reservationActions.replaceHistoryModalData({
+                  fitOrGroup: 'group',
                   ReservationChangeHistories,
-                  ...groupReservationData
-               } = responseData;
-               if (Reservations) {
-                  dispatch(
-                     reservationActions.replaceGroupDetailReservationsState(
-                        Reservations
-                     )
-                  );
-               }
-               const sendData = {
-                  data: groupReservationData,
-                  pageName,
-               };
-               if (pageName === 'reservation') sendData.mode = 'detail';
-               dispatch(reservationActions.openGroupModal(sendData));
-               dispatch(
-                  reservationActions.replaceHistoryModalData({
-                     fitOrGroup: 'group',
-                     ReservationChangeHistories,
-                  })
-               );
-            }
+               })
+            );
          }
       } catch (err) {
          console.log(err);

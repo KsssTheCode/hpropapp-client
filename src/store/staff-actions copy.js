@@ -126,7 +126,7 @@ export const logIn = ({ staffId, password }) => {
             dispatch(staffActions.login(staffId));
 
             schedule.scheduleJob(
-               new Date(Date.now() * 8 * 3600000),
+               new Date(Date.now() + 1000),
                extendLoginState(dispatch)
             );
             // autoLogOutScheduleJobs.push(reservedJob);
