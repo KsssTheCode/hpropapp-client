@@ -62,13 +62,7 @@ const CheckInTable = (props) => {
       if (rowData.roomNumber) {
          let id = null;
          rowData.rsvnId ? (id = rowData.rsvnId) : (id = rowData.groupRsvnId);
-         dispatch(
-            editReservation({
-               pageName: props.pageName,
-               id,
-               data: { statusCode: 'CI' },
-            })
-         );
+         dispatch(editReservation(props.pageName, id, { statusCode: 'CI' }));
 
          const updatedData = data.map((d) => {
             if (d.rsvnId === id) {
@@ -197,12 +191,7 @@ const CheckInTable = (props) => {
    };
 
    const onRowDoubleClickedHandler = (e) => {
-      dispatch(
-         openDetailModal({
-            id: e.data.rsvnId || e.data.groupRsvnId,
-            pageName: 'checkIn',
-         })
-      );
+      dispatch(openDetailModal(e.data.rsvnId || e.data.groupRsvnId, 'checkIn'));
    };
 
    const itemsInOnePageOptions = [50, 100, 150];

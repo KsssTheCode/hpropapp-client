@@ -22,27 +22,15 @@ const RoomDetail = (props) => {
    }, [data]);
 
    const onOpenDetailReservationHandler = () => {
-      dispatch(openDetailModal({ id: data.id, pageName: 'checkOut' }));
+      dispatch(openDetailModal(data.id, 'checkOut'));
    };
 
    const holdingCheckOutReservationHandler = () => {
-      dispatch(
-         editReservation({
-            pageName: props.pageName,
-            id: data.id,
-            data: { statusCode: 'HC' },
-         })
-      );
+      dispatch(editReservation(props.pageName, data.id, { statusCode: 'HC' }));
    };
 
    const checkOutReservationHandler = () => {
-      dispatch(
-         editReservation({
-            pageName: props.pageName,
-            id: data.id,
-            data: { statusCode: 'CO' },
-         })
-      );
+      dispatch(editReservation(props.pageName, data.id, { statusCode: 'CO' }));
    };
    return (
       <div className={classes['room-info__wrapper']}>

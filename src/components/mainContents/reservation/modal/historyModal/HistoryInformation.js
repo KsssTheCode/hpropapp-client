@@ -58,42 +58,41 @@ const HistoryInformation = forwardRef((props, ref) => {
 
    const onClickButtonsHandler = (e) => {
       e.preventDefault();
-      const id = rsvnData.rsvnId || rsvnData.groupRsvnId;
-      const pageName = props.pageName;
-      const fitOrGroup = props.fitOrGroup;
 
-      let requestData = {};
+      let changeData = {};
 
       if (e.target.textContent === 'History') {
          if (historyData.length < 1) {
             alert('변경 이력이 존재하지 않습니다.');
          } else {
-            dispatch(reservationActions.openHistoryModal({ fitOrGroup }));
+            dispatch(reservationActions.openHistoryModal(props.fitOrGroup));
          }
       } else {
          switch (e.target.textContent) {
             case 'Recover':
-               requestData = { pageName, id, data: { statusCode: 'RR' } };
+               changeData = { statusCode: 'RR' };
                break;
             case 'C/I':
-               requestData = { pageName, id, data: { statusCode: 'CI' } };
+               changeData = { statusCode: 'CI' };
                break;
             case 'CXL':
-               requestData = { pageName, id, data: { statusCode: 'CX' } };
+               changeData = { statusCode: 'CX' };
                break;
             case 'CXL C/I':
-               requestData = {
-                  pageName,
-                  id,
-                  data: { statusCode: 'RR', roomNumber: null },
-               };
+               changeData = { statusCode: 'RR', roomNumber: null };
                break;
             case 'Re C/I':
-               requestData = { pageName, id, data: { statusCode: 'CI' } };
+               changeData = { statusCode: 'CI' };
                break;
             default:
          }
-         dispatch(editReservation(requestData));
+         dispatch(
+            editReservation(
+               props.pageName,
+               rsvnData.rsvnId || rsvnData.groupRsvnId,
+               changeData
+            )
+         );
       }
    };
 

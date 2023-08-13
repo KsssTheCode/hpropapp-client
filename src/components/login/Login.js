@@ -13,12 +13,7 @@ const Login = () => {
 
    const onLoginHandler = async (e) => {
       e.preventDefault();
-      dispatch(
-         logIn({
-            staffId: staffId.current?.value,
-            password: password.current?.value,
-         })
-      );
+      dispatch(logIn(staffId.current?.value, password.current?.value));
    };
 
    return (

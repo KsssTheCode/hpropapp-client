@@ -7,12 +7,12 @@ import classes from './ReservationWidget.module.css';
 
 import { reservationActions } from '../../../store/reservation-slice';
 import {
-   getReservationsDataByOptions,
+   getReservationsDataInOptions,
    getReservationStatus,
 } from '../../../store/reservation-actions';
 import { getRateTypeCodesData } from '../../../store/rate-type-actions';
 import { getRoomTypeCodesData } from '../../../store/room-type-actions';
-import { getStaffsData } from '../../../store/staff-actions';
+import { getStaffsDataForFilter } from '../../../store/staff-actions';
 // import { getMembershipsData } from '../../../store/membership-actions';
 import FitOrGroupSwtich from '../../UI/FitOrGroupSwitch';
 
@@ -48,7 +48,7 @@ const ReservationWidget = () => {
    useEffect(() => {
       dispatch(getRateTypeCodesData(rateTypeOptions));
       dispatch(getRoomTypeCodesData(roomTypeOptions));
-      dispatch(getStaffsData(staffOptions));
+      dispatch(getStaffsDataForFilter(staffOptions));
       // dispatch(getMembershipsData(membershipOptions));
       dispatch(getReservationStatus());
    }, [dispatch]);
@@ -166,12 +166,7 @@ const ReservationWidget = () => {
          searchOptions.checkOutStaffs = selectedCheckOutStaffs.map(
             (d) => d.value
          );
-      dispatch(
-         getReservationsDataByOptions({
-            searchOptions,
-            pageName: 'reservation',
-         })
-      );
+      dispatch(getReservationsDataInOptions(searchOptions, 'reservation'));
    };
 
    return (

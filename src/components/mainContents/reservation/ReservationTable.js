@@ -139,10 +139,7 @@ const ReservationTable = () => {
 
    const onRowDoubleClickedHandler = (e) => {
       dispatch(
-         openDetailModal({
-            id: e.data.rsvnId || e.data.groupRsvnId,
-            pageName: 'reservation',
-         })
+         openDetailModal(e.data.rsvnId || e.data.groupRsvnId, 'reservation')
       );
    };
 

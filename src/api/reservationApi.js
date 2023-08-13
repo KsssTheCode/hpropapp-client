@@ -1,8 +1,8 @@
-/** [GET API call] Retrieve detail informations for modal of reservation.
+/** [GET API call] Retrieve detail informations for modal(or detail form) of reservation.
  * @param {string} id - Reservation ID.
  * @returns {Promise<object>} - Reservation data corresponding to the provided reservation ID.
  */
-export const openRsvnDetailModal = async (id) => {
+export const getRsvnDetailInformations = async (id) => {
    const params = new URLSearchParams({ id });
    let url = `${process.env.REACT_APP_API_HOST}`;
    if (id.charAt(0) === 'R') url += `/rsvn/get-selected-rsvn?${params}`;
@@ -12,7 +12,7 @@ export const openRsvnDetailModal = async (id) => {
    return await fetch(url, { credentials: 'include' });
 };
 
-/** [GET API call] Retrieve F.I.T reservations based on conditions included in the filter.
+/** [GET API call] Retrieve F.I.T reservations based on conditions included in user-defined filter.
  * @param {object} searchOptions - User-configured filter options get from widget.
  * @returns {Promise<object>} - F.I.T reservation datas filtered by searchOptions.
  */
@@ -24,7 +24,7 @@ export const getFITRsvnsDataInFilterOptions = async (searchOptions) => {
    );
 };
 
-/** [GET API call] Retrieve group reservations based on conditions included in the filter.
+/** [GET API call] Retrieve group reservations based on conditions included in user-defined filter.
  * @param {object} searchOptions - User-configured filter options get from widget.
  * @returns {Promise<object>} - Group reservation datas filtered by searchOptions.
  */
@@ -36,7 +36,7 @@ export const getGroupRsvnsDataInFilterOptions = async (searchOptions) => {
    );
 };
 
-/** [POST API call] Creating a reservation using the provided input datas.
+/** [POST API call] Creating a reservation based on user-provided informations.
  * @param {object} createFormData - Reservation informations requested to be created as inputs by the user.
  * @param {string} fitOrGroup - Determination of F.I.T or Group Reservation. (Only allow 'fit' or 'group' in string)
  * @returns {Promise<object>} - Created reservation data.
@@ -53,7 +53,7 @@ export const createRsvn = async (createFormData, fitOrGroup) => {
    });
 };
 
-/** [POST API call] Creating reservations included in group reservation by using the provided input datas.
+/** [POST API call] Creating reservations included in group reservation based on user-provided informations.
  * @param {object} createFormData - Reservation informations to be created as inputs by the user.
  * @returns {Promise<object>} - Created group detail reservations.
  */
@@ -93,7 +93,7 @@ export const deleteDetailRsvnsIncludedInGroupRsvn = async (ids) => {
  * @param {object} changeData - Reservation data properties which is requested to edit. (Include only the properties to be change)
  * @returns {Promise<object>} - Edited data.
  */
-export const editFITRsvn = async (id, changeData) => {
+export const editRsvn = async (id, changeData) => {
    let url = `${process.env.REACT_APP_API_HOST}`;
    if (id.charAt(0) === 'R') url += '/rsvn/edit-rsvn';
    if (id.charAt(0) === 'G') url += '/group-rsvn/edit-group-rsvn';
@@ -107,27 +107,12 @@ export const editFITRsvn = async (id, changeData) => {
 };
 
 /**
- * [GET API call] Retrieve detail informations for detail form of check-out page.
- * @param {string} id - Reservation ID.
- * @returns {Promise<object>} - Reservation data corresponding to the provided reservation ID.
- */
-export const setCheckOutDetailForm = async (id) => {
-   const params = new URLSearchParams({ id });
-   let url = `${process.env.REACT_APP_API_HOST}`;
-   if (id.charAt(0) === 'R') url += `/rsvn/get-selected-rsvn?${params}`;
-   if (id.charAt(0) === 'G')
-      url += `/group-rsvn/get-selected-group-rsvn?${params}`;
-
-   return await fetch(url, { credentials: 'include' });
-};
-
-/**
  * [PATCH API call] Assign rooms to reservations.
  * @param {array} idAndRoomPairs - An array of objects composed of id and room number. (It should be an array regardless of the number of IDs)
  * @param {string} fitOrGroup - Determination of F.I.T or Group Reservation. (Only allow 'fit' or 'group' in string)
  * @returns {Promise<object>} - Only use for to get response status.
  */
-export const assignRooms = async (idAndRoomPairs, fitOrGroup) => {
+export const assignRoomsToRsvns = async (idAndRoomPairs, fitOrGroup) => {
    let url = `${process.env.REACT_APP_API_HOST}`;
    if (fitOrGroup === 'fit') url += '/rsvn/assign-room-to-rsvn';
    if (fitOrGroup === 'group') url += '/group-rsvn/assign-rooms';

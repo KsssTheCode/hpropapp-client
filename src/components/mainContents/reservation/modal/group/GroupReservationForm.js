@@ -64,13 +64,7 @@ const GroupReservationForm = (props) => {
          ...groupInformationFormData,
          ...(callerAndCallerTelData && { ...callerAndCallerTelData }),
       };
-      dispatch(
-         createReservation({
-            createFormData: formData,
-            fitOrGroup: 'group',
-            pageName: props.pageName,
-         })
-      );
+      dispatch(createReservation(formData, 'group', props.pageName));
    };
 
    const onSaveGroupReservationHandler = () => {};

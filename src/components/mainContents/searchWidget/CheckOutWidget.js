@@ -1,7 +1,7 @@
 import moment from 'moment';
 import React, { useRef } from 'react';
 import { useDispatch } from 'react-redux';
-import { getReservationsDataByOptions } from '../../../store/reservation-actions';
+import { getReservationsDataInOptions } from '../../../store/reservation-actions';
 
 import FitOrGroupSwtich from '../../UI/FitOrGroupSwitch';
 
@@ -40,9 +40,7 @@ const CheckOutWidget = () => {
          default:
       }
 
-      dispatch(
-         getReservationsDataByOptions({ searchOptions, pageName: 'checkOut' })
-      );
+      dispatch(getReservationsDataInOptions(searchOptions, 'checkOut'));
    };
 
    const onClearFilterHandler = (e) => {
@@ -62,9 +60,7 @@ const CheckOutWidget = () => {
          searchOptions.departureEndDate =
             departureEndDateRef.current.value.replace(/-/g, '');
 
-      dispatch(
-         getReservationsDataByOptions({ searchOptions, pageName: 'checkOut' })
-      );
+      dispatch(getReservationsDataInOptions(searchOptions, 'checkOut'));
    };
    return (
       <form onSubmit={onSubmitSearchFormHandler}>

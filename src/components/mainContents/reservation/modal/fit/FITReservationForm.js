@@ -287,11 +287,7 @@ const FITReservationForm = (props) => {
          setIsRoomAssignConditionFit(false);
          if (mode !== 'create') {
             dispatch(
-               releaseAssignedRooms({
-                  pageName: props.pageName,
-                  fitOrGroup: 'fit',
-                  ids: [data?.rsvnId],
-               })
+               releaseAssignedRooms(props.pageName, 'fit', [data?.rsvnId])
             );
          }
       }
@@ -438,13 +434,7 @@ const FITReservationForm = (props) => {
          return { price: data.totalPrice, date: data.date };
       });
       formData.id = data.rsvnId;
-      await dispatch(
-         editReservation({
-            pageName: props.pageName,
-            id: data.rsvnId,
-            data: formData,
-         })
-      );
+      await dispatch(editReservation(props.pageName, data.rsvnId, formData));
 
       if (isGroupModalOpen) {
          await dispatch(
@@ -454,13 +444,7 @@ const FITReservationForm = (props) => {
             })
          );
       }
-      await dispatch(
-         openDetailModal({
-            id: data.rsvnId,
-            pageName: props.pageName,
-         })
-      );
-      alert('저장 완료');
+      await dispatch(openDetailModal(data.rsvnId, props.pageName));
    };
 
    const onCreateReservationHandler = async () => {
@@ -475,13 +459,7 @@ const FITReservationForm = (props) => {
       const formData = getFormData();
       formData.dailyRatesData = dailyRatesData;
 
-      dispatch(
-         createReservation({
-            createFormData: formData,
-            fitOrGroup: 'fit',
-            pageName: props.pageName,
-         })
-      );
+      dispatch(createReservation(formData, 'fit', props.pageName));
    };
 
    const onOpenAssignRoomHandler = () => {

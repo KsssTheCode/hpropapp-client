@@ -97,7 +97,7 @@ export const openDetailModal = ({ id, pageName }) => {
    };
 };
 
-export const getReservationsDataByOptions = ({ searchOptions, pageName }) => {
+export const getReservationsDataInOptions = ({ searchOptions, pageName }) => {
    return async (dispatch) => {
       const getRequest = async () => {
          if (searchOptions) {
@@ -190,7 +190,7 @@ export const createReservation = ({ createFormData, fitOrGroup, pageName }) => {
    };
 };
 
-export const createDetailReservations = ({ pageName, groupId, formData }) => {
+export const createGroupDetailRsvns = ({ pageName, groupId, formData }) => {
    return async (dispatch) => {
       const sendRequest = async () => {
          const response = await fetch(
@@ -231,7 +231,7 @@ export const createDetailReservations = ({ pageName, groupId, formData }) => {
    };
 };
 
-// export const createDetailReservations = ({ pageName, groupId, formData }) => {
+// export const createGroupDetailRsvns = ({ pageName, groupId, formData }) => {
 //    return async (dispatch) => {
 //       const sendRequest = async () => {
 //          const response = await fetch(
@@ -436,12 +436,7 @@ export const setCheckOutDetailForm = ({ id }) => {
    };
 };
 
-export const assignRoomsToReservations = ({
-   pageName,
-   fitOrGroup,
-   ids,
-   rooms,
-}) => {
+export const assignRoomsToRsvns = ({ pageName, fitOrGroup, ids, rooms }) => {
    const idAndRoomPairs = rooms.map((roomNumber, i) => {
       const id = ids[i];
       return { id, roomNumber };

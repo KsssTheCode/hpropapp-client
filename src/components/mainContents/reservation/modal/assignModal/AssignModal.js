@@ -12,7 +12,7 @@ import classes from './AssignModal.module.css';
 import leftArrowIcon from '../../../../../assets/pic/leftArrow.png';
 import rightArrowIcon from '../../../../../assets/pic/rightArrow.png';
 import {
-   assignRoomsToReservations,
+   assignRoomsToRsvns,
    releaseAssignedRooms,
 } from '../../../../../store/reservation-actions';
 import {
@@ -72,12 +72,12 @@ const AssignModal = (props) => {
          return;
       }
       dispatch(
-         assignRoomsToReservations({
-            pageName: props.pageName,
-            fitOrGroup: props.fitOrGroup,
-            ids: selectedReservationsData,
-            rooms: selectedRoomsData,
-         })
+         assignRoomsToRsvns(
+            props.pageName,
+            props.fitOrGroup,
+            selectedReservationsData,
+            selectedRoomsData
+         )
       );
 
       if (isGroupModalOpen) {
@@ -121,11 +121,11 @@ const AssignModal = (props) => {
       }
 
       dispatch(
-         releaseAssignedRooms({
-            pageName: props.pageName,
-            fitOrGroup: props.fitOrGroup,
-            ids: selectedReservationsData,
-         })
+         releaseAssignedRooms(
+            props.pageName,
+            props.fitOrGroup,
+            selectedReservationsData
+         )
       );
 
       if (isGroupModalOpen) {

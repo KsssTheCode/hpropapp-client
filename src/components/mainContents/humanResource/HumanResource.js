@@ -1,6 +1,6 @@
 import { useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { getStaffsData } from '../../../store/staff-actions';
+// import { getStaffsDataForFilter } from '../../../store/staff-actions';
 import Table from '../../UI/Table.js';
 
 import classes from './HumanResource.module.css';
@@ -10,7 +10,7 @@ const Staff = () => {
    const staffsData = useSelector((state) => state.staff.staffs);
 
    useEffect(() => {
-      dispatch(getStaffsData());
+      // dispatch(getStaffsDataForFilter());
    }, [dispatch]);
 
    return (

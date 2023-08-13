@@ -2,7 +2,7 @@ import moment from 'moment';
 import React from 'react';
 import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { getReservationsDataByOptions } from '../../../store/reservation-actions';
+import { getReservationsDataInOptions } from '../../../store/reservation-actions';
 import FITReservationForm from '../reservation/modal/fit/FITReservationForm';
 import GroupReservationForm from '../reservation/modal/group/GroupReservationForm';
 
@@ -38,12 +38,7 @@ const CheckIn = () => {
             ? (searchOptions = checkInSearchOptions)
             : (searchOptions = initialSearchOptions);
 
-         dispatch(
-            getReservationsDataByOptions({
-               searchOptions,
-               pageName: 'checkIn',
-            })
-         );
+         dispatch(getReservationsDataInOptions(searchOptions, 'checkIn'));
       } else {
          return;
       }

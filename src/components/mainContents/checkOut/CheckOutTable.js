@@ -6,8 +6,8 @@ import '../../UI/Table.css';
 import 'ag-grid-community/styles/ag-grid.css';
 import 'ag-grid-community/styles/ag-theme-alpine.css';
 import {
-   getReservationsDataByOptions,
-   setCheckOutDetailForm,
+   getReservationsDataInOptions,
+   getCheckOutDetailForm,
 } from '../../../store/reservation-actions';
 import { useRef } from 'react';
 
@@ -41,7 +41,7 @@ const CheckOutTable = () => {
    }
 
    const onDoubleClickReservationHandler = (e) => {
-      dispatch(setCheckOutDetailForm({ id: e.data.rsvnId }));
+      dispatch(getCheckOutDetailForm(e.data.rsvnId));
    };
 
    const onRowSelectedHandler = (e) => {
@@ -50,7 +50,7 @@ const CheckOutTable = () => {
    };
 
    const checkOutSelectedReservationHandler = () => {
-      dispatch(getReservationsDataByOptions({ pageName: 'checkOut' }));
+      dispatch(getReservationsDataInOptions(null, 'checkOut'));
    };
 
    const columns = [

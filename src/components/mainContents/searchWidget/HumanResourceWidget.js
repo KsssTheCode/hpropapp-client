@@ -1,6 +1,6 @@
 import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { getStaffsData } from '../../../store/staff-actions';
+// import { getStaffsData } from '../../../store/staff-actions';
 import { useEffect } from 'react';
 
 import classes from './ReservationWidget.module.css';
@@ -17,7 +17,7 @@ const HumanResourceWidget = () => {
       e.preventDefault();
 
       const searchOptions = {};
-      dispatch(getStaffsData(searchOptions, 'humanResource'));
+      // dispatch(getStaffsData(searchOptions));
    };
 
    const departmentsData = useSelector((state) => state.department.departments);

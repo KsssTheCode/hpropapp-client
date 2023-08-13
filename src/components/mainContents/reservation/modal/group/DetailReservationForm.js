@@ -1,7 +1,7 @@
 import moment from 'moment';
 import { useRef } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { createDetailReservations } from '../../../../../store/reservation-actions';
+import { createGroupDetailRsvns } from '../../../../../store/reservation-actions';
 import classes from './GroupReservationForm.module.css';
 
 const DetailReservationForm = (props) => {
@@ -55,11 +55,11 @@ const DetailReservationForm = (props) => {
 
       formData.dailyRatesData = dailyRatesData;
       dispatch(
-         createDetailReservations({
-            pageName: props.pageName,
-            groupId: groupReservationData.groupRsvnId,
-            formData: formData,
-         })
+         createGroupDetailRsvns(
+            props.pageName,
+            groupReservationData.groupRsvnId,
+            formData
+         )
       );
       onClearDetailReservationFormHandler();
    };
