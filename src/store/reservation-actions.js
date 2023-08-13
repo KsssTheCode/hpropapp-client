@@ -5,87 +5,93 @@ export const openDetailModal = ({ id, pageName }) => {
    return async (dispatch) => {
       try {
          const response = await api.openRsvnDetailModal(id);
-         if (response.status === 404) {
-            alert(response.message);
-         } else if (response.status === 400) {
-            alert(response.message);
-         } else if (response.status === 200) {
-            console.log('성공');
-            const responseData = await response.json();
-            console.log(responseData);
-            console.log(responseData.errorMessage);
-
-            if (responseData.arrivalTime) {
-               const t = responseData.arrivalTime;
-               responseData.arrivalTime = t.slice(0, 2) + ':' + t.slice(2);
-            }
-            if (responseData.departureTime) {
-               const t = responseData.departureTime;
-               responseData.departureTime = t.slice(0, 2) + ':' + t.slice(2);
-            }
-            if (id[0] === 'R') {
-               const {
-                  DailyRates,
-                  RoomRates,
-                  ReservationChangeHistories,
-                  ...reservationData
-               } = responseData;
-
-               const dailyRatesData = DailyRates.map((rate) => {
-                  const room = RoomRates.find(
-                     (room) => +room.date === +rate.date
+         const responseData = await response.json();
+         if (!response.ok) {
+            switch (responseData.status) {
+               case 400:
+                  alert(responseData.message);
+                  break;
+               case 422:
+                  alert(
+                     '잘못된 형식의 예약번호입니다. \n관리자에게 문의하세요.'
                   );
-                  const originPrice = room ? room.price : null;
-                  const totalPrice = rate.price;
-                  return { date: rate.date, originPrice, totalPrice };
-               });
+                  break;
+               case 500:
+                  alert('예약 호출에 실패했습니다. \n관리자에게 문의하세요.');
+                  break;
+               default:
+            }
+            return;
+         }
 
-               const sendData = {
-                  data: reservationData,
+         if (responseData.arrivalTime) {
+            const t = response.arrivalTime;
+            responseData.arrivalTime = t.slice(0, 2) + ':' + t.slice(2);
+         }
+         if (responseData.departureTime) {
+            const t = response.departureTime;
+            responseData.departureTime = t.slice(0, 2) + ':' + t.slice(2);
+         }
+         if (id[0] === 'R') {
+            const {
+               DailyRates,
+               RoomRates,
+               ReservationChangeHistories,
+               ...reservationData
+            } = responseData;
+
+            const dailyRatesData = DailyRates.map((rate) => {
+               const room = RoomRates.find((room) => +room.date === +rate.date);
+               const originPrice = room ? room.price : null;
+               const totalPrice = rate.price;
+               return { date: rate.date, originPrice, totalPrice };
+            });
+
+            const sendData = {
+               data: reservationData,
+               pageName,
+            };
+            if (pageName === 'reservation') sendData.mode = 'detail';
+
+            dispatch(reservationActions.openFITModal(sendData));
+            dispatch(
+               reservationActions.replaceRoomRatesData({
                   pageName,
-               };
-               if (pageName === 'reservation') sendData.mode = 'detail';
-
-               dispatch(reservationActions.openFITModal(sendData));
+                  data: dailyRatesData,
+               })
+            );
+            dispatch(
+               reservationActions.replaceHistoryModalData({
+                  fitOrGroup: 'fit',
+                  data: ReservationChangeHistories,
+               })
+            );
+         }
+         if (id[0] === 'G') {
+            const {
+               Reservations,
+               ReservationChangeHistories,
+               ...groupReservationData
+            } = responseData;
+            if (Reservations) {
                dispatch(
-                  reservationActions.replaceRoomRatesData({
-                     pageName,
-                     data: dailyRatesData,
-                  })
-               );
-               dispatch(
-                  reservationActions.replaceHistoryModalData({
-                     fitOrGroup: 'fit',
-                     data: ReservationChangeHistories,
-                  })
+                  reservationActions.replaceGroupDetailReservationsState(
+                     Reservations
+                  )
                );
             }
-            if (id[0] === 'G') {
-               const {
-                  Reservations,
+            const sendData = {
+               data: groupReservationData,
+               pageName,
+            };
+            if (pageName === 'reservation') sendData.mode = 'detail';
+            dispatch(reservationActions.openGroupModal(sendData));
+            dispatch(
+               reservationActions.replaceHistoryModalData({
+                  fitOrGroup: 'group',
                   ReservationChangeHistories,
-                  ...groupReservationData
-               } = responseData;
-               if (Reservations) {
-                  dispatch(
-                     reservationActions.replaceGroupDetailReservationsState(
-                        Reservations
-                     )
-                  );
-               }
-               const sendData = {
-                  data: groupReservationData,
-                  pageName,
-               };
-               if (pageName === 'reservation') sendData.mode = 'detail';
-               dispatch(reservationActions.openGroupModal(sendData));
-               dispatch(
-                  reservationActions.replaceHistoryModalData({
-                     fitOrGroup: 'group',
-                     ReservationChangeHistories,
-                  })
-               );
-            }
+               })
+            );
          }
       } catch (err) {
          console.log(err);
@@ -143,27 +149,22 @@ export const getReservationsDataByOptions = ({ searchOptions, pageName }) => {
 
 export const createReservation = ({ createFormData, fitOrGroup, pageName }) => {
    return async (dispatch) => {
-      const sendRequest = async () => {
-         let url = process.env.REACT_APP_API_HOST;
-         if (fitOrGroup === 'fit') url += `/rsvn/create-rsvn`;
-         if (fitOrGroup === 'group') url += `/group-rsvn/create-group-rsvn`;
-         const response = await fetch(url, {
-            method: 'POST',
-            body: JSON.stringify(createFormData),
-            headers: { 'Content-Type': 'application/json' },
-            credentials: 'include',
-         });
-
-         const responseData = await response.json();
-         return responseData;
-      };
       try {
-         const responseData = await sendRequest();
-
-         if (responseData) {
-            alert('예약생성 완료');
-         } else {
-            alert('예약생성 실패');
+         const response = await api.createRsvn(createFormData, fitOrGroup);
+         const responseData = await response.json();
+         if (!response.ok) {
+            switch (responseData.status) {
+               case 422:
+                  alert(responseData.message);
+                  break;
+               case 400:
+                  alert(responseData.message);
+                  break;
+               case 500:
+                  alert('예약생성에 실패했습니다. \n관리자에게 문의하세요.');
+                  break;
+               default:
+            }
             return;
          }
 

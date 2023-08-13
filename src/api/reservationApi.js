@@ -38,12 +38,12 @@ export const getGroupRsvnsDataInFilterOptions = async (searchOptions) => {
 
 /** [POST API call] Creating a reservation using the provided input datas.
  * @param {object} createFormData - Reservation informations requested to be created as inputs by the user.
- * @param {string} fitOrGroup - Determination of F.I.T or Group Reservation. (Only allow 'FIT' or 'group' in string)
+ * @param {string} fitOrGroup - Determination of F.I.T or Group Reservation. (Only allow 'fit' or 'group' in string)
  * @returns {Promise<object>} - Created reservation data.
  */
 export const createRsvn = async (createFormData, fitOrGroup) => {
    let url = `${process.env.REACT_APP_API_HOST}`;
-   if (fitOrGroup === 'FIT') url += '/rsvn/create-rsvn';
+   if (fitOrGroup === 'fit') url += '/rsvn/create-rsvn';
    if (fitOrGroup === 'group') url += '/group-rsvn/create-group-rsvn';
    return await fetch(url, {
       method: 'POST',
@@ -124,12 +124,12 @@ export const setCheckOutDetailForm = async (id) => {
 /**
  * [PATCH API call] Assign rooms to reservations.
  * @param {array} idAndRoomPairs - An array of objects composed of id and room number. (It should be an array regardless of the number of IDs)
- * @param {string} fitOrGroup - Determination of F.I.T or Group Reservation. (Only allow 'FIT' or 'group' in string)
+ * @param {string} fitOrGroup - Determination of F.I.T or Group Reservation. (Only allow 'fit' or 'group' in string)
  * @returns {Promise<object>} - Only use for to get response status.
  */
 export const assignRooms = async (idAndRoomPairs, fitOrGroup) => {
    let url = `${process.env.REACT_APP_API_HOST}`;
-   if (fitOrGroup === 'FIT') url += '/rsvn/assign-room-to-rsvn';
+   if (fitOrGroup === 'fit') url += '/rsvn/assign-room-to-rsvn';
    if (fitOrGroup === 'group') url += '/group-rsvn/assign-rooms';
 
    return await fetch(url, {
@@ -143,12 +143,12 @@ export const assignRooms = async (idAndRoomPairs, fitOrGroup) => {
 /**
  * [PATCH API call] Release room assignment from reservation.
  * @param {array} ids - An array of ids to be released room assignment. (It should be an array regardless of the number of IDs)
- * @param {string} fitOrGroup - Determination of F.I.T or Group Reservation. (Only allow 'FIT' or 'group' in string)
+ * @param {string} fitOrGroup - Determination of F.I.T or Group Reservation. (Only allow 'fit' or 'group' in string)
  *  @returns {Promise<object>} - Only use for to get response status.
  */
 export const releaseAssignedRooms = async (ids, fitOrGroup) => {
    let url = `${process.env.REACT_APP_API_HOST}`;
-   if (fitOrGroup === 'FIT') url += '/rsvn/release-assigned-room-from-rsvn';
+   if (fitOrGroup === 'fit') url += '/rsvn/release-assigned-room-from-rsvn';
    if (fitOrGroup === 'group')
       url += '/group-rsvn/relase-assigned-rooms-from-rsvns';
 
