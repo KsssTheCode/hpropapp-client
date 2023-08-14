@@ -4,7 +4,7 @@
  * @returns {Promise<object>} - Staff datas found by filter conditions.
  */
 export const getStaffsData = async (searchOptions) => {
-   let url = `${process.env.REACT_APP_API_HOST}/staff/get-staffs-data`;
+   let url = `${process.env.REACT_APP_API_HOST}/staff/get-staffs-in-options`;
    if (searchOptions) {
       const params = new URLSearchParams(searchOptions);
       url += `?${params}`;

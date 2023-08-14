@@ -85,37 +85,6 @@ const extendLoginState = () => {
    };
 };
 
-// const extendLoginState = async (dispatch) => {
-//    const confirm = window.confirm(
-//       '로그인 유지 시간이 경과되어 자동 로그아웃됩니다.\n로그인을 유지하시겠습니까?'
-//    );
-//    if (!confirm) {
-//       dispatch(logOut());
-//       return;
-//    }
-
-//    const password = window.prompt(
-//       '로그인 연장을 하시려면 비밀번호를 입력하세요'
-//    );
-//    if (!password) {
-//       dispatch(logOut());
-//       return;
-//    }
-
-//    try {
-//       const staffId = sessionStorage.getItem('staffId');
-//       const response = await authApi.extendLoginState(staffId, password);
-//       if (!response.ok) {
-//          alert('올바른 비밀번호가 아닙니다.\n다시 로그인해주세요.');
-//          dispatch(logOut());
-//       } else {
-//          alert('로그인 유효시간이 연장되었습니다.');
-//       }
-//    } catch (err) {
-//       console.log(err);
-//    }
-// };
-
 export const logIn = (staffId, password) => {
    return async (dispatch) => {
       try {
