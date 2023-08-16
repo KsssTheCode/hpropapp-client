@@ -2,7 +2,7 @@ import React, { useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import moment from 'moment';
 
-import { getReservationsDataInOptions } from '../../../store/reservation-actions';
+import { getReservationsDataInFilterOptions } from '../../../store/reservation-actions';
 
 import classes from './Reservation.module.css';
 import ReservationTable from './ReservationTable';
@@ -37,7 +37,9 @@ const Reservation = () => {
          Object.entries(reservationSearchOptions).length > 0
             ? (searchOptions = reservationSearchOptions)
             : (searchOptions = initialSearchOptions);
-         dispatch(getReservationsDataInOptions(searchOptions, 'reservation'));
+         dispatch(
+            getReservationsDataInFilterOptions(searchOptions, 'reservation')
+         );
       } else {
          return;
       }

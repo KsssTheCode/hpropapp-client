@@ -109,7 +109,7 @@ export const openDetailModal = (id, pageName) => {
  * @param {object} searchOptions - User-defined filter options get from widget.
  * @param {*} pageName - Page name where the reservation modal will be shown.(must be 'checkIn', 'checkOut' or 'reservation')
  */
-export const getReservationsDataInOptions = (searchOptions, pageName) => {
+export const getReservationsDataInFilterOptions = (searchOptions, pageName) => {
    return async (dispatch) => {
       try {
          const FITResponse = await rsvnApi.getFITRsvnsDataInFilterOptions(

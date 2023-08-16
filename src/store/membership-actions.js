@@ -1,20 +1,17 @@
+import * as membershipApi from '../api/membershipApi';
 import { membershipActions } from './membership-slice';
 
-export const getMembershipsData = (searchOptions) => {
+export const getMembershipsDataForFilterSelection = () => {
    return async (dispatch) => {
-      const getRequest = async () => {
-         let url = `${process.env.REACT_APP_API_HOST}/membership/get-all-memberships`;
-         if (searchOptions) {
-            const params = new URLSearchParams(searchOptions);
-            url += `?${params}`;
-         }
-         const response = await fetch(url, { credentials: 'include' });
-         return response.json();
-      };
-
       try {
-         const membershipsData = await getRequest();
-         dispatch(membershipActions.replaceMemberships(membershipsData || []));
+         const response = await membershipApi.getMembershipsData();
+         const responseData = await response.json();
+         if (!response.ok) {
+            switch (response.status) {
+            }
+            return;
+         }
+         dispatch(membershipActions.replaceMemberships(responseData || []));
       } catch (err) {
          console.log(err);
       }

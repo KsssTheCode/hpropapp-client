@@ -19,7 +19,7 @@ export const getRsvnDetailInformations = async (id) => {
 export const getFITRsvnsDataInFilterOptions = async (searchOptions) => {
    const params = new URLSearchParams(searchOptions);
    return await fetch(
-      `${process.env.REACT_APP_API_HOST}/rsvn/get-rsvns-in-options?${params}`,
+      `${process.env.REACT_APP_API_HOST}/rsvn/get-rsvns-in-filter-options?${params}`,
       { credentials: 'include' }
    );
 };

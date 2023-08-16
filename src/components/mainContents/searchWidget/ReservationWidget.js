@@ -7,18 +7,15 @@ import classes from './ReservationWidget.module.css';
 
 import { reservationActions } from '../../../store/reservation-slice';
 import {
-   getReservationsDataInOptions,
+   getReservationsDataInFilterOptions,
    getReservationStatus,
 } from '../../../store/reservation-actions';
-import { getRateTypeCodesData } from '../../../store/rate-type-actions';
-import { getRoomTypeCodesData } from '../../../store/room-type-actions';
-import { getStaffsDataForFilter } from '../../../store/staff-actions';
+import { getRateTypesDataForFilterSelection } from '../../../store/rate-type-actions';
+import { getRoomTypesDataForFilterSelection } from '../../../store/room-type-actions';
+import { getStaffsDataForFilterSelection } from '../../../store/staff-actions';
 // import { getMembershipsData } from '../../../store/membership-actions';
 import FitOrGroupSwtich from '../../UI/FitOrGroupSwitch';
 
-const roomTypeOptions = { attributes: ['roomTypeCode', 'roomTypeName'] };
-const rateTypeOptions = { attributes: ['rateTypeCode'] };
-const staffOptions = { attributes: ['name', 'staffId'] };
 // const membershipOptions = { attributes: ['membershipName'] };
 
 const ReservationWidget = () => {
@@ -46,9 +43,9 @@ const ReservationWidget = () => {
    // const memberships = useSelector((state) => state.membership.memberships);
 
    useEffect(() => {
-      dispatch(getRateTypeCodesData(rateTypeOptions));
-      dispatch(getRoomTypeCodesData(roomTypeOptions));
-      dispatch(getStaffsDataForFilter(staffOptions));
+      dispatch(getRateTypesDataForFilterSelection());
+      dispatch(getRoomTypesDataForFilterSelection());
+      dispatch(getStaffsDataForFilterSelection());
       // dispatch(getMembershipsData(membershipOptions));
       dispatch(getReservationStatus());
    }, [dispatch]);
@@ -166,7 +163,9 @@ const ReservationWidget = () => {
          searchOptions.checkOutStaffs = selectedCheckOutStaffs.map(
             (d) => d.value
          );
-      dispatch(getReservationsDataInOptions(searchOptions, 'reservation'));
+      dispatch(
+         getReservationsDataInFilterOptions(searchOptions, 'reservation')
+      );
    };
 
    return (

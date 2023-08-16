@@ -6,9 +6,7 @@ import { useEffect } from 'react';
 import classes from './ReservationWidget.module.css';
 import searchIcon from '../../../assets/pic/search.png';
 import MultiDropdown from '../../UI/MultiDropdown';
-import { getDepartmentsData } from '../../../store/department-actions';
-
-const departmentOptions = { attributes: ['deptCode'] };
+import { getDeptsDataForFilterSelection } from '../../../store/department-actions';
 
 const HumanResourceWidget = () => {
    const dispatch = useDispatch();
@@ -16,14 +14,14 @@ const HumanResourceWidget = () => {
    const onSubmitSearchFormHandler = (e) => {
       e.preventDefault();
 
-      const searchOptions = {};
+      // const searchOptions = {};
       // dispatch(getStaffsData(searchOptions));
    };
 
    const departmentsData = useSelector((state) => state.department.departments);
 
    useEffect(() => {
-      dispatch(getDepartmentsData(departmentOptions));
+      dispatch(getDeptsDataForFilterSelection());
    }, [dispatch]);
 
    return (

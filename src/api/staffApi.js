@@ -3,11 +3,9 @@
  * @param {object} searchOptions - Conditions to find staffs' data.
  * @returns {Promise<object>} - Staff datas found by filter conditions.
  */
-export const getStaffsData = async (searchOptions) => {
-   let url = `${process.env.REACT_APP_API_HOST}/staff/get-staffs-in-options`;
-   if (searchOptions) {
-      const params = new URLSearchParams(searchOptions);
-      url += `?${params}`;
-   }
-   return await fetch(url, { credentials: 'include' });
+export const getStaffsDataForFilterSelection = async () => {
+   return await fetch(
+      `${process.env.REACT_APP_API_HOST}/staff/get-staffs-data-for-filter-selection`,
+      { credentials: 'include' }
+   );
 };

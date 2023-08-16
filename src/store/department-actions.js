@@ -1,18 +1,21 @@
-import { getDepartmentsInOptions } from '../api/departmentApi';
+import * as deptApi from '../api/departmentApi';
 import { departmentActions } from './department-slice';
 
-export const getDepartmentsData = (searchOptions) => {
+/**
+ *
+ */
+export const getDeptsDataForFilterSelection = () => {
    return async (dispatch) => {
       try {
-         const response = getDepartmentsInOptions(searchOptions);
-         const responseData = await response.json();
+         const response = await deptApi.getDeptsDataForFilterSelection();
+         const departmentsData = await response.json();
          if (!response.ok) {
             switch (response.status) {
             }
             return;
          }
 
-         dispatch(departmentActions.replaceDepartments(responseData || []));
+         dispatch(departmentActions.replaceDepartments(departmentsData || []));
       } catch (err) {
          console.log(err);
       }

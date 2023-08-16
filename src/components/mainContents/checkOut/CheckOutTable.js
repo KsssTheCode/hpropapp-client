@@ -6,7 +6,7 @@ import '../../UI/Table.css';
 import 'ag-grid-community/styles/ag-grid.css';
 import 'ag-grid-community/styles/ag-theme-alpine.css';
 import {
-   getReservationsDataInOptions,
+   getReservationsDataInFilterOptions,
    getCheckOutDetailForm,
 } from '../../../store/reservation-actions';
 import { useRef } from 'react';
@@ -50,7 +50,7 @@ const CheckOutTable = () => {
    };
 
    const checkOutSelectedReservationHandler = () => {
-      dispatch(getReservationsDataInOptions(null, 'checkOut'));
+      dispatch(getReservationsDataInFilterOptions(null, 'checkOut'));
    };
 
    const columns = [

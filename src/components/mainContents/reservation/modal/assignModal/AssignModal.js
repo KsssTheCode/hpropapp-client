@@ -1,7 +1,8 @@
 import { Modal } from '@mui/material';
 import { useEffect, useRef } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { getRoomTypeCodesData } from '../../../../../store/room-type-actions';
+import { getRoomTypesDataForFilterSelection } from '../../../../../store/room-type-actions';
+import { getCleanStatusesDataInOptions } from '../../../../../store/room-actions';
 import { roomActions } from '../../../../../store/room-slice';
 
 import MultiDropdown from '../../../../UI/MultiDropdown';
@@ -16,13 +17,12 @@ import {
    releaseAssignedRooms,
 } from '../../../../../store/reservation-actions';
 import {
-   getCleanStatusesData,
    getFloorsData,
    getRoomsDataInOptionsForAssign,
 } from '../../../../../store/room-actions';
 import { reservationActions } from '../../../../../store/reservation-slice';
 
-const roomTypeOptions = { attributes: ['roomTypeCode', 'roomTypeName'] };
+const roomTypeOptions = ['roomTypeCode', 'roomTypeName'];
 
 const AssignModal = (props) => {
    const dispatch = useDispatch();
@@ -45,9 +45,9 @@ const AssignModal = (props) => {
    const selectedReservations = useRef(null);
 
    useEffect(() => {
-      dispatch(getRoomTypeCodesData(roomTypeOptions));
+      dispatch(getRoomTypesDataForFilterSelection(roomTypeOptions));
       dispatch(getFloorsData());
-      dispatch(getCleanStatusesData());
+      dispatch(getCleanStatusesDataInOptions());
    }, [dispatch]);
 
    useEffect(() => {

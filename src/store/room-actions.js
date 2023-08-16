@@ -1,21 +1,20 @@
 import { reservationActions } from './reservation-slice';
 import { roomActions } from './room-slice';
+import * as roomApi from '../api/roomApi';
 
-export const getRoomsData = () => {
+export const getRoomsDataInOptions = () => {
    return async (dispatch) => {
-      const getRequest = async () => {
-         const response = await fetch(
-            `${process.env.REACT_APP_API_HOST}/room/get-rooms-for-room-preview`,
-            { credentials: 'include' }
-         );
-         return response.json();
-      };
-
       try {
-         const roomsData = await getRequest();
+         const response = await roomApi.getRoomsDataForIndicator();
+         const responseData = await response.json();
+         if (!response.ok) {
+            switch (response.status) {
+            }
+            return;
+         }
          dispatch(
             roomActions.replaceRoom({
-               rooms: roomsData || [],
+               rooms: responseData || [],
             })
          );
          // return roomsData;
@@ -27,17 +26,17 @@ export const getRoomsData = () => {
 
 export const getRoomsDataInOptionsForAssign = (searchOptions) => {
    return async (dispatch) => {
-      const getRequest = async () => {
-         const params = new URLSearchParams(searchOptions);
-         const response = await fetch(
-            `${process.env.REACT_APP_API_HOST}/room/get-rooms-in-options-for-assign?${params}`,
-            { credentials: 'include' }
+      try {
+         const response = await roomApi.getRoomsDataInOptionsForAssign(
+            searchOptions
          );
          const responseData = await response.json();
-         return responseData;
-      };
-      try {
-         const responseData = await getRequest();
+         if (!response.ok) {
+            switch (response.status) {
+            }
+            return;
+         }
+
          dispatch(roomActions.replaceAssignModalRoomData(responseData));
       } catch (err) {
          console.log(err);
@@ -47,20 +46,18 @@ export const getRoomsDataInOptionsForAssign = (searchOptions) => {
 
 export const getFloorsData = () => {
    return async (dispatch) => {
-      const getRequest = async () => {
-         const response = await fetch(
-            `${process.env.REACT_APP_API_HOST}/floor/get-floors`,
-            { credentials: 'include' }
-         );
-         return response.json();
-      };
-
       try {
-         const floorsData = await getRequest();
+         const response = await roomApi.getFloorsData();
+         const responseData = await response.json();
+         if (!response.ok) {
+            switch (response.status) {
+            }
+            return;
+         }
 
          dispatch(
             roomActions.replaceFloor({
-               floors: floorsData || [],
+               floors: responseData || [],
             })
          );
       } catch (err) {
@@ -69,41 +66,34 @@ export const getFloorsData = () => {
    };
 };
 
-export const getCleanStatusesData = () => {
+export const getCleanStatusesDataInOptions = () => {
    return async (dispatch) => {
-      const getRequest = async () => {
-         const response = await fetch(
-            `${process.env.REACT_APP_API_HOST}/clean-status/get-clean-statuses`,
-            { credentials: 'include' }
-         );
-         return response.json();
-      };
-
       try {
-         const cleanStatusesData = await getRequest();
-         dispatch(
-            roomActions.replaceCleanStatusesData(cleanStatusesData || [])
-         );
+         const response = await roomApi.getCleanStatusesData();
+         const responseData = await response.json();
+         if (!response.ok) {
+            switch (response.status) {
+            }
+            return;
+         }
+
+         dispatch(roomActions.replaceCleanStatusesData(responseData || []));
       } catch (err) {
          console.log(err);
       }
    };
 };
 
-export const getDefaultRoomRatesData = ({ pageName, indexes }) => {
+export const getDefaultRoomRatesData = (pageName, indexes) => {
    return async (dispatch) => {
-      const getRequest = async () => {
-         const params = new URLSearchParams(indexes);
-         const response = await fetch(
-            `${process.env.REACT_APP_API_HOST}/roomrate/get-roomrates-by-indexes?${params}`,
-            { credentials: 'include' }
-         );
-
-         return await response.json();
-      };
       try {
-         const responseData = await getRequest();
-
+         const response = await roomApi.getDefaultRoomRatesData(indexes);
+         const responseData = await response.json();
+         if (!response.ok) {
+            switch (response.status) {
+            }
+            return;
+         }
          const convertedData = responseData.map((data) => {
             return {
                date: data.date,

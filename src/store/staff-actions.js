@@ -5,30 +5,26 @@ import schedule from 'node-schedule';
 
 /**
  * Get every staff's to use as options of filter.
- * @param {object} searchOptions - Conditions to find staffs' data.
+ * @param {object<array, object>} searchOptions - Conditions to find staff data.
  */
-export const getStaffsDataForFilter = () => {
+export const getStaffsDataForFilterSelection = () => {
    return async (dispatch) => {
       try {
-         const response = await staffApi.getStaffsData();
-         const responseData = await response.json();
+         const response = await staffApi.getStaffsDataForFilterSelection();
+         const staffsData = await response.json();
          if (!response.ok) {
             switch (response.status) {
             }
             return;
          }
 
-         dispatch(staffActions.replaceStaffsList(responseData || []));
+         dispatch(staffActions.replaceStaffsList(staffsData || []));
       } catch (err) {
          console.log(err);
       }
    };
 };
 
-/**
- *
- * @returns
- */
 export const logOut = () => {
    return async (dispatch) => {
       try {

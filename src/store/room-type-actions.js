@@ -1,19 +1,17 @@
 import { roomTypeActions } from './room-type-slice';
+import * as roomTypeApi from '../api/roomTypeApi';
 
-export const getRoomTypeCodesData = (searchOptions) => {
+export const getRoomTypesDataForFilterSelection = () => {
    return async (dispatch) => {
-      const getRequest = async () => {
-         let url = `${process.env.REACT_APP_API_HOST}/roomtype/get-all-roomtypes`;
-         if (searchOptions) {
-            const params = new URLSearchParams(searchOptions);
-            url += `?${params}`;
-         }
-         const response = await fetch(url, { credentials: 'include' });
-         return response.json();
-      };
-
       try {
-         const roomTypeCodesData = await getRequest();
+         const response =
+            await roomTypeApi.getRoomTypesDataForFilterSelection();
+         const roomTypeCodesData = await response.json();
+         if (!response.ok) {
+            switch (response.status) {
+            }
+            return;
+         }
          dispatch(
             roomTypeActions.replaceRoomTypeCodes(roomTypeCodesData || [])
          );

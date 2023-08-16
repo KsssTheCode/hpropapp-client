@@ -17,7 +17,7 @@ export const getRoomsDataForIndicator = async () => {
 export const getRoomsDataInOptionsForAssign = async (searchOptions) => {
    const params = new URLSearchParams(searchOptions);
    return await fetch(
-      `${process.env.REACT_APP_API_HOST}/room/get-rooms-in-options-for-assign?${params}`,
+      `${process.env.REACT_APP_API_HOST}/room/get-rooms-data-in-options-for-assign?${params}`,
       { credentials: 'include' }
    );
 };

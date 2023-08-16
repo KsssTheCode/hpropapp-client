@@ -46,23 +46,21 @@ const AssignRoomTable = forwardRef((props, ref) => {
    });
 
    const roomsOnList = roomsData.map((room) => (
-      <tbody>
-         <tr>
-            <td className={classes['checkbox']}>
-               <input
-                  type="checkbox"
-                  value={room.roomNumber}
-                  checked={selectedRooms.includes(room.roomNumber.toString())}
-                  onChange={checkboxChangeHandler}
-               />
-            </td>
-            <td className={classes['room-number']}>{room.roomNumber}</td>
-            <td className={classes['floor']}>{room.floorNumber}</td>
-            <td className={classes['room-type']}>{room.roomTypeCode}</td>
-            <td className={classes['clean-status']}>{room.cleanStatusCode}</td>
-            <td className={classes['room-status']}>{room.roomStatusCode}</td>
-         </tr>
-      </tbody>
+      <tr>
+         <td className={classes['checkbox']}>
+            <input
+               type="checkbox"
+               value={room.roomNumber}
+               checked={selectedRooms.includes(room.roomNumber.toString())}
+               onChange={checkboxChangeHandler}
+            />
+         </td>
+         <td className={classes['room-number']}>{room.roomNumber}</td>
+         <td className={classes['floor']}>{room.floorNumber}</td>
+         <td className={classes['room-type']}>{room.roomTypeCode}</td>
+         <td className={classes['clean-status']}>{room.cleanStatusCode}</td>
+         <td className={classes['room-status']}>{room.roomStatusCode}</td>
+      </tr>
    ));
 
    return (
@@ -77,7 +75,7 @@ const AssignRoomTable = forwardRef((props, ref) => {
                <th>Sts</th>
             </tr>
          </thead>
-         {roomsOnList}
+         <tbody>{roomsOnList}</tbody>
       </table>
    );
 });

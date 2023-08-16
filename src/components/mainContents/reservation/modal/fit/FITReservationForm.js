@@ -261,16 +261,13 @@ const FITReservationForm = (props) => {
          setIsRoomAssignConditionFit(true);
          if (isRateTypeCodeFit) {
             dispatch(
-               getDefaultRoomRatesData({
-                  pageName: props.pageName,
-                  indexes: {
-                     roomTypeCode: roomTypeCode.current.value,
-                     rateTypeCode: rateTypeCode.current.value,
-                     startDate: arrivalDate.current.value,
-                     endDate: moment(departureDate.current.value, 'YYYYMMDD')
-                        .subtract(1, 'days')
-                        .format('YYYYMMDD'),
-                  },
+               getDefaultRoomRatesData(props.pageName, {
+                  roomTypeCode: roomTypeCode.current.value,
+                  rateTypeCode: rateTypeCode.current.value,
+                  startDate: arrivalDate.current.value,
+                  endDate: moment(departureDate.current.value, 'YYYYMMDD')
+                     .subtract(1, 'days')
+                     .format('YYYYMMDD'),
                })
             );
             setIsConditionForRoomRateReady(true);

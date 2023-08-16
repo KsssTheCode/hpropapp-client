@@ -1,6 +1,9 @@
 import React, { useEffect } from 'react';
 import { useDispatch } from 'react-redux';
-import { getFloorsData, getRoomsData } from '../../../store/room-actions';
+import {
+   getFloorsData,
+   getRoomsDataInOptions,
+} from '../../../store/room-actions';
 import Floors from './Floors';
 
 import classes from './RoomPreview.module.css';
@@ -10,7 +13,7 @@ const RoomPreview = () => {
 
    useEffect(() => {
       dispatch(getFloorsData());
-      dispatch(getRoomsData());
+      dispatch(getRoomsDataInOptions());
    }, [dispatch]);
 
    return (

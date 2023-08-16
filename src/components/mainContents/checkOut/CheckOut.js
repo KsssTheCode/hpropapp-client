@@ -6,7 +6,7 @@ import classes from './CheckOut.module.css';
 import UsageDetail from './UsageDetail';
 import RoomDetail from './RoomDetail';
 
-import { getReservationsDataInOptions } from '../../../store/reservation-actions';
+import { getReservationsDataInFilterOptions } from '../../../store/reservation-actions';
 import CheckOutTable from './CheckOutTable';
 import FITReservationForm from '../reservation/modal/fit/FITReservationForm';
 
@@ -36,7 +36,9 @@ const CheckOut = () => {
             ? (searchOptions = checkOutSearchOptions)
             : (searchOptions = initialSearchOptions);
 
-         dispatch(getReservationsDataInOptions(searchOptions, 'checkOut'));
+         dispatch(
+            getReservationsDataInFilterOptions(searchOptions, 'checkOut')
+         );
       } else {
          return;
       }

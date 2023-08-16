@@ -1,19 +1,18 @@
 import { rateTypeActions } from './rate-type-slice';
+import * as rateTypeApi from '../api/rateTypeApi';
 
-export const getRateTypeCodesData = (searchOptions) => {
+export const getRateTypesDataForFilterSelection = () => {
    return async (dispatch) => {
-      const getRequest = async () => {
-         let url = `${process.env.REACT_APP_API_HOST}/ratetype/get-all-ratetypes`;
-         if (searchOptions) {
-            const params = new URLSearchParams(searchOptions);
-            url += `?${params}`;
-         }
-         const response = await fetch(url, { credentials: 'include' });
-         return response.json();
-      };
-
       try {
-         const rateTypeCodesData = await getRequest();
+         const response =
+            await rateTypeApi.getRateTypesDataForFilterSelection();
+         const rateTypeCodesData = await response.json();
+         if (!response.ok) {
+            switch (response.status) {
+            }
+            return;
+         }
+
          dispatch(
             rateTypeActions.replaceRateTypeCodes(rateTypeCodesData || [])
          );

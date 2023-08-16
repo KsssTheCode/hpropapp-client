@@ -2,7 +2,7 @@ import React from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { useEffect } from 'react';
 
-import { getRoomTypeCodesData } from '../../../store/room-type-actions';
+import { getRoomTypesDataForFilterSelection } from '../../../store/room-type-actions';
 import MultiDropdown from '../../UI/MultiDropdown';
 
 import classes from './RoomPreviewWidget.module.css';
@@ -18,10 +18,10 @@ const RoomPreviewWidget = () => {
    const roomTypeCodesData = useSelector(
       (state) => state.roomType.roomTypeCodes
    );
-   const floorsData = useSelector((state) => state.room.floors);
+   // const floorsData = useSelector((state) => state.room.floors);
 
    useEffect(() => {
-      dispatch(getRoomTypeCodesData(roomTypeOptions));
+      dispatch(getRoomTypesDataForFilterSelection(roomTypeOptions));
       dispatch(getFloorsData(floorOptions));
    }, [dispatch]);
 

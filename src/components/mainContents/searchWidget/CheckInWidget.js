@@ -2,23 +2,19 @@ import moment from 'moment';
 import React, { useEffect, useRef, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import {
-   getReservationsDataInOptions,
+   getReservationsDataInFilterOptions,
    getReservationStatus,
 } from '../../../store/reservation-actions';
 import { reservationActions } from '../../../store/reservation-slice';
-import { getRateTypeCodesData } from '../../../store/rate-type-actions';
-import { getRoomTypeCodesData } from '../../../store/room-type-actions';
-import { getStaffsDataForFilter } from '../../../store/staff-actions';
+import { getRateTypesDataForFilterSelection } from '../../../store/rate-type-actions';
+import { getRoomTypesDataForFilterSelection } from '../../../store/room-type-actions';
+import { getStaffsDataForFilterSelection } from '../../../store/staff-actions';
 // import { getMembershipsData } from '../../../store/membership-actions';
 
 import FitOrGroupSwtich from '../../UI/FitOrGroupSwitch';
 import MultiDropdown from '../../UI/MultiDropdown';
 
 import classes from './CheckInWidget.module.css';
-
-const roomTypeOptions = { attributes: ['roomTypeCode', 'roomTypeName'] };
-const rateTypeOptions = { attributes: ['rateTypeCode'] };
-// const membershipOptions = { attributes: ['membershipName'] };
 
 const CheckInWidget = () => {
    const dispatch = useDispatch();
@@ -46,9 +42,9 @@ const CheckInWidget = () => {
    // const memberships = useSelector((state) => state.membership.memberships);
 
    useEffect(() => {
-      dispatch(getRateTypeCodesData(rateTypeOptions));
-      dispatch(getRoomTypeCodesData(roomTypeOptions));
-      dispatch(getStaffsDataForFilter());
+      dispatch(getRateTypesDataForFilterSelection());
+      dispatch(getRoomTypesDataForFilterSelection());
+      dispatch(getStaffsDataForFilterSelection());
       // dispatch(getMembershipsData(membershipOptions));
       dispatch(getReservationStatus());
    }, [dispatch]);
@@ -132,7 +128,7 @@ const CheckInWidget = () => {
             (d) => d.value
          );
 
-      dispatch(getReservationsDataInOptions(searchOptions, 'checkIn'));
+      dispatch(getReservationsDataInFilterOptions(searchOptions, 'checkIn'));
    };
 
    const todayExpectedArrivalHandler = (e) => {
@@ -141,7 +137,7 @@ const CheckInWidget = () => {
          arrivalStartDate: today,
          arrivalEndDate: today,
       };
-      dispatch(getReservationsDataInOptions(searchOptions, 'checkIn'));
+      dispatch(getReservationsDataInFilterOptions(searchOptions, 'checkIn'));
    };
 
    const todayExpectedCheckOutHandler = (e) => {
@@ -151,7 +147,7 @@ const CheckInWidget = () => {
          departureEndDate: today,
          statusCodes: ['CI'],
       };
-      dispatch(getReservationsDataInOptions(searchOptions, 'checkIn'));
+      dispatch(getReservationsDataInFilterOptions(searchOptions, 'checkIn'));
    };
 
    const todayExpectedCheckInHandler = (e) => {
@@ -161,7 +157,7 @@ const CheckInWidget = () => {
          arrivalEndDate: today,
          statusCodes: ['RR'],
       };
-      dispatch(getReservationsDataInOptions(searchOptions, 'checkIn'));
+      dispatch(getReservationsDataInFilterOptions(searchOptions, 'checkIn'));
    };
 
    const stayingHandler = (e) => {
@@ -169,7 +165,7 @@ const CheckInWidget = () => {
       const searchOptions = {
          statusCodes: ['CI'],
       };
-      dispatch(getReservationsDataInOptions(searchOptions, 'checkIn'));
+      dispatch(getReservationsDataInFilterOptions(searchOptions, 'checkIn'));
    };
 
    const onClearFormHandler = (e) => {
