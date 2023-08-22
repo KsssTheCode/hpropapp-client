@@ -1,3 +1,5 @@
+import apiFacade from './apiFacade';
+
 /**
  * [GET API call] Get all existing room number datas.
  * @returns {Promise<object>} - All of existing room number datas.
@@ -49,9 +51,11 @@ export const getCleanStatusesData = async () => {
  * @returns - Room rates for sent indexes.
  */
 export const getDefaultRoomRatesData = async (indexes) => {
-   const params = new URLSearchParams(indexes);
-   return await fetch(
-      `${process.env.REACT_APP_API_HOST}/roomrate/get-roomrates-by-indexes?${params}`,
-      { credentials: 'include' }
-   );
+   let uri = '/roomrate/get-roomrates-by-indexes';
+   return await apiFacade.get(uri, indexes);
+   // const params = new URLSearchParams(indexes);
+   // return await fetch(
+   //    `${process.env.REACT_APP_API_HOST}/roomrate/get-roomrates-by-indexes?${params}`,
+   //    { credentials: 'include' }
+   // );
 };

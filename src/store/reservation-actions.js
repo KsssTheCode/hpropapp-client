@@ -297,12 +297,12 @@ export const assignRoomsToRsvns = (pageName, fitOrGroup, ids, rooms) => {
  * Release assigned rooms from the reservations.
  * @param {string} pageName - Page name where the reservation modal will be shown.(must be 'checkIn', 'checkOut' or 'reservation').
  * @param {string} fitOrGroup - Distinguishing between individual reservations or group reservations
- * @param {array} ids - Selected reservation IDs request to be released.
+ * @param {array} id - Selected reservation IDs request to be released.
  */
-export const releaseAssignedRooms = (pageName, fitOrGroup, ids) => {
+export const releaseAssignedRooms = (pageName, fitOrGroup, id) => {
    return async (dispatch) => {
       try {
-         const response = await rsvnApi.releaseAssignedRooms(ids, fitOrGroup);
+         const response = await rsvnApi.releaseAssignedRooms(id, fitOrGroup);
          if (!response.ok) {
             const responseData = await response.json();
             switch (response.status) {
@@ -321,14 +321,14 @@ export const releaseAssignedRooms = (pageName, fitOrGroup, ids) => {
             reservationActions.releaseAssignedRoomsFromModalState({
                pageName,
                fitOrGroup,
-               ids,
+               id,
             })
          );
          dispatch(
             reservationActions.releaseAssignedRoomsFromReservationsState({
                pageName,
                fitOrGroup,
-               ids,
+               id,
             })
          );
       } catch (err) {

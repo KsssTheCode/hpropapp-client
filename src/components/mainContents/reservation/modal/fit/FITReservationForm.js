@@ -282,7 +282,7 @@ const FITReservationForm = (props) => {
          }
       } else {
          setIsRoomAssignConditionFit(false);
-         if (mode !== 'create') {
+         if (mode !== 'create' && data?.roomNumber) {
             dispatch(
                releaseAssignedRooms(props.pageName, 'fit', [data?.rsvnId])
             );
@@ -427,21 +427,23 @@ const FITReservationForm = (props) => {
          formData.roomRatesData = roomRatesData;
       }
 
-      formData.dailyRatesData = roomRatesData.map((data) => {
-         return { price: data.totalPrice, date: data.date };
-      });
+      if (formData.dailyRatesData) {
+         formData.dailyRatesData = roomRatesData.map((data) => {
+            return { price: data.totalPrice, date: data.date };
+         });
+      }
       formData.id = data.rsvnId;
-      await dispatch(editReservation(props.pageName, data.rsvnId, formData));
+      dispatch(editReservation(props.pageName, data.rsvnId, formData));
 
       if (isGroupModalOpen) {
-         await dispatch(
+         dispatch(
             reservationActions.reflectDetailReservationChangeToGroup({
                id: data.rsvnId,
                changeData: formData,
             })
          );
       }
-      await dispatch(openDetailModal(data.rsvnId, props.pageName));
+      dispatch(openDetailModal(data.rsvnId, props.pageName));
    };
 
    const onCreateReservationHandler = async () => {
