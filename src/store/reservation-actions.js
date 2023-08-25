@@ -234,6 +234,8 @@ export const editReservation = (pageName, id, changeData) => {
                fitOrGroup,
             })
          );
+
+         alert('저장완료');
       } catch (err) {
          console.log(err);
       }

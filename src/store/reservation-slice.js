@@ -356,7 +356,7 @@ const reservationSlice = createSlice({
          state.reservationStatus = action.payload;
       },
       openHistoryModal(state, action) {
-         const { fitOrGroup } = action.payload;
+         const fitOrGroup = action.payload;
          let historyState = null;
          if (fitOrGroup === 'fit') {
             historyState = 'FITModalHistoryData';

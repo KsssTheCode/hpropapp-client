@@ -427,11 +427,9 @@ const FITReservationForm = (props) => {
          formData.roomRatesData = roomRatesData;
       }
 
-      if (formData.dailyRatesData) {
-         formData.dailyRatesData = roomRatesData.map((data) => {
-            return { price: data.totalPrice, date: data.date };
-         });
-      }
+      formData.dailyRatesData = roomRatesData.map((data) => {
+         return { price: data.totalPrice, date: data.date };
+      });
       formData.id = data.rsvnId;
       dispatch(editReservation(props.pageName, data.rsvnId, formData));
 
