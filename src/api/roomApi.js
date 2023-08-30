@@ -29,9 +29,12 @@ export const getRoomsDataInOptionsForAssign = async (searchOptions) => {
  * @returns {Promise<object>} - All existing floor datas.
  */
 export const getFloorsData = async () => {
-   return await fetch(`${process.env.REACT_APP_API_HOST}/floor/get-floors`, {
-      credentials: 'include',
-   });
+   return await fetch(
+      `${process.env.REACT_APP_API_HOST}/floor/get-floors-data`,
+      {
+         credentials: 'include',
+      }
+   );
 };
 
 /**
