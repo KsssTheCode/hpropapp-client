@@ -23,7 +23,7 @@ const MainWrapper = () => {
       case 'checkIn':
          widget = <CheckInWidget key={currentPage} />;
          break;
-      case 'roomPreview':
+      case 'indicator':
          widget = <RoomPreviewWidget key={currentPage} />;
          break;
       case 'checkOut':

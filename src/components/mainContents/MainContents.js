@@ -19,7 +19,7 @@ const MainContents = () => {
       case 'reservation':
          content = <Reservation />;
          break;
-      case 'roomPreview':
+      case 'indicator':
          content = <RoomPreview />;
          break;
       case 'checkIn':

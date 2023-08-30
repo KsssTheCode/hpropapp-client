@@ -11,6 +11,7 @@ const SideBar = (props) => {
    const dispatch = useDispatch();
 
    const pages = useSelector((state) => state.page.entirePages);
+   console.log(pages);
    const onSubmitHandler = (e) => {
       e.preventDefault();
    };
@@ -35,6 +36,9 @@ const SideBar = (props) => {
             break;
          case 'checkOut':
             pageTitle = 'Check Out';
+            break;
+         case 'indicator':
+            pageTitle = 'Indicator';
             break;
          default:
       }
