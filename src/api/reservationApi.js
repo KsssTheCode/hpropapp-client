@@ -6,18 +6,12 @@ import apiFacade from './apiFacade';
  */
 export const getRsvnDetailInformations = async (id) => {
    let uri = null;
+   console.log('1');
    if (id.charAt(0) === 'R') uri = '/rsvn/get-selected-rsvn';
    if (id.charAt(0) === 'G') uri = '/group-rsvn/get-selected-group-rsvn';
+   console.log('1끝');
 
    return await apiFacade.get(uri, { id });
-
-   // const params = new URLSearchParams({ id });
-   // let url = `${process.env.REACT_APP_API_HOST}`;
-   // if (id.charAt(0) === 'R') url += `/rsvn/get-selected-rsvn?${params}`;
-   // if (id.charAt(0) === 'G')
-   //    url += `/group-rsvn/get-selected-group-rsvn?${params}`;
-
-   // return await fetch(url, { credentials: 'include' });
 };
 
 /** [GET API call] Retrieve F.I.T reservations based on conditions included in user-defined filter.
@@ -27,12 +21,6 @@ export const getRsvnDetailInformations = async (id) => {
 export const getFITRsvnsDataInFilterOptions = async (searchOptions) => {
    const uri = '/rsvn/get-rsvns-in-filter-options';
    return await apiFacade.get(uri, searchOptions);
-
-   // const params = new URLSearchParams(searchOptions);
-   // return await fetch(
-   //    `${process.env.REACT_APP_API_HOST}/rsvn/get-rsvns-in-filter-options?${params}`,
-   //    { credentials: 'include' }
-   // );
 };
 
 /** [GET API call] Retrieve group reservations based on conditions included in user-defined filter.
@@ -42,12 +30,6 @@ export const getFITRsvnsDataInFilterOptions = async (searchOptions) => {
 export const getGroupRsvnsDataInFilterOptions = async (searchOptions) => {
    const uri = '/group-rsvn/get-group-rsvns-in-filter-options';
    return await apiFacade.get(uri, searchOptions);
-
-   // const params = new URLSearchParams(searchOptions);
-   // return await fetch(
-   //    `${process.env.REACT_APP_API_HOST}/group-rsvn/get-group-rsvns-in-filter-options?${params}`,
-   //    { credentials: 'include' }
-   // );
 };
 
 /** [POST API call] Creating a reservation based on user-provided informations.
@@ -60,16 +42,6 @@ export const createRsvn = async (createFormData, fitOrGroup) => {
    if (fitOrGroup === 'fit') uri = '/rsvn/create-rsvn';
    if (fitOrGroup === 'group') uri = '/group-rsvn/create-group-rsvn';
    return await apiFacade.post(uri, createFormData);
-
-   // let url = `${process.env.REACT_APP_API_HOST}`;
-   // if (fitOrGroup === 'fit') url += '/rsvn/create-rsvn';
-   // if (fitOrGroup === 'group') url += '/group-rsvn/create-group-rsvn';
-   // return await fetch(url, {
-   //    method: 'POST',
-   //    body: JSON.stringify(createFormData),
-   //    headers: { 'Content-Type': 'application/json' },
-   //    credentials: 'include',
-   // });
 };
 
 /** [POST API call] Creating reservations included in group reservation based on user-provided informations.
@@ -79,18 +51,6 @@ export const createRsvn = async (createFormData, fitOrGroup) => {
 export const createGroupDetailRsvns = async (groupRsvnId, detailRsvnsData) => {
    let uri = '/group-rsvn/create-detail-rsvns';
    return await apiFacade.post(uri, { groupRsvnId, detailRsvnsData });
-   // return await fetch(
-   //    `${process.env.REACT_APP_API_HOST}/group-rsvn/create-detail-rsvns`,
-   //    {
-   //       method: 'POST',
-   //       body: JSON.stringify({
-   //          groupRsvnId: groupRsvnId,
-   //          detailRsvnsData: formData,
-   //       }),
-   //       headers: { 'Content-Type': 'application/json' },
-   //       credentials: 'include',
-   //    }
-   // );
 };
 
 /** [DELETE API call] Delete selected detail reservations from group reservation.
@@ -100,15 +60,6 @@ export const createGroupDetailRsvns = async (groupRsvnId, detailRsvnsData) => {
 export const deleteDetailRsvnsIncludedInGroupRsvn = async (ids) => {
    const uri = '/group-rsvn/delete-detail-rsvns';
    return await apiFacade.delete(uri, ids);
-   // return await fetch(
-   //    `${process.env.REACT_APP_API_HOST}/group-rsvn/delete-detail-rsvns`,
-   //    {
-   //       method: 'DELETE',
-   //       body: JSON.stringify({ rsvnIds: ids }),
-   //       headers: { 'Content-Type': 'application/json' },
-   //       credentials: 'include',
-   //    }
-   // );
 };
 
 /** [PATCH API call] Edit reservation.
@@ -121,17 +72,6 @@ export const editRsvn = async (id, changeData) => {
    if (id.charAt(0) === 'R') uri = '/rsvn/edit-rsvn';
    if (id.charAt(0) === 'G') uri = '/group-rsvn/edit-group-rsvn';
    return await apiFacade.patch(uri, { rsvnId: id, ...changeData });
-
-   // let url = `${process.env.REACT_APP_API_HOST}`;
-   // if (id.charAt(0) === 'R') url += '/rsvn/edit-rsvn';
-   // if (id.charAt(0) === 'G') url += '/group-rsvn/edit-group-rsvn';
-
-   // return await fetch(url, {
-   //    method: 'PATCH',
-   //    body: JSON.stringify({ rsvnId: id, ...changeData }),
-   //    headers: { 'Content-Type': 'application/json' },
-   //    credentials: 'include',
-   // });
 };
 
 /**
@@ -146,17 +86,6 @@ export const assignRoomsToRsvns = async (idAndRoomPairs, fitOrGroup) => {
    if (fitOrGroup === 'group') uri = '/group-rsvn/assign-rooms';
 
    return await apiFacade.patch(uri, { idAndRoomPairs });
-
-   // let url = `${process.env.REACT_APP_API_HOST}`;
-   // if (fitOrGroup === 'fit') url += '/rsvn/assign-room-to-rsvn';
-   // if (fitOrGroup === 'group') url += '/group-rsvn/assign-rooms';
-
-   // return await fetch(url, {
-   //    method: 'PATCH',
-   //    body: JSON.stringify({ idAndRoomPairs }),
-   //    headers: { 'Content-Type': 'application/json' },
-   //    credentials: 'include',
-   // });
 };
 
 /**
@@ -171,16 +100,4 @@ export const releaseAssignedRooms = async (id, fitOrGroup) => {
    if (fitOrGroup === 'group')
       uri = '/group-rsvn/relase-assigned-rooms-from-rsvns';
    return await apiFacade.patch(uri, { id });
-
-   // let url = `${process.env.REACT_APP_API_HOST}`;
-   // if (fitOrGroup === 'fit') url += '/rsvn/release-assigned-room-from-rsvn';
-   // if (fitOrGroup === 'group')
-   //    url += '/group-rsvn/relase-assigned-rooms-from-rsvns';
-
-   // return await fetch(url, {
-   //    method: 'PATCH',
-   //    body: JSON.stringify({ ids }),
-   //    headers: { 'Content-Type': 'application/json' },
-   //    credentials: 'include',
-   // });
 };

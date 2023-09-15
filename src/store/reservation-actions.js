@@ -206,6 +206,7 @@ export const editReservation = (pageName, id, changeData) => {
    return async (dispatch) => {
       try {
          let fitOrGroup = null;
+         console.log(id);
          if (id.charAt(0) === 'R') fitOrGroup = 'fit';
          if (id.charAt(0) === 'G') fitOrGroup = 'group';
 

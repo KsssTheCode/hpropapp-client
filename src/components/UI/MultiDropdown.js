@@ -16,7 +16,7 @@ const Dropdown = (props) => {
             placeholderValue = 'Room Type';
             break;
          case 'status':
-            dataSet = { value: d.statusCode, label: d.statusCode };
+            dataSet = { value: d.value, label: d.key };
             placeholderValue = 'Status';
             break;
          case 'memberships':
