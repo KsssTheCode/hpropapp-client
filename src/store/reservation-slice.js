@@ -274,7 +274,6 @@ const reservationSlice = createSlice({
       },
       replaceReservationsState(state, action) {
          const { reservations, pageName } = action.payload;
-         console.log(reservations);
          if (reservations.fit) {
             state.reservations[pageName].fit = reservations.fit;
          }

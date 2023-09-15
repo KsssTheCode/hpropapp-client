@@ -439,25 +439,6 @@ export const createGroupDetailRsvns = (pageName, groupId, formData) => {
    };
 };
 
-export const getReservationStatus = () => {
-   return async (dispatch) => {
-      const getRequest = async () => {
-         let url = `${process.env.REACT_APP_API_HOST}/rsvn-status/get-rsvn-status`;
-         const response = await fetch(url, { credentials: 'include' });
-         return response.json();
-      };
-
-      try {
-         const responseData = await getRequest();
-         dispatch(
-            reservationActions.replaceReservationStatus(responseData || null)
-         );
-      } catch (err) {
-         console.log(err);
-      }
-   };
-};
-
 export const deleteDetailReservations = (ids) => {
    return async (dispatch) => {
       const getRequest = async () => {

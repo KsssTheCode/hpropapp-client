@@ -1,10 +1,7 @@
 import moment from 'moment';
 import React, { useEffect, useRef, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import {
-   getReservationsDataInFilterOptions,
-   getReservationStatus,
-} from '../../../store/reservation-actions';
+import { getReservationsDataInFilterOptions } from '../../../store/reservation-actions';
 import { reservationActions } from '../../../store/reservation-slice';
 import { getRateTypesDataForFilterSelection } from '../../../store/rate-type-actions';
 import { getRoomTypesDataForFilterSelection } from '../../../store/room-type-actions';
@@ -15,6 +12,7 @@ import FitOrGroupSwtich from '../../UI/FitOrGroupSwitch';
 import MultiDropdown from '../../UI/MultiDropdown';
 
 import classes from './CheckInWidget.module.css';
+import { RSVN_STATUS } from '../../../constants/constants';
 
 const CheckInWidget = () => {
    const dispatch = useDispatch();
@@ -35,9 +33,12 @@ const CheckInWidget = () => {
    const [selectedCheckInStaffs, setSelectedCheckInStaffs] = useState([]);
    const [selectedCheckOutStaffs, setSelectedCheckOutStaffs] = useState([]);
 
+   const statuses = Object.entries(RSVN_STATUS).map(([key, value]) => ({
+      key,
+      value,
+   }));
    const rateTypeCodes = useSelector((state) => state.rateType.rateTypeCodes);
    const roomTypeCodes = useSelector((state) => state.roomType.roomTypeCodes);
-   const statuses = useSelector((state) => state.reservation.reservationStatus);
    const staffs = useSelector((state) => state.staff.staffs);
    // const memberships = useSelector((state) => state.membership.memberships);
 
@@ -46,7 +47,6 @@ const CheckInWidget = () => {
       dispatch(getRoomTypesDataForFilterSelection());
       dispatch(getStaffsDataForFilterSelection());
       // dispatch(getMembershipsData(membershipOptions));
-      dispatch(getReservationStatus());
    }, [dispatch]);
 
    const today = moment().format('YYYYMMDD');

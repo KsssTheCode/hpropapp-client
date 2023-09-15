@@ -13,7 +13,7 @@ const makeRequest = async (uri, method, sendData) => {
       if (method === 'GET' || method === 'DELETE') {
          const params = new URLSearchParams(sendData);
          url += `?${params}`;
-      } else if (method === 'POST' || method === 'PATCH') {
+      } else if (method === 'POST' || method === 'PATCH' || method === 'PUT') {
          options.body = JSON.stringify(sendData);
       }
    }
@@ -25,6 +25,7 @@ const apiFacade = {
    get: (uri, sendData) => makeRequest(uri, 'GET', sendData),
    post: (uri, sendData) => makeRequest(uri, 'POST', sendData),
    patch: (uri, sendData) => makeRequest(uri, 'PATCH', sendData),
+   put: (uri, sendData) => makeRequest(uri, 'PUT', sendData),
    delete: (uri, sendData) => makeRequest(uri, 'DELETE', sendData),
 };
 

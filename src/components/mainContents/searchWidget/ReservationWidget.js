@@ -6,15 +6,13 @@ import MultiDropdown from '../../UI/MultiDropdown';
 import classes from './ReservationWidget.module.css';
 
 import { reservationActions } from '../../../store/reservation-slice';
-import {
-   getReservationsDataInFilterOptions,
-   getReservationStatus,
-} from '../../../store/reservation-actions';
+import { getReservationsDataInFilterOptions } from '../../../store/reservation-actions';
 import { getRateTypesDataForFilterSelection } from '../../../store/rate-type-actions';
 import { getRoomTypesDataForFilterSelection } from '../../../store/room-type-actions';
 import { getStaffsDataForFilterSelection } from '../../../store/staff-actions';
 // import { getMembershipsData } from '../../../store/membership-actions';
 import FitOrGroupSwtich from '../../UI/FitOrGroupSwitch';
+import { RSVN_STATUS } from '../../../constants/constants';
 
 // const membershipOptions = { attributes: ['membershipName'] };
 
@@ -36,9 +34,13 @@ const ReservationWidget = () => {
    const [selectedCheckInStaffs, setSelectedCheckInStaffs] = useState([]);
    const [selectedCheckOutStaffs, setSelectedCheckOutStaffs] = useState([]);
 
+   const statuses = Object.entries(RSVN_STATUS).map(([key, value]) => ({
+      key,
+      value,
+   }));
+   console.log(statuses);
    const rateTypeCodes = useSelector((state) => state.rateType.rateTypeCodes);
    const roomTypeCodes = useSelector((state) => state.roomType.roomTypeCodes);
-   const statuses = useSelector((state) => state.reservation.reservationStatus);
    const staffs = useSelector((state) => state.staff.staffs);
    // const memberships = useSelector((state) => state.membership.memberships);
 
@@ -47,7 +49,6 @@ const ReservationWidget = () => {
       dispatch(getRoomTypesDataForFilterSelection());
       dispatch(getStaffsDataForFilterSelection());
       // dispatch(getMembershipsData(membershipOptions));
-      dispatch(getReservationStatus());
    }, [dispatch]);
 
    const onOpenCreateModalHandler = (e) => {
