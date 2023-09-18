@@ -6,10 +6,8 @@ import apiFacade from './apiFacade';
  */
 export const getRsvnDetailInformations = async (id) => {
    let uri = null;
-   console.log('1');
    if (id.charAt(0) === 'R') uri = '/rsvn/get-selected-rsvn';
    if (id.charAt(0) === 'G') uri = '/group-rsvn/get-selected-group-rsvn';
-   console.log('1끝');
 
    return await apiFacade.get(uri, { id });
 };

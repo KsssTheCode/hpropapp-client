@@ -1,4 +1,5 @@
 import moment from 'moment';
+import openSocket from 'socket.io-client';
 import { AgGridReact } from 'ag-grid-react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useEffect, useRef, useState } from 'react';
@@ -25,6 +26,27 @@ const ReservationTable = () => {
    const fitOrGroupFilter = useSelector(
       (state) => state.reservation.fitOrGroupFilter.reservation
    );
+
+   useEffect(() => {
+      console.log('감지!');
+      const socket = openSocket(process.env.REACT_APP_API_HOST);
+      socket.on('createRsvn', (data) => {
+         if (data.action === 'createRsvn') {
+            console.log('변경감지!');
+            dispatch(
+               reservationActions.reflectCreationToReservationsState(
+                  'fit',
+                  'reservation',
+                  data
+               )
+            );
+         }
+
+         return () => {
+            socket.disconnect();
+         };
+      });
+   }, [dispatch]);
 
    useEffect(() => {
       let datas = [];

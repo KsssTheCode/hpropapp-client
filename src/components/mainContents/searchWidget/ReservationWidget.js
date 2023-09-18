@@ -38,7 +38,6 @@ const ReservationWidget = () => {
       key,
       value,
    }));
-   console.log(statuses);
    const rateTypeCodes = useSelector((state) => state.rateType.rateTypeCodes);
    const roomTypeCodes = useSelector((state) => state.roomType.roomTypeCodes);
    const staffs = useSelector((state) => state.staff.staffs);

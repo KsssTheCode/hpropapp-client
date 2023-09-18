@@ -11,8 +11,6 @@ import CheckOutTable from './CheckOutTable';
 import FITReservationForm from '../reservation/modal/fit/FITReservationForm';
 
 const initialSearchOptions = {
-   // departureStartDate: moment().format('YYYYMMDD'),
-   // departureEndDate: moment().format('YYYYMMDD'),
    statusCodes: ['CI', 'HC'],
 };
 

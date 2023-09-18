@@ -29,14 +29,6 @@ export const openDetailModal = (id, pageName) => {
             return;
          }
 
-         if (responseData.arrivalTime) {
-            const t = response.arrivalTime;
-            responseData.arrivalTime = t.slice(0, 2) + ':' + t.slice(2);
-         }
-         if (responseData.departureTime) {
-            const t = response.departureTime;
-            responseData.departureTime = t.slice(0, 2) + ':' + t.slice(2);
-         }
          if (id[0] === 'R') {
             const {
                DailyRates,
@@ -181,7 +173,7 @@ export const createReservation = (createFormData, fitOrGroup, pageName) => {
          if (fitOrGroup === 'fit') id = responseData.rsvnId;
          if (fitOrGroup === 'group') id = responseData.groupRsvnId;
 
-         dispatch(openDetailModal({ id, pageName: 'reservation' }));
+         dispatch(openDetailModal(id, 'reservation'));
 
          dispatch(
             reservationActions.reflectCreationToReservationsState({
@@ -206,7 +198,6 @@ export const editReservation = (pageName, id, changeData) => {
    return async (dispatch) => {
       try {
          let fitOrGroup = null;
-         console.log(id);
          if (id.charAt(0) === 'R') fitOrGroup = 'fit';
          if (id.charAt(0) === 'G') fitOrGroup = 'group';
 
