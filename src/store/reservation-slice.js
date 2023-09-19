@@ -96,8 +96,8 @@ const reservationSlice = createSlice({
       reflectCreationToReservationsState(state, action) {
          const { fitOrGroup, pageName, data } = action.payload;
          const updatedData = [
-            data,
             ...state.reservations[pageName][fitOrGroup],
+            data,
          ];
 
          state.reservations[pageName][fitOrGroup] = updatedData;

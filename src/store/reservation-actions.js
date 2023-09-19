@@ -1,5 +1,6 @@
 import * as rsvnApi from '../api/reservationApi';
 import { reservationActions } from './reservation-slice';
+import openSocket from 'socket.io-client';
 
 /**
  * Retrieve selected reservation's detao; informations for reservation modal.
@@ -169,19 +170,17 @@ export const createReservation = (createFormData, fitOrGroup, pageName) => {
             return;
          }
 
-         let id = null;
-         if (fitOrGroup === 'fit') id = responseData.rsvnId;
-         if (fitOrGroup === 'group') id = responseData.groupRsvnId;
+         // dispatch(
+         //    reservationActions.reflectCreationToReservationsState({
+         //       fitOrGroup,
+         //       pageName,
+         //       data: responseData,
+         //    })
+         // );
 
-         dispatch(openDetailModal(id, 'reservation'));
+         alert('생성완료');
 
-         dispatch(
-            reservationActions.reflectCreationToReservationsState({
-               fitOrGroup,
-               pageName,
-               data: responseData,
-            })
-         );
+         dispatch(openDetailModal(responseData.rsvnData.rsvnId, pageName));
       } catch (err) {
          console.log(err);
       }
@@ -261,6 +260,9 @@ export const assignRoomsToRsvns = (pageName, fitOrGroup, ids, rooms) => {
                   break;
                case 500:
                   alert('관리자에게 문의하세요.');
+                  break;
+               case 409:
+                  alert('이미 배정이 완료된 객실입니다.');
                   break;
                default:
             }

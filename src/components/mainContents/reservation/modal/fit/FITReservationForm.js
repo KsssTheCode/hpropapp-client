@@ -445,7 +445,6 @@ const FITReservationForm = (props) => {
    };
 
    const onCreateReservationHandler = async () => {
-      // if (!roomRatesData) return;
       const dailyRatesData = roomRatesData.map((data) => {
          return {
             date: data.date,
