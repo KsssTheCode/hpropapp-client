@@ -5,7 +5,6 @@ const roomSlice = createSlice({
    initialState: {
       rooms: [],
       floors: [],
-      cleanStatuses: [],
       pinnedRooms: { rooms: [], spread: true },
       assignModal: {
          isOpen: false,
@@ -73,9 +72,6 @@ const roomSlice = createSlice({
             ...state.assignModal.options,
             ...action.payload,
          };
-      },
-      replaceCleanStatusesData(state, action) {
-         state.cleanStatuses = action.payload;
       },
    },
 });

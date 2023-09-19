@@ -44,7 +44,7 @@ const Dropdown = (props) => {
             placeholderValue = 'Floor';
             break;
          case 'cleanStatus':
-            dataSet = { value: d.cleanStatusCode, label: d.statusName };
+            dataSet = { value: d.value, label: d.value };
             placeholderValue = 'Clean Status';
             break;
          default:

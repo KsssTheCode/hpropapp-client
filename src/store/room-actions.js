@@ -66,24 +66,6 @@ export const getFloorsData = () => {
    };
 };
 
-export const getCleanStatusesDataInOptions = () => {
-   return async (dispatch) => {
-      try {
-         const response = await roomApi.getCleanStatusesData();
-         const responseData = await response.json();
-         if (!response.ok) {
-            switch (response.status) {
-            }
-            return;
-         }
-
-         dispatch(roomActions.replaceCleanStatusesData(responseData || []));
-      } catch (err) {
-         console.log(err);
-      }
-   };
-};
-
 export const getDefaultRoomRatesData = (pageName, indexes) => {
    return async (dispatch) => {
       try {

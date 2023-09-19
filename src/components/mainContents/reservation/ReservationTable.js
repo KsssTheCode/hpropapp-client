@@ -28,17 +28,16 @@ const ReservationTable = () => {
    );
 
    useEffect(() => {
-      console.log('감지!');
       const socket = openSocket(process.env.REACT_APP_API_HOST);
+
       socket.on('createRsvn', (data) => {
-         if (data.action === 'createRsvn') {
-            console.log('변경감지!');
+         if (data.action === 'createsvn') {
             dispatch(
-               reservationActions.reflectCreationToReservationsState(
-                  'fit',
-                  'reservation',
-                  data
-               )
+               reservationActions.reflectCreationToReservationsState({
+                  fitOrGroup: 'fit',
+                  pageName: 'reservation',
+                  data: data.rsvn,
+               })
             );
          }
 

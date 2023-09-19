@@ -38,17 +38,6 @@ export const getFloorsData = async () => {
 };
 
 /**
- * [GET API call] Get all existing clean statuses to use in widget filter.
- * @returns {Promise<object>} - All exsiting clean statuses.
- */
-export const getCleanStatusesData = async () => {
-   return await fetch(
-      `${process.env.REACT_APP_API_HOST}/clean-status/get-clean-statuses`,
-      { credentials: 'include' }
-   );
-};
-
-/**
  * [GET API call] Get configured room rates searched by combinations of date, room type, rate type.
  * @param {array} indexes - Consisted objects of date, rateType, and roomType.
  * @returns - Room rates for sent indexes.

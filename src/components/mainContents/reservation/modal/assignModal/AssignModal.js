@@ -2,7 +2,6 @@ import { Modal } from '@mui/material';
 import { useEffect, useRef } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { getRoomTypesDataForFilterSelection } from '../../../../../store/room-type-actions';
-import { getCleanStatusesDataInOptions } from '../../../../../store/room-actions';
 import { roomActions } from '../../../../../store/room-slice';
 
 import MultiDropdown from '../../../../UI/MultiDropdown';
@@ -21,6 +20,7 @@ import {
    getRoomsDataInOptionsForAssign,
 } from '../../../../../store/room-actions';
 import { reservationActions } from '../../../../../store/reservation-slice';
+import { ROOM_CLEAN_STATUS } from '../../../../../constants/constants';
 
 const roomTypeOptions = ['roomTypeCode', 'roomTypeName'];
 
@@ -29,7 +29,12 @@ const AssignModal = (props) => {
 
    const roomTypeCodes = useSelector((state) => state.roomType.roomTypeCodes);
    const floors = useSelector((state) => state.room.floors);
-   const cleanStatuses = useSelector((state) => state.room.cleanStatuses);
+   const cleanStatuses = Object.entries(ROOM_CLEAN_STATUS).map(
+      ([key, value]) => ({
+         key,
+         value,
+      })
+   );
 
    const { isOpen: isGroupModalOpen } = useSelector(
       (state) => state.reservation.groupModal[props.pageName]
@@ -47,7 +52,6 @@ const AssignModal = (props) => {
    useEffect(() => {
       dispatch(getRoomTypesDataForFilterSelection(roomTypeOptions));
       dispatch(getFloorsData());
-      dispatch(getCleanStatusesDataInOptions());
    }, [dispatch]);
 
    useEffect(() => {
