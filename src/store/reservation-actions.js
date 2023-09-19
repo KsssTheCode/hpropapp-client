@@ -1,7 +1,5 @@
 import * as rsvnApi from '../api/reservationApi';
 import { reservationActions } from './reservation-slice';
-import openSocket from 'socket.io-client';
-
 /**
  * Retrieve selected reservation's detao; informations for reservation modal.
  * @param {string} id - Reservation ID.
@@ -170,17 +168,14 @@ export const createReservation = (createFormData, fitOrGroup, pageName) => {
             return;
          }
 
-         // dispatch(
-         //    reservationActions.reflectCreationToReservationsState({
-         //       fitOrGroup,
-         //       pageName,
-         //       data: responseData,
-         //    })
-         // );
-
          alert('생성완료');
 
-         dispatch(openDetailModal(responseData.rsvnData.rsvnId, pageName));
+         const createdRsvnId =
+            fitOrGroup === 'fit'
+               ? responseData.rsvnData.rsvnId
+               : responseData.groupRsvnId;
+
+         dispatch(openDetailModal(createdRsvnId, pageName));
       } catch (err) {
          console.log(err);
       }
@@ -420,13 +415,8 @@ export const createGroupDetailRsvns = (pageName, groupId, formData) => {
                responseData
             )
          );
-         dispatch(
-            reservationActions.reflectCreationToReservationsState({
-               pageName,
-               fitOrGroup: 'fit',
-               data: responseData,
-            })
-         );
+
+         alert('생성완료');
       } catch (err) {
          console.log(err);
       }

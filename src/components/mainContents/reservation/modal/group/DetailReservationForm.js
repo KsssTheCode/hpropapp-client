@@ -1,5 +1,5 @@
 import moment from 'moment';
-import { useRef } from 'react';
+import { useEffect, useRef } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { createGroupDetailRsvns } from '../../../../../store/reservation-actions';
 import classes from './GroupReservationForm.module.css';
@@ -47,10 +47,7 @@ const DetailReservationForm = (props) => {
       }
 
       const dailyRatesData = dateArray.map((date) => {
-         return {
-            date,
-            price: formData.roomRate,
-         };
+         return { date, price: formData.roomRate };
       });
 
       formData.dailyRatesData = dailyRatesData;

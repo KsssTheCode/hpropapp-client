@@ -94,11 +94,10 @@ const reservationSlice = createSlice({
          state[historyModal] = { ...state[historyModal], data };
       },
       reflectCreationToReservationsState(state, action) {
-         const { fitOrGroup, pageName, data } = action.payload;
-         const updatedData = [
-            ...state.reservations[pageName][fitOrGroup],
-            data,
-         ];
+         const { fitOrGroup, pageName, rsvn } = action.payload;
+         const updatedData = Array.isArray(rsvn)
+            ? [...state.reservations[pageName][fitOrGroup], ...rsvn]
+            : [...state.reservations[pageName][fitOrGroup], rsvn];
 
          state.reservations[pageName][fitOrGroup] = updatedData;
       },

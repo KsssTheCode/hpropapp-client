@@ -1,5 +1,4 @@
 import moment from 'moment';
-import openSocket from 'socket.io-client';
 import { AgGridReact } from 'ag-grid-react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useEffect, useRef, useState } from 'react';
@@ -10,6 +9,10 @@ import '../../UI/Table.css';
 import 'ag-grid-community/styles/ag-grid.css';
 import 'ag-grid-community/styles/ag-theme-alpine.css';
 import { openDetailModal } from '../../../store/reservation-actions';
+import {
+   subscribeToCreateRsvn,
+   subscribeToEditRsvn,
+} from '../../../socket/socket';
 
 const ReservationTable = () => {
    const dispatch = useDispatch();
@@ -28,24 +31,23 @@ const ReservationTable = () => {
    );
 
    useEffect(() => {
-      const socket = openSocket(process.env.REACT_APP_API_HOST);
+      const unsubscribeCreateRsvn = subscribeToCreateRsvn(
+         dispatch,
+         'reservation'
+      );
 
-      socket.on('createRsvn', (data) => {
-         if (data.action === 'createsvn') {
-            dispatch(
-               reservationActions.reflectCreationToReservationsState({
-                  fitOrGroup: 'fit',
-                  pageName: 'reservation',
-                  data: data.rsvn,
-               })
-            );
-         }
-
-         return () => {
-            socket.disconnect();
-         };
-      });
+      return () => {
+         unsubscribeCreateRsvn();
+      };
    }, [dispatch]);
+
+   // useEffect(() => {
+   //    const unsubscribeEditRsvn = subscribeToEditRsvn(dispatch, 'reservation');
+
+   //    return () => {
+   //       unsubscribeEditRsvn();
+   //    };
+   // }, [dispatch]);
 
    useEffect(() => {
       let datas = [];
