@@ -1,5 +1,5 @@
 import { Modal } from '@mui/material';
-import React, { useRef, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { createReservation } from '../../../../../store/reservation-actions';
 import { reservationActions } from '../../../../../store/reservation-slice';

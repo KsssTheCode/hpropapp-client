@@ -12,7 +12,7 @@ import { openDetailModal } from '../../../store/reservation-actions';
 import {
    subscribeToCreateRsvn,
    subscribeToEditRsvn,
-} from '../../../socket/socket';
+} from '../../../socket/socketFunctions.js';
 
 const ReservationTable = () => {
    const dispatch = useDispatch();
@@ -31,6 +31,7 @@ const ReservationTable = () => {
    );
 
    useEffect(() => {
+      console.log('컴포넌트생성감지!');
       const unsubscribeCreateRsvn = subscribeToCreateRsvn(
          dispatch,
          'reservation'
@@ -41,13 +42,14 @@ const ReservationTable = () => {
       };
    }, [dispatch]);
 
-   // useEffect(() => {
-   //    const unsubscribeEditRsvn = subscribeToEditRsvn(dispatch, 'reservation');
+   useEffect(() => {
+      console.log('컴포넌트변경감지!');
+      const unsubscribeEditRsvn = subscribeToEditRsvn(dispatch, 'reservation');
 
-   //    return () => {
-   //       unsubscribeEditRsvn();
-   //    };
-   // }, [dispatch]);
+      return () => {
+         unsubscribeEditRsvn();
+      };
+   }, [dispatch]);
 
    useEffect(() => {
       let datas = [];

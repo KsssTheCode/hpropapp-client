@@ -29,22 +29,21 @@ export const openDetailModal = (id, pageName) => {
          }
 
          if (id[0] === 'R') {
-            const {
-               DailyRates,
-               RoomRates,
-               ReservationChangeHistories,
-               ...reservationData
-            } = responseData;
+            const { rsvn, roomRatesData } = responseData;
+            const { DailyRates, ReservationChangeHistories, ...rsvnData } =
+               rsvn;
 
             const dailyRatesData = DailyRates.map((rate) => {
-               const room = RoomRates.find((room) => +room.date === +rate.date);
+               const room = roomRatesData.find(
+                  (room) => +room.date === +rate.date
+               );
                const originPrice = room ? room.price : null;
                const totalPrice = rate.price;
                return { date: rate.date, originPrice, totalPrice };
             });
 
             const sendData = {
-               data: reservationData,
+               data: rsvnData,
                pageName,
             };
             if (pageName === 'reservation') sendData.mode = 'detail';
@@ -172,7 +171,7 @@ export const createReservation = (createFormData, fitOrGroup, pageName) => {
 
          const createdRsvnId =
             fitOrGroup === 'fit'
-               ? responseData.rsvnData.rsvnId
+               ? responseData.rsvnId
                : responseData.groupRsvnId;
 
          dispatch(openDetailModal(createdRsvnId, pageName));
@@ -207,16 +206,7 @@ export const editReservation = (pageName, id, changeData) => {
          await dispatch(
             reservationActions.replaceModalData({
                pageName,
-               data: responseData[0],
-               fitOrGroup,
-            })
-         );
-
-         await dispatch(
-            reservationActions.reflectEditedReservationToReservationsState({
-               pageName,
-               id,
-               data: responseData[0],
+               data: responseData,
                fitOrGroup,
             })
          );
@@ -271,13 +261,6 @@ export const assignRoomsToRsvns = (pageName, fitOrGroup, ids, rooms) => {
                idAndRoomPairs,
             })
          );
-
-         dispatch(
-            reservationActions.reflectRoomAssignsToReservationsState({
-               pageName,
-               idAndRoomPairs,
-            })
-         );
       } catch (err) {
          console.log(err);
       }
@@ -310,13 +293,6 @@ export const releaseAssignedRooms = (pageName, fitOrGroup, id) => {
 
          dispatch(
             reservationActions.releaseAssignedRoomsFromModalState({
-               pageName,
-               fitOrGroup,
-               id,
-            })
-         );
-         dispatch(
-            reservationActions.releaseAssignedRoomsFromReservationsState({
                pageName,
                fitOrGroup,
                id,

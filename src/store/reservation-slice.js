@@ -112,6 +112,7 @@ const reservationSlice = createSlice({
       },
       reflectRoomAssignsToModalState(state, action) {
          const { fitOrGroup, idAndRoomPairs, pageName } = action.payload;
+         console.log(action.payload);
          if (fitOrGroup === 'fit') {
             state.FITModal[pageName].data = {
                ...state.FITModal[pageName].data,
@@ -122,7 +123,7 @@ const reservationSlice = createSlice({
                (rsvn) => {
                   idAndRoomPairs.forEach((pair, i) => {
                      if (rsvn.rsvnId === pair.rsvnId) {
-                        rsvn.roomNumber = pair.roomNumber;
+                        rsvn.roomNumber = +pair.roomNumber;
                      }
                      return rsvn;
                   });
@@ -131,19 +132,27 @@ const reservationSlice = createSlice({
             state.groupDetailReservations = newReservationsData;
          }
       },
-      reflectRoomAssignsToReservationsState(state, action) {
-         const { pageName, idAndRoomPairs } = action.payload;
+      // reflectRoomAssignsToReservationsState(state, action) {
+      //    const { pageName, idAndRoomPairs } = action.payload;
 
-         const updatedData = state.reservations[pageName].fit.map((rsvn) => {
-            const isMatch = idAndRoomPairs.find(
-               (pair) => rsvn.rsvnId === pair.id
-            );
-            if (isMatch) return { ...rsvn, roomNumber: isMatch.roomNumber };
-            return rsvn;
-         });
+      //    const updatedData = state.reservations[pageName].fit.map((rsvn) => {
+      //       const isMatch = idAndRoomPairs.find(
+      //          (pair) => rsvn.rsvnId === pair.id
+      //       );
+      //       if (isMatch) return { ...rsvn, roomNumber: isMatch.roomNumber };
+      //       return rsvn;
+      //    });
 
-         state.reservations[pageName].fit = updatedData;
-      },
+      //    state.reservations[pageName].fit = updatedData;
+      // },
+      // areflectRoomAssignsToReservationsState(state,action) {
+      //    const {pageName, data} = action.payload;
+
+      //    const updatedData = state.reservations[pageName].fit.map(rsvn => {
+      //       if(id === rsvn.rsvnId) return {...rsvn, ...data};
+      //       return rsvn;
+      //    })
+      // },
       reflectDetailReservationChangeToGroup(state, action) {
          const { id, changeData } = action.payload;
          const index = state.groupDetailReservations.findIndex(
@@ -192,27 +201,27 @@ const reservationSlice = createSlice({
             state.groupModal.detailReservations = newReservationsData;
          }
       },
-      releaseAssignedRoomsFromReservationsState(state, action) {
-         const { fitOrGroup, ids, pageName } = action.payload;
-         if (fitOrGroup === 'fit') {
-            state.reservations[pageName][fitOrGroup] = state.reservations[
-               pageName
-            ][fitOrGroup].map((rsvn) => {
-               const isMatch = ids.find((id) => id === rsvn.rsvnId);
-               if (isMatch) return { ...rsvn, roomNumber: null };
-               return rsvn;
-            });
-         } else if (fitOrGroup === 'group') {
-            const newReservationsData = state.groupDetailReservations.map(
-               (rsvn) => {
-                  const isMatch = ids.find((id) => id === rsvn.rsvnId);
-                  if (isMatch) return { ...rsvn, roomNumber: null };
-                  return rsvn;
-               }
-            );
-            state.groupModal.detailReservations = newReservationsData;
-         }
-      },
+      // releaseAssignedRoomsFromReservationsState(state, action) {
+      //    const { fitOrGroup, ids, pageName } = action.payload;
+      //    if (fitOrGroup === 'fit') {
+      //       state.reservations[pageName][fitOrGroup] = state.reservations[
+      //          pageName
+      //       ][fitOrGroup].map((rsvn) => {
+      //          const isMatch = ids.find((id) => id === rsvn.rsvnId);
+      //          if (isMatch) return { ...rsvn, roomNumber: null };
+      //          return rsvn;
+      //       });
+      //    } else if (fitOrGroup === 'group') {
+      //       const newReservationsData = state.groupDetailReservations.map(
+      //          (rsvn) => {
+      //             const isMatch = ids.find((id) => id === rsvn.rsvnId);
+      //             if (isMatch) return { ...rsvn, roomNumber: null };
+      //             return rsvn;
+      //          }
+      //       );
+      //       state.groupModal.detailReservations = newReservationsData;
+      //    }
+      // },
       reflectRoomReleasesToGroupDetailReservationsState(state, action) {
          const { selectedReservationsData } = action.payload;
 
@@ -248,13 +257,13 @@ const reservationSlice = createSlice({
             };
          }
       },
-      reflectOneReservationDataToReservationsState(state, action) {
-         const { pageName, fitOrGroup, data } = action.payload;
-         const index = state.reservations[pageName][fitOrGroup].findIndex(
-            (rsvn) => rsvn.rsvnId === action.payload.id
-         );
-         state.reservations[pageName][fitOrGroup][index] = data;
-      },
+      // reflectOneReservationDataToReservationsState(state, action) {
+      //    const { pageName, fitOrGroup, data } = action.payload;
+      //    const index = state.reservations[pageName][fitOrGroup].findIndex(
+      //       (rsvn) => rsvn.rsvnId === action.payload.id
+      //    );
+      //    state.reservations[pageName][fitOrGroup][index] = data;
+      // },
       openRoomRateModal(state, action) {
          state.roomRateModal[action.payload].isOpen = true;
       },
@@ -265,12 +274,12 @@ const reservationSlice = createSlice({
          state.roomRateModal[action.payload.pageName].data =
             action.payload.data;
       },
-      addRoomRateInfo(state, action) {
-         state.isModalOpen.object = {
-            ...state.isModalOpen.object,
-            dailyRate: action.payload,
-         };
-      },
+      // addRoomRateInfo(state, action) {
+      //    state.isModalOpen.object = {
+      //       ...state.isModalOpen.object,
+      //       dailyRate: action.payload,
+      //    };
+      // },
       replaceReservationsState(state, action) {
          const { reservations, pageName } = action.payload;
          if (reservations.fit) {

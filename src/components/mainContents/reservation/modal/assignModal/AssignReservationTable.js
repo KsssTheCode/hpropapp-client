@@ -39,24 +39,22 @@ const AssignReservationTable = forwardRef((props, ref) => {
    const listsData = data.map((rsvn) => {
       const stay = `${rsvn.arrivalDate} ~ ${rsvn.departureDate}`;
       return (
-         <tbody>
-            <tr>
-               <td className={classes['checkbox']}>
-                  {rsvn.statusCode === 'RR' && (
-                     <input
-                        type="checkbox"
-                        value={rsvn.rsvnId}
-                        checked={selectedReservations.includes(rsvn.rsvnId)}
-                        onChange={checkboxChangeHandler}
-                     />
-                  )}
-               </td>
-               <td className={classes['room-number']}>{rsvn.roomNumber}</td>
-               <td className={classes['name']}>{rsvn.guestName}</td>
-               <td className={classes['duration']}>{stay}</td>
-               <td className={classes['room-status']}>{rsvn.statusCode}</td>
-            </tr>
-         </tbody>
+         <tr key={rsvn.rsvnId}>
+            <td className={classes['checkbox']}>
+               {rsvn.statusCode === 'RR' && (
+                  <input
+                     type="checkbox"
+                     value={rsvn.rsvnId}
+                     checked={selectedReservations.includes(rsvn.rsvnId)}
+                     onChange={checkboxChangeHandler}
+                  />
+               )}
+            </td>
+            <td className={classes['room-number']}>{rsvn.roomNumber}</td>
+            <td className={classes['name']}>{rsvn.guestName}</td>
+            <td className={classes['duration']}>{stay}</td>
+            <td className={classes['room-status']}>{rsvn.statusCode}</td>
+         </tr>
       );
    });
 
@@ -74,7 +72,7 @@ const AssignReservationTable = forwardRef((props, ref) => {
                <th>Sts</th>
             </tr>
          </thead>
-         {listsData}
+         <tbody>{listsData}</tbody>
       </table>
    );
 });

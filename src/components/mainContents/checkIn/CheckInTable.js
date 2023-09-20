@@ -8,6 +8,10 @@ import {
    editReservation,
    openDetailModal,
 } from '../../../store/reservation-actions';
+import {
+   subscribeToCreateRsvn,
+   subscribeToEditRsvn,
+} from '../../../socket/socketFunctions.js';
 
 import classes from './CheckInTable.module.css';
 import '../../UI/Table.css';
@@ -30,6 +34,24 @@ const CheckInTable = (props) => {
    const fitOrGroupFilter = useSelector(
       (state) => state.reservation.fitOrGroupFilter.checkIn
    );
+
+   useEffect(() => {
+      console.log('컴포넌트생성감지!');
+      const unsubscribeCreateRsvn = subscribeToCreateRsvn(dispatch, 'checkIn');
+
+      return () => {
+         unsubscribeCreateRsvn();
+      };
+   }, [dispatch]);
+
+   useEffect(() => {
+      console.log('컴포넌트변경감지!');
+      const unsubscribeEditRsvn = subscribeToEditRsvn(dispatch, 'checkIn');
+
+      return () => {
+         unsubscribeEditRsvn();
+      };
+   }, [dispatch]);
 
    useEffect(() => {
       let datas = [];
@@ -82,7 +104,7 @@ const CheckInTable = (props) => {
       {
          headerName: '',
          field: '',
-         width: '20',
+         width: 20,
          cellRenderer: (params) => {
             const rowData = params.node.data;
             if (rowData.statusCode === 'RR' && rowData.roomNumber) {
@@ -110,6 +132,7 @@ const CheckInTable = (props) => {
          headerName: 'Room No.',
          field: 'roomNumber',
          filter: 'agTextColumnFilter',
+         valueGetter: (params) => +params.data.roomNumber || null,
          floatingFilter: true,
          width: 100,
       },

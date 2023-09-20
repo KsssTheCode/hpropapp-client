@@ -46,7 +46,7 @@ const AssignRoomTable = forwardRef((props, ref) => {
    });
 
    const roomsOnList = roomsData.map((room) => (
-      <tr>
+      <tr key={room.roomNumber}>
          <td className={classes['checkbox']}>
             <input
                type="checkbox"
