@@ -2,10 +2,7 @@ import { reservationActions } from '../store/reservation-slice';
 import socket from './socket';
 
 export const subscribeToCreateRsvn = (dispatch, pageName) => {
-   console.log('생성감지');
    const createRsvnHandler = (data) => {
-      console.log(data);
-      console.log(data.rsvn);
       dispatch(
          reservationActions.reflectCreationToReservationsState({
             fitOrGroup: data.rsvn.rsvnId ? 'fit' : 'group',
@@ -20,7 +17,6 @@ export const subscribeToCreateRsvn = (dispatch, pageName) => {
    const unsubscribe = () => {
       socket.off('createRsvn', createRsvnHandler);
       socket.disconnect();
-      console.log('연결종료');
    };
 
    return unsubscribe;
@@ -49,7 +45,6 @@ export const subscribeToEditRsvn = (dispatch, pageName) => {
    const unsubscribe = () => {
       socket.off('editRsvn', editRsvnHandler);
       socket.disconnect();
-      console.log('연결종료');
    };
 
    return unsubscribe;

@@ -31,7 +31,6 @@ const ReservationTable = () => {
    );
 
    useEffect(() => {
-      console.log('컴포넌트생성감지!');
       const unsubscribeCreateRsvn = subscribeToCreateRsvn(
          dispatch,
          'reservation'
@@ -43,7 +42,6 @@ const ReservationTable = () => {
    }, [dispatch]);
 
    useEffect(() => {
-      console.log('컴포넌트변경감지!');
       const unsubscribeEditRsvn = subscribeToEditRsvn(dispatch, 'reservation');
 
       return () => {
