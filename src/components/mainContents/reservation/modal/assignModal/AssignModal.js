@@ -75,6 +75,7 @@ const AssignModal = (props) => {
          alert('객실과 예약건의 수를 일치시켜주세요.');
          return;
       }
+
       dispatch(
          assignRoomsToRsvns(
             props.pageName,
@@ -98,6 +99,8 @@ const AssignModal = (props) => {
             )
          );
       }
+
+      dispatch(roomActions.removeAssignedRoomsFromList(selectedRoomsData));
    };
 
    const releaseAssignedRoomsFromReservationsHandler = () => {

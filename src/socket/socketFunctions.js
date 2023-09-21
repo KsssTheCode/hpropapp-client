@@ -1,4 +1,5 @@
 import { reservationActions } from '../store/reservation-slice';
+import { roomActions } from '../store/room-slice';
 import socket from './socket';
 
 export const subscribeToCreateRsvn = (dispatch, pageName) => {
@@ -24,19 +25,42 @@ export const subscribeToCreateRsvn = (dispatch, pageName) => {
 
 export const subscribeToEditRsvn = (dispatch, pageName) => {
    const editRsvnHandler = (data) => {
-      const { action, rsvn } = data;
-      const id = rsvn.rsvnId ? rsvn.rsvnId : rsvn.groupRsvnId;
-      const fitOrGroup = rsvn.rsvnId ? 'fit' : 'group';
-
-      if (!action) {
+      const { action, returnData } = data;
+      if (action === 'editRsvnBasicInfo') {
+         const id = returnData.rsvnId
+            ? returnData.rsvnId
+            : returnData.groupRsvnId;
+         const fitOrGroup = returnData.rsvnId ? 'fit' : 'group';
          dispatch(
             reservationActions.reflectEditedReservationToReservationsState({
                fitOrGroup,
                id,
-               data: rsvn,
+               data: returnData,
                pageName,
             })
          );
+      } else if (
+         action === 'releaseAssignedRoomFromRsvn' ||
+         action === 'assignRoomToRsvn'
+      ) {
+         const { updatedRsvnData, roomData } = returnData;
+         const id = updatedRsvnData.rsvnId
+            ? updatedRsvnData.rsvnId
+            : updatedRsvnData.groupRsvnId;
+         const fitOrGroup = updatedRsvnData.rsvnId ? 'fit' : 'group';
+         dispatch(
+            reservationActions.reflectEditedReservationToReservationsState({
+               fitOrGroup,
+               id,
+               data: updatedRsvnData,
+               pageName,
+            })
+         );
+         if (action === 'releaseAssignedRoomFromRsvn') {
+            dispatch(roomActions.addReleasedRoomToList(roomData));
+         } else if (action === 'assignRoomToRsvn') {
+            dispatch(roomActions.removeAssignedRoomsFromList([roomData]));
+         }
       }
    };
 

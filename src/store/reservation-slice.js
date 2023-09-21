@@ -112,7 +112,6 @@ const reservationSlice = createSlice({
       },
       reflectRoomAssignsToModalState(state, action) {
          const { fitOrGroup, idAndRoomPairs, pageName } = action.payload;
-         console.log(action.payload);
          if (fitOrGroup === 'fit') {
             state.FITModal[pageName].data = {
                ...state.FITModal[pageName].data,

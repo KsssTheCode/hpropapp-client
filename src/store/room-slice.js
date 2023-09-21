@@ -73,6 +73,27 @@ const roomSlice = createSlice({
             ...action.payload,
          };
       },
+
+      removeAssignedRoomsFromList(state, action) {
+         const assignedRooms = action.payload.map(Number);
+
+         const updatedAssignRoomsData =
+            state.assignModal.assignRoomsData.filter(
+               (room) => !assignedRooms.includes(room.roomNumber)
+            );
+
+         state.assignModal.assignRoomsData = updatedAssignRoomsData;
+      },
+
+      addReleasedRoomToList(state, action) {
+         console.log(action.payload);
+         const updatedAssignRoomsData = [
+            ...state.assignModal.assignRoomsData,
+            ...action.payload,
+         ];
+
+         state.assignModal.assignRoomsData = updatedAssignRoomsData;
+      },
    },
 });
 
